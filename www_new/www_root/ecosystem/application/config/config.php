@@ -378,6 +378,7 @@ function __autoload($class)
 $config['cusa_log'] = FALSE;
 $config['cusa_log_path'] = '';
 $config['my_voice_url'] = 'my-voices';
+$config['my_voice_per_page_limit'] = 4;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

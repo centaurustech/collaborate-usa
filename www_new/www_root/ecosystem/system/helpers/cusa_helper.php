@@ -40,6 +40,7 @@ if( ! function_exists('c_get_assets_url')){
 
 // get now date time
 if( ! function_exists('c_now')){
+    
     function c_now(){
         return date("Y-m-d H:i:s");
     }
@@ -47,8 +48,17 @@ if( ! function_exists('c_now')){
 
 // get configs
 if( ! function_exists('c_get_config')){
+    
     function c_get_config(){
         $CI =& get_instance();
         return $CI->config->config;
+    }
+}
+
+// pick param
+if( ! function_exists('c_pick_param')){
+    
+    function c_pick_param($bundle = array(), $param, $default){
+        return (isset($bundle[$param])) ? $bundle[$param] : $default;
     }
 }
