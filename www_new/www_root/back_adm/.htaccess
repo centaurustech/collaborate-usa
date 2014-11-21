@@ -1,0 +1,69 @@
+Header append X-FRAME-OPTIONS "SAMEORIGIN"
+
+# Secure htaccess File
+<FilesMatch "\.(htaccess|ini|htpasswd)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>
+
+# Disable Directory Browsing
+Options -Indexes
+
+# Prevent Folder Listing
+IndexIgnore *
+
+
+# serve custom error pages
+ErrorDocument 403 "<title>410 Gone</title><h2>GONE / 410</h2><b>Resource is no longer available!</b><p>The requested URL is no longer available on this server and there is no forwarding address. If you followed a link from a foreign page, please contact the author of this page.</p><p>If you think this is a server error, please contact the <a href=#>webmaster</a>.</p><h2>Error 410</h2>"
+ErrorDocument 401 "<title>410 Gone</title><h2>GONE / 410</h2><b>Resource is no longer available!</b><p>The requested URL is no longer available on this server and there is no forwarding address. If you followed a link from a foreign page, please contact the author of this page.</p><p>If you think this is a server error, please contact the <a href=#>webmaster</a>.</p><h2>Error 410</h2>"
+ErrorDocument 404 http://cusa-local/back_adm/404
+#ErrorDocument 404 http://new.collaborateusa.com/back_adm/404
+
+
+# Password Protection - tested
+AuthName "CUSA Admin"
+AuthType Basic
+#AuthUserFile "/home/rancan1102/public_html/collaborateusa.com/www_new/htpassx/.htpasswd"
+AuthUserFile "D:/xampp/htdocs/collaborate_usa/www_new/htpassx/.htpasswd"
+require valid-user
+
+<FilesMatch "\.(img|png|gif|jpeg|jpg|swf)$">
+Order Deny,Allow
+Allow from all
+satisfy any
+</FilesMatch>
+
+##########################Smart URLs#########################
+
+## Rewrite URL
+RewriteEngine On
+
+# Rewite Admin to run on https - tested
+#RewriteCond %{HTTPS} off
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
+
+# Fixing double-login problem and making sure authorization usernames and passwords are not sent in cleartext unencrypted.
+##SSLOptions +StrictRequire
+##SSLRequireSSL
+##SSLRequire %{HTTP_HOST} eq "test.aa.com/"
+
+
+#/ Rewrite html to php
+rewriteRule ^(.*)\.htm$ $1.htm [L]
+rewriteRule ^(.*)\.html$ $1.php [L]
+rewriteRule ^(.*)\.html?(.*)$ $1.php?$2 [L]
+
+#/ Home
+rewriteRule ^home$ index.php [L]
+rewriteRule ^index index.php [L]
+rewriteRule ^index/(.*)$ index.php?$1 [L]
+
+#/ Login
+rewriteRule ^login login.php [L]
+rewriteRule ^login/(.*)$ login.php?$1 [L]
+
+#/ No-Query-String Pages
+rewriteRule ^(404|404/.*)$ 404.php [L]
+rewriteRule ^(403P|403P/.*)$ 403P.php [L]
+rewriteRule ^(logout|logout/.*)$ logout.php [L]
+rewriteRule ^(home|home/.*)$ index.php [L]
