@@ -1,11 +1,11 @@
 // process ajax request
-function processData(ajax_url, data_args, callback){    
+function processData(ajax_url, data, callback){    
     
-    ajax_url  = pickParam(url, false);
-    data_args = pickParam(data_args, "");
+    ajax_url  = pickParam(ajax_url, false);
+    data = pickParam(data, {});
     callback  = pickParam(callback, function(res){});
-
-    if(! url)
+    
+    if(! ajax_url)
         return false;
 
     $.ajaxSetup({
@@ -14,20 +14,20 @@ function processData(ajax_url, data_args, callback){
             'Cache-Control': 'no-cache'
         }
     });
-
+    
     $.ajax({  
         type: 'POST',
         url: ajax_url,
-        data : data_args,
-        cache: false,
+        data : data,
+        cache: false,        
         headers: { 
             "Cache-Control": "no-cache"
         },
         success: function(res){
             callback(res);
         },          
-        error: function(e){  
-            metroAlert(e.message, {theme: "error", updateMetro: true});
+        error: function(e){
+            metroAlert(e.status, {theme: metroStyle.ERROR, updateMetro: true});            
         }
     }); 
 }

@@ -47,6 +47,7 @@ class MY_Voices extends Voice {
     /////////////////////////////////////////////////
     
     public function my_voices_ajax(){
-        echo "OK";
+        $start = $this->input->post('s', true);
+        echo $start;
     }
 }

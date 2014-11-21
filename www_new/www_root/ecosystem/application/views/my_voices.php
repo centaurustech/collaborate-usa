@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); $config = c_get_config(); ?>
 
 <div class="leftcont brdrnone bkgrnd"> 
     <span class="mainbanner"><img src="<?php echo c_get_assets_url(); ?>images/my_voice.jpg" alt="My Voice"  /></span>
@@ -220,10 +220,21 @@
             }
         });
         
-        
+        // load my voices
+        loadMyVoices();
         
         <?php if($this->session->userdata('create_voice_message')){ $msg = $this->session->userdata('create_voice_message'); ?>
             metroAlert("<?php echo $msg["message"]; ?>", {theme: "<?php echo $msg["level"] ?>"});
         <?php $this->session->unset_userdata('create_voice_message'); } ?>
-    })
+    });
+    
+    var s = 0;
+    function loadMyVoices(){
+        var url = "<?php echo base_url() . $config['my_voice_url']; ?>/my_voices_ajax";
+        var data = {s: s};
+        
+        processData(url, data, function(res){
+            metroAlert(res, {theme: metroStyle.SUCCESS, updateMetro: true});
+        });
+    }
 </script>
