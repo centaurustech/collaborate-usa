@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo c_get_assets_url(); ?>css/style.css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo c_get_assets_url(); ?>js/crystal-metro-alert-1.0.js"></script>
+        <script type="text/javascript" src="<?php echo c_get_assets_url(); ?>js/crystal.js"></script>
         
         <script type="text/javascript">
 			
