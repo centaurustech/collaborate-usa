@@ -62,3 +62,36 @@ if( ! function_exists('c_pick_param')){
         return (isset($bundle[$param])) ? $bundle[$param] : $default;
     }
 }
+
+// find plane url and make to link
+if( ! function_exists('make_url_to_link')){
+    
+    function make_url_to_link($text = ""){
+        $text = preg_replace('$(\s|^)(https?://[a-z0-9_./?=&-]+)(?![^<>]*>)$i', ' <a href="$2" target="_blank">$2</a> ', $text." ");                    
+        $text = preg_replace('$(\s|^)(www\.[a-z0-9_./?=&-]+)(?![^<>]*>)$i', '<a target="_blank" href="http://$2"  target="_blank">$2</a> ', $text." ");
+        return $text;
+    }
+}
+
+
+function c_get_time_elapsed($time){
+
+    $time = time() - $time; // to get the time since that moment
+
+    $tokens = array (
+        31536000 => 'year',
+        2592000 => 'month',
+        604800 => 'week',
+        86400 => 'day',
+        3600 => 'hour',
+        60 => 'minute',
+        1 => 'second'
+    );
+
+    foreach ($tokens as $unit => $text) {
+        if ($time < $unit) continue;
+        $numberOfUnits = floor($time / $unit);
+        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'') . ' ago';
+    }
+
+}

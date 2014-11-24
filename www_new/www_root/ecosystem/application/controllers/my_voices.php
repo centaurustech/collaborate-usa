@@ -30,7 +30,7 @@ class MY_Voices extends Voice {
     /////////////////////////////////////////////////
     
     public function index(){
-                
+        
         $this->page_data["voice_categories"] = $this->Mod_My_Voices->get_voice_categories();
         
         $this->load_header();
@@ -59,12 +59,21 @@ class MY_Voices extends Voice {
             $start = 0;
         }
         
-        $sql = "SELECT * FROM user_voice ORDER BY id DESC LIMIT {$start}, {$limit}";
-        
-        $bundle = array("sql" => $sql);
+        $bundle = array("start" => $start, "limit" => $limit);
         
         $voices = $this->Mod_My_Voices->get_my_voices($bundle);
-                                
-        echo @json_encode($voices);
+        
+        if($voices["is_data"]){
+            
+            $voice_to_html = $this->Mod_My_Voices->mv_to_html($voices["data"]);
+            
+            if($voice_to_html["status"] == true){
+                $voices["data"] = $voice_to_html["data"];
+            }
+            
+            $voices["message"] = $voice_to_html["message"];
+        }
+            
+        echo @json_encode($voices);               
     }
 }

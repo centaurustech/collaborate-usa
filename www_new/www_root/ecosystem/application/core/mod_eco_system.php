@@ -28,7 +28,17 @@ class Mod_Eco_System extends CI_Model {
     public function __construct(){
         parent::__construct();
         $this->_load_library();
+        $this->_load_models();
+        
         $this->log("Model Mod_Eco_System loaded.");
+    }
+    
+    /////////////////////////////////////////////////
+    // PRIVATE FUNCTIONS
+    /////////////////////////////////////////////////
+    
+    private function _load_models(){
+        //$this->load->model('Mod_Vote');
     }
     
     /////////////////////////////////////////////////
@@ -83,7 +93,7 @@ class Mod_Eco_System extends CI_Model {
                 
                 // check is valid user id
                 if($user_id){
-                    return $user_id;                    
+                    return $userdata["uid"];                    
                 }
                 
                 // user is not valid this is invalid or unknown user
@@ -124,7 +134,7 @@ class Mod_Eco_System extends CI_Model {
         $query = $this->db->query($sql, array($uid));
         
         if($query->num_rows() > 0){
-            return $uid;
+            return $query->result_array();
         }
         else{
             return false;

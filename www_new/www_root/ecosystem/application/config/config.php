@@ -377,8 +377,11 @@ function __autoload($class)
 // setup custom configs
 $config['cusa_log'] = FALSE;
 $config['cusa_log_path'] = '';
-$config['my_voice_url'] = 'my-voices';
-$config['my_voice_per_page_limit'] = 4;
+$config['vote_down'] = 'i_dont_see';
+$config['vote_up'] = 'i_see';
+$config['my_voices_url'] = 'my-voices';
+$config['voices_url'] = 'voices';
+$config['my_voice_per_page_limit'] = 10;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

@@ -2,7 +2,7 @@
 
 <div class="leftcont brdrnone bkgrnd"> 
     <span class="mainbanner"><img src="<?php echo c_get_assets_url(); ?>images/my_voice.jpg" alt="My Voice"  /></span>
-    <div class="container_705 bkgrnd"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png"></span>
+    <div class="container_705 bkgrnd"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
         <div class="starheadmar">
             <form name="voice_post" id="voice_post" action="<?php echo base_url(); ?>create-voice" method="post" enctype="multipart/form-data">
                 <input name="voc_title" class="leftsinpt wdthhundr txt-voc-title" placeholder="Voice Title"/>                
@@ -23,9 +23,13 @@
     
     <!-- populate my voices data -->
     <div id="my_voice_data">
-        <div class="voice-loader"><img src="<?php echo c_get_assets_url(); ?>images/voice_loader.gif" alt="Loading... Please wait." /></div>
+        
     </div>
-    
+    <div class="voice-loader">
+        <img src="<?php echo c_get_assets_url(); ?>images/voice_loader.gif" alt="Loading... Please wait." id="voc_loader" />
+        <img src="<?php echo c_get_assets_url(); ?>images/view_more.png" alt="View More" id="voc_more" style="cursor: pointer; display: none;" />
+    </div>
+    <!--
     <div class="withbor">
         <div class="container_705"> <span class="star_vo"><img src="<?php echo c_get_assets_url(); ?>images/voice.png" alt=""  /></span>
             <div class="starheadmar">
@@ -141,6 +145,7 @@
             </div>
         </div>
     </div>
+    -->
 </div>    
 
 <!-- Right Section -->
@@ -221,20 +226,105 @@
         });
         
         // load my voices
-        loadMyVoices();
+        loadMyVoices(st);
+        
+        // load more voice
+        $("#voc_more").bind('click', function(){
+            $("#voc_more").css("display", "none");
+            $("#voc_loader").css("display", "inline-block");            
+            loadMyVoices(++st);
+        })
         
         <?php if($this->session->userdata('create_voice_message')){ $msg = $this->session->userdata('create_voice_message'); ?>
             metroAlert("<?php echo $msg["message"]; ?>", {theme: "<?php echo $msg["level"] ?>"});
         <?php $this->session->unset_userdata('create_voice_message'); } ?>
     });
     
-    var s = 0;
-    function loadMyVoices(){
-        var url = "<?php echo base_url() . $config['my_voice_url']; ?>/my_voices_ajax";
-        var data = {s: s};
+    var st = 0;
+    function loadMyVoices(_s){
+        var url = "<?php echo base_url() . $config['my_voices_url']; ?>/my_voices_ajax";
+        var data = {s: _s};
         
         processData(url, data, function(res){
-            metroAlert(res, {theme: metroStyle.SUCCESS, updateMetro: true});
+            try{
+                res = JSON.parse(res);
+                
+                // check return status is true
+                if(res.status){
+                    
+                    // check data is available on response
+                    if(res.is_data === true){
+                        $("#voc_loader").css("display", "none");
+                        $("#voc_more").css("display", "inline-block");
+                        $('#my_voice_data').append(res.data);
+                        
+                        // rebind clicks
+                        rebindVotes();
+                    }
+                    
+                    // no data is available
+                    else{
+                        $(".voice-loader").css("display", "none");                        
+                    }
+                }
+                
+                // something wrong
+                else{
+                    $("#voc_loader").css("display", "none");
+                    $("#voc_more").css("display", "inline-block");
+                    metroAlert(res.message, {theme: metroStyle.ERROR});
+                }
+            }
+            catch(e){
+                
+            }
         });
     }
+    
+    function rebindVotes(){
+        // rebind clicks
+        // vote up
+        $('.vote-up').unbind('click').bind('click', function(){
+            voteUp($(this).attr('data-vid'));
+        });
+        
+        // vote down
+        $('.vote-down').unbind('click').bind('click', function(){
+            voteDown($(this).attr('data-vid'));
+        });
+    }
+    
+    function voteUp(vid){
+        vote(vid, 1);
+    }
+    
+    function voteDown(vid){
+        vote(vid, 0);
+    }
+    
+    function vote(vid, vac){
+        var url = "<?php echo base_url() . $config['voices_url']; ?>/ajax_vote_action";
+        var data = {vocid: vid, votva: vac};
+        
+        processData(url, data, function(res){
+            try{
+                res = JSON.parse(res);
+                console.log(res);
+                // check return status is true
+                if(res.status){
+                                        
+                }
+                
+                // something wrong
+                else{
+                    metroAlert(res.message, {theme: metroStyle.ERROR});
+                }  
+            }
+            catch(e){
+                
+            }
+        });
+    }
+    
+    
 </script>
