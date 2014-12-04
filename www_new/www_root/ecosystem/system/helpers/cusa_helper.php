@@ -11,10 +11,10 @@ if( ! function_exists('is_logged_in')){
         
         if( !isset($is_logged_in) || $is_logged_in != true){
             $dummy_logged_in_data = array(
-                "uid" => 2, 
+                "uid" => 2,
                 "uemail" => "dp.owaisali@gmail.com", 
                 "screen_name" => "Syed Owais Ali",
-                "profile_pic" => "apple_1.png",
+                "profile_pic" => "v.jpg",
                 "fname" => "Syed",
                 "mname" => "Owais",
                 "lname" => "Ali",
@@ -24,7 +24,8 @@ if( ! function_exists('is_logged_in')){
             $CI->session->set_userdata('user_data', $dummy_logged_in_data);            
             return true;
         }
-        else{            
+        else{
+                        
             return true;
         }
     }
@@ -73,25 +74,50 @@ if( ! function_exists('make_url_to_link')){
     }
 }
 
+// since time
+if(! function_exists('c_get_time_elapsed')){
+    function c_get_time_elapsed($time){
 
-function c_get_time_elapsed($time){
-
-    $time = time() - $time; // to get the time since that moment
-
-    $tokens = array (
-        31536000 => 'year',
-        2592000 => 'month',
-        604800 => 'week',
-        86400 => 'day',
-        3600 => 'hour',
-        60 => 'minute',
-        1 => 'second'
-    );
-
-    foreach ($tokens as $unit => $text) {
-        if ($time < $unit) continue;
-        $numberOfUnits = floor($time / $unit);
-        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'') . ' ago';
+        $time = time() - $time; // to get the time since that moment
+    
+        $tokens = array (
+            31536000 => 'year',
+            2592000 => 'month',
+            604800 => 'week',
+            86400 => 'day',
+            3600 => 'hour',
+            60 => 'minute',
+            1 => 'second'
+        );
+    
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) continue;
+            $numberOfUnits = floor($time / $unit);
+            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'') . ' ago';
+        }
     }
+}
 
+// manage name
+if(! function_exists('manage_name')){
+    function manage_name($user){
+        
+        $name = $user['screen_name'];
+        
+        switch($user['identify_by']){
+            case "full_name":
+                $name = $user['first_name'] . ' ' . $user['middle_name'] . ' ' . $user['last_name'];
+                break;
+                
+            case "screen_name":
+                $name = $user['screen_name'];
+                break;
+                
+            case "company_name":
+                $name = $user['company_name'];
+                break;
+        }
+        
+        return $name;
+    }
 }

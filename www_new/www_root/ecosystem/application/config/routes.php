@@ -42,7 +42,9 @@ $route['default_controller'] = "my_voices";
 $route['my-voices'] = "my_voices";
 $route['my-voices/(:any)'] = "my_voices/$1";
 $route['voices/(:any)'] = "voices/$1";
+$route['voice/(:any)'] = "voices/single_voice/$1";
 $route['create-voice'] = "create_voice";
+$route['check-voice'] = "voice_checker";
 $route['404_override'] = '';
 
 

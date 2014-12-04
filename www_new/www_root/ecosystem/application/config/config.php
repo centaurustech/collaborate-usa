@@ -381,7 +381,11 @@ $config['vote_down'] = 'i_dont_see';
 $config['vote_up'] = 'i_see';
 $config['my_voices_url'] = 'my-voices';
 $config['voices_url'] = 'voices';
-$config['my_voice_per_page_limit'] = 10;
+$config['single_voice_url'] = 'voice';
+$config['voice_create_url'] = 'create-voice';
+$config['my_voice_per_page_limit'] = 9;
+$config['voice_deadline'] = 30;
+$config['voice_minimum_vote'] = 10;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

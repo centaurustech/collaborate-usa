@@ -26,10 +26,11 @@ class Eco_System extends CI_Controller {
     }
     
     /////////////////////////////////////////////////
-    // PROTECTED FUNCTIONS
+    // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
     // write any kind of log like error, info, debug
+    
     protected function log($msg, $level = 'info', $php_error = FALSE){
         $this->cusa_log->log($level, $msg, $php_error);
     }
@@ -43,6 +44,16 @@ class Eco_System extends CI_Controller {
     // load footer view
     protected function load_footer($data = array()){
         $this->load->view('includes/footer', $data);
+    }
+    
+    // redirect to login page
+    protected function goto_login_page(){
+        echo "redirect to login";
+    }
+    
+    // redirect to feed page
+    protected function goto_feed_page(){
+        echo "Redirect to feed please wait...";
     }
     
     /////////////////////////////////////////////////

@@ -56,7 +56,7 @@ class Mod_Eco_System extends CI_Model {
     }
     
     /////////////////////////////////////////////////
-    // PROTECTED FUNCTIONS
+    // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
     /**
@@ -67,13 +67,9 @@ class Mod_Eco_System extends CI_Model {
      * @param bool $php_error
      * @return void
      */
-    protected function log($msg, $level = 'info', $php_error = FALSE){
+    public function log($msg, $level = 'info', $php_error = FALSE){
         $this->cusa_log->log($level, $msg, $php_error);
     }
-    
-    /////////////////////////////////////////////////
-    // PUBLIC FUNCTIONS
-    /////////////////////////////////////////////////
     
     /**
      * Mod_Eco_System::get_logged_uid()
@@ -139,98 +135,9 @@ class Mod_Eco_System extends CI_Model {
         else{
             return false;
         }
-    }
+    }            
     
-    
-    /**
-     * Mod_Eco_System::get_voice_categories()
-     * 
-     * @param mixed $id
-     * @return
-     */
-    public function get_voice_categories($id = null){
-        
-        // store all categories data
-        $result = array("is_data" => false, "data" => array());
-        
-        // set query to null
-        $query = null;
-        
-        // check is null or not set
-        if($id == null){
-            
-            // query for select all voice catgories
-            $sql = "SELECT * FROM voice_categories";
-            
-            // exec sql and store res to query
-            $query = $this->db->query($sql);
-        }
-        
-        // else select category by category id
-        else{
-            
-            if($this->is_valid_voice_cat($id)){
-                // query for select voice category by id
-                $sql = "SELECT * FROM voice_categories WHERE id=?";
-                
-                // exec sql and store res to query
-                $query = $this->db->query($sql, array($id));
-            }
-            else{
-                return $result;
-            }
-        }
-        
-        // check first query is not null
-        if($query != null){
-            
-            // check category count if count is greater than 0
-            if($query->num_rows() > 0){
-                
-                // set found data flag to true
-                $result["is_data"] = true;
-                
-                // fetch and store data to result
-                $result["data"] = $query->result_array();
-            }
-        }
-        
-        // query is error return
-        else{
-            
-            // write log
-            $this->log('function get_voice_categories; var $query is null return file name mod_voice.php in application/core directory', "debug");                    
-        }
-        
-        // return result
-        return $result;
-    }
-    
-    /**
-     * Mod_Eco_System::is_valid_voice_cat()
-     * 
-     * @param integer $id
-     * @return
-     */
-    public function is_valid_voice_cat($id = 0){
-        
-        // query for select voice category by id
-        $sql = "SELECT * FROM voice_categories WHERE id=?";
-        
-        // exec sql and store res to query
-        $query = $this->db->query($sql, array($id));
-        
-        // check valid category id
-        if($query->num_rows() > 0){
-            return true;
-        }
-        
-        // invalid category id
-        else{
-            return false;
-        }
-    }
-    
+    /*
     public function get_folder_by_uid($uid = 0){
         
         // user is valid
@@ -243,4 +150,5 @@ class Mod_Eco_System extends CI_Model {
             return false;
         }
     }
+    */
 }

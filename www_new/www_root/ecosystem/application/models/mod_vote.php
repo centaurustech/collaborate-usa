@@ -15,6 +15,65 @@ class Mod_Vote extends Mod_Voice {
     // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
+    public function count_vote($voc_id = 0, $vot_val = false){
+        
+        if($this->is_valid_voice($voc_id)){
+            if($this->is_valid_vote_value($vot_val)){
+                $sql = "SELECT * FROM voices_votes WHERE voice_id=? AND vote_value=?";
+                $query = $this->db->query($sql, array($voc_id, $vot_val));
+            }
+            else{
+                $sql = $sql = "SELECT * FROM voices_votes WHERE voice_id=?";
+                $query = $this->db->query($sql, array($voc_id));
+            }
+            
+            return $query->num_rows();
+        }
+        
+        return 0;
+    }
+    
+    public function get_vote_users($voc_id, $vot_val = false){
+        
+        $result = array("status" => false, "message" => "", "data" => array());
+        
+        if($this->is_valid_voice($voc_id)){
+            if($this->is_valid_vote_value($vot_val)){
+                $sql = "SELECT vote.id AS vote_id, vote.voice_id, vote.vote_value, vote.voted_on, users. *
+                        FROM voices_votes AS vote
+                        INNER JOIN users ON users.id = vote.user_id
+                        WHERE vote.voice_id=?
+                        AND vote.vote_value=?";
+                
+                $query = $this->db->query($sql, array($voc_id, $vot_val));
+            }
+            else{
+                $sql = "SELECT vote.id AS vote_id, vote.voice_id, vote.vote_value, vote.voted_on, users. *
+                        FROM voices_votes AS vote
+                        INNER JOIN users ON users.id = vote.user_id
+                        WHERE vote.voice_id =?";
+                
+                $query = $this->db->query($sql, array($voc_id));
+            }
+            
+            if($query->num_rows() > 0){
+                $result['status'] = true;
+                $result['message'] = 'Data found.';
+                //$result['data'] = $query->result_array();
+                foreach($query->result_array() as $user){
+                    $data = $user;
+                    $data['name'] = manage_name($user);
+                    array_push($result['data'], $data);
+                }
+            }
+        }
+        else{
+            $result['message'] = "Voice id not valid.";
+        }
+        
+        return $result;
+    }
+    
     public function vote($vocid = 0, $votval = ''){
         
         $result = array("status" => false, "message" => "Login first.", "already_casted" => false, "data" => array());
@@ -31,7 +90,7 @@ class Mod_Vote extends Mod_Voice {
                 if($this->is_valid_voice($vocid)){
                     
                     // check already vote casted with no error
-                    $rlt = $this->is_vote_casted($uid, $vocid);
+                    $rlt = $this->is_vote_cast($uid, $vocid);
                     if($rlt["status"] == true){
                         
                         // check no cast
@@ -143,7 +202,7 @@ class Mod_Vote extends Mod_Voice {
         return $rsl->result_array();
     }
     
-    public function is_vote_casted($uid = 0, $vid = 0){
+    public function is_vote_cast($uid = 0, $vid = 0){
         
         $result = array("status" => false, "message" => "", "data" => array(), "already_casted" => false);
         

@@ -40,6 +40,8 @@ class Voices extends Voice {
     
     private function _load_models(){
         $this->load->model('Mod_Voices');
+        $this->load->model('Mod_Tags');
+        $this->load->model('Mod_Vote');
     }
     
     /////////////////////////////////////////////////
@@ -64,5 +66,38 @@ class Voices extends Voice {
         
         $result = $this->Mod_Vote->vote($voc_id, $vot_va);        
         echo @json_encode($result);                      
+    }
+    
+    public function single_voice($id = 0){
+        
+        if(is_logged_in()){
+            
+            $result = $this->Mod_Voices->get_single_voice($id);
+            $this->page_data['voice'] = $result['data'];
+            $this->page_data['user_id'] = $this->Mod_Voices->get_logged_uid();            
+            
+            if($result['status'] == true){
+            
+                $cat_result = $this->Mod_Voices->get_voice_category($this->page_data['voice']['voice_cat_id']);
+                $tag_result = $this->Mod_Tags->get_tags($this->page_data['voice']['voice_tag_ids']);
+                $this->page_data['category'] = $cat_result['data'];
+                $this->page_data['tags'] = $tag_result['data'];
+                $this->page_data['total_vote_up'] = $this->Mod_Vote->count_vote($this->page_data['voice']['id'], $this->_config['vote_up']);
+                $this->page_data['total_vote_down'] = $this->Mod_Vote->count_vote($this->page_data['voice']['id'], $this->_config['vote_down']);
+                $this->page_data['user_vote_cast'] = $this->Mod_Vote->is_vote_cast($this->page_data['user_id'], $this->page_data['voice']['id']);
+                $this->page_data['vote_up_users'] = $this->Mod_Vote->get_vote_users($this->page_data['voice']['id'], $this->_config['vote_up']);
+                $this->page_data['vote_down_users'] = $this->Mod_Vote->get_vote_users($this->page_data['voice']['id'], $this->_config['vote_down']);                
+                
+                $this->load_header();
+                $this->load->view('single_voice', $this->page_data);
+                $this->load_footer();
+            }
+            else{
+                $this->goto_feed_page();
+            }            
+        }
+        else{
+            $this->goto_login_page();
+        }
     }
 }

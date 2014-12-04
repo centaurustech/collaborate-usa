@@ -3,6 +3,12 @@
 class Mod_My_Voices extends Mod_Voice {
     
     /////////////////////////////////////////////////
+    // PRIVATE VAR
+    /////////////////////////////////////////////////
+    
+    private $_config;
+
+    /////////////////////////////////////////////////
     // CONSTRUCTOR
     /////////////////////////////////////////////////
     
@@ -10,6 +16,7 @@ class Mod_My_Voices extends Mod_Voice {
         parent::__construct();
         $this->log("Model Mod_My_Voices loaded.");
         
+        $this->_config = c_get_config();
         // load models
         $this->_load_models();
     }
@@ -43,7 +50,7 @@ class Mod_My_Voices extends Mod_Voice {
             // calculate start
             $start = $start * $limit;
             
-            $query = "SELECT * FROM user_voices WHERE user_id=%d ORDER BY id DESC LIMIT %d, %d";
+            $query = "SELECT * FROM user_voices WHERE user_id=%d AND is_blocked=0 ORDER BY id DESC LIMIT %d, %d";
             $sql = sprintf($query, $uid, $start, $limit);
             
             $bundle = array("sql" => $sql);
@@ -79,44 +86,68 @@ class Mod_My_Voices extends Mod_Voice {
             if(count($data) > 0){
                 
                 // set blank html
-                $html = "";                                
+                $group = "";
+                $html = "";
+                
+                $control = 0;
+                $serial = 0;
+                                
                 foreach($data as $voice){
                     
                     $voice_id = $voice['id'];
                     $title = strip_tags($voice['question_text']);
+                    $title = word_limiter($title, 7);
                     $image = "../user_files/prof/" . $this->get_logged_uid() . "/voices/" . $voice['voice_pic'];
                     $since = c_get_time_elapsed(strtotime($voice['added_on']));
                     $detail = strip_tags($voice["voice_details"]);
                     $detail = make_url_to_link($detail);
                     $detail = nl2br($detail);
                     $detail = preg_replace('/^(?:<br\s*\/?>\s*)+/', '', $detail);
-                    $detail = word_limiter($detail, 150);
+                    $detail = word_limiter($detail, 10);
+                    $userdata = $this->session->userdata('user_data');
+                    $user_image = $userdata['profile_pic'];
+                    $uid = $userdata['uid'];
+                    $single_voice_url = base_url() . $this->_config['single_voice_url'] . '/' . $voice_id;
                     
-                    $html .= "
-                        <div class='withbor'>
-                            <div class='container_705'> <span class='star_vo'><img src='" . c_get_assets_url() . "images/voice.png' alt=''  /></span>
-                                <div class='starheadmar'>
-                                    <h2><span class='star_head'>{$title}</span> <!--Posted Voice--></h2>
-                                </div>
-                                <div class='hoursin'>{$since}</div>
-                                <div class='smallhouseimg'><img src='{$image}' alt=''  /></div>
-                                <div class='smallhousetxt'><!-- <span class='star_headdrop'>It has survived not only five centuries, </span>-->
-                                    <p>{$detail}</p>
-                                    <a href='my_voice_detail.php'>Read More</a>
-                                </div>
-                            </div>
-                            <div class='brdrgratop'>
-                                <div class='container_705 margnten'>
-                                    <div class='radio leftsinpthide'>
-                                        <input type='radio' value='male' name='vote{$voice_id}' id='male{$voice_id}' class='vote-up' data-vid='{$voice_id}' />
-                                        <label for='male{$voice_id}' class='test'>I SEE IT</label>
-                                        <input type='radio' value='female' name='vote{$voice_id}' id='female{$voice_id}' class='vote-down' data-vid='{$voice_id}' />
-                                        <label for='female{$voice_id}' class='test'>I DON'T SEE IT</label>
+                    ++$serial;
+                    
+                    if($control == 0){
+                        $group = "<div class='container_705'><ul class='dropcontainer'>";
+                        ++$control;
+                    }
+                    else{
+                        $group = "";
+                        ++$control;
+                    }
+                    
+                    $list = "
+                            <li>
+                                <div class='wwf_the_outer' style='background: url({$image}) no-repeat scroll 0 0 / 100% 100px rgba(0, 0, 0, 0)'>
+                                    <div class='image_wwf'>
+                                        <img src='../user_files/prof/{$uid}/{$user_image}' alt='' style='width: 56px; height: 56px;' />
                                     </div>
+                                    <h4>{$title}</h4>
+                                    <p>{$detail}</p>
+                                    <a href='{$single_voice_url}' class='yellow_btn'>Vote</a>
+                                    <p>{$since}</p>
                                 </div>
-                            </div>
-                        </div>
-                    ";                                        
+                            </li>
+                    ";
+                    
+                    $html .= $group . $list;
+                    
+                    if($control == 3){
+                        $group = "</ul></div><div class='brdrall'></div>";
+                        $control = 0;                        
+                    }
+                    else{
+                        $group = "";
+                    }
+                    
+                    if($serial == count($data))
+                        $group = "</ul></div><div class='brdrall'></div>";
+                    
+                    $html .= $group;                                     
                 }
                 
                 $result["status"] = true;

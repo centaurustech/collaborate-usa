@@ -1,168 +1,100 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); $config = c_get_config(); ?>
 
-<div class="leftcont brdrnone bkgrnd"> 
-    <span class="mainbanner"><img src="<?php echo c_get_assets_url(); ?>images/my_voice.jpg" alt="My Voice"  /></span>
-    <div class="container_705 bkgrnd"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
-        <div class="starheadmar">
-            <form name="voice_post" id="voice_post" action="<?php echo base_url(); ?>create-voice" method="post" enctype="multipart/form-data">
-                <input name="voc_title" class="leftsinpt wdthhundr txt-voc-title" placeholder="Voice Title"/>                
-                <textarea name="voc_desc" class="leftsinpt wdthhundr" placeholder="Voice Description" style="font-family: arial; font-size: 10pt; height: 70px; line-height: 16px; resize: none;"></textarea>
-                
-                <div class="voice-tags"><ul id="voice_tags" class="ul-voice-tags"></ul></div>
-                <input type="hidden" name="voc_tags" class="hid-voice-tags" value="" />
-                <select name="voc_cat" class="sel-voice-cats">
-                    <?php foreach($voice_categories["data"] as $category){ ?>
-                    <option value="<?php echo $category["id"]; ?>"><?php echo $category["category"]; ?></option>
-                    <?php } ?>
-                </select>
-                <input name="userfile" type="file" class="floatlft" />
-                <input type="button" value="POST" class="mainsave floatlft btn-create-voice" style="border: none; cursor:  pointer; float: right !important;" />
-            </form>
+<div class="leftcont brdrnone"> 
+    <span class="mainbanner">
+        <img src="<?php echo c_get_assets_url(); ?>images/my_voice.jpg" alt="My Voice" />
+    </span>
+    <div class="container_588 bkgrnd">
+        <form  name="voice_post" id="voice_post" action="<?php echo base_url() . $config['voice_create_url']; ?>" method="post" enctype="multipart/form-data">
+        <div class="voiceimgcont"> <span class="voiceimg"><img src="<?php echo c_get_assets_url(); ?>images/image.jpg" class="vpp" alt="" /></span> 
+            <div id="file-upload-cont">
+                <input id="original" name="userfile" type="file" accept="image/*" />
+                <div id="my-button" class="mainbrowse">Browse</div>
+            </div>    
         </div>
+        <div class="starheadsev">
+                              
+                  <input name="voc_title" class="leftsinpt wdthnin txt-voc-title" placeholder="Voice Title"/>                   
+                  <textarea name="voc_desc" cols="1" rows="2" class="leftstxtarea wdthnin" placeholder="Voice Description"></textarea>
+                  <!-- <input name="" type="text"  class="leftsinpt wdthnin" placeholder='Tags' /> -->
+                  <div class="voice-tags"><ul id="voice_tags" class="ul-voice-tags"></ul></div>
+                <input type="hidden" name="voc_tags" class="hid-voice-tags" value="" />
+                  <select name="voc_cat" class="leftsinptselct">
+                <?php foreach($voice_categories["data"] as $category){ ?>
+                <option value="<?php echo $category["id"]; ?>"><?php echo $category["category"]; ?></option>
+                <?php } ?>
+                </select>
+            
+            <a href="javascript:voice(0);" class="mainsave btn-create-voice">Post</a>
+        </div>
+        </form>
     </div>
-    
-    <!-- populate my voices data -->
-    <div id="my_voice_data">
+    <div class="withbor" style="border: none;">
+        <div class="brdrall"></div>
+        
+        <!-- my voices data -->
+        <div id="my_voice_data">
+        </div>
         
     </div>
-    <div class="voice-loader">
-        <img src="<?php echo c_get_assets_url(); ?>images/voice_loader.gif" alt="Loading... Please wait." id="voc_loader" />
-        <img src="<?php echo c_get_assets_url(); ?>images/view_more.png" alt="View More" id="voc_more" style="cursor: pointer; display: none;" />
+    <div class="widthhundr">
+        <div class="voice-loader">
+            <img src="<?php echo c_get_assets_url(); ?>images/voice_loader.gif" alt="Loading... Please wait." id="voc_loader" />
+            <!-- <img src="<?php echo c_get_assets_url(); ?>images/view_more.png" alt="View More" id="voc_more" />-->
+            <a class="bluebutton_drop" href="javascript:void(0);" style="cursor: pointer; display: none;" id="voc_more">View More</a>
+        </div>        
     </div>
-    <!--
-    <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img src="<?php echo c_get_assets_url(); ?>images/voice.png" alt=""  /></span>
-            <div class="starheadmar">
-                <h2><span class="star_head">Christoph Zierz</span> Posted Voice</h2>
-            </div>
-            <div class="hoursin">2h Ago</div>
-            <div class="smallhouseimg"><img src="<?php echo c_get_assets_url(); ?>images/house.jpg" alt=""  /></div>
-            <div class="smallhousetxt"> <span class="star_headdrop">It has survived not only five centuries, </span>
-                <p>electronic typesetting, remaining essentially 
-                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                passages.</p>
-                <a href="my_voice_detail.php">Read More</a>
-            </div>
-        </div>
-        <div class="brdrgratop">
-            <div class="container_705 margnten">
-                <div class="radio leftsinpthide">
-                    <input type="radio" value="male" name="gender" id="male" />
-                    <label for="male" class="test">I SEE IT</label>
-                    <input type="radio" value="female" name="gender" id="female" />
-                    <label for="female" class="test">I DON'T SEE IT</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img src="<?php echo c_get_assets_url(); ?>images/voice.png" alt=""  /></span>
-            <div class="starheadmar">
-                <h2><span class="star_head">Christoph Zierz</span> Posted Voice</h2>
-            </div>
-            <div class="hoursin">2h Ago</div>
-            <div class="smallhouseimg"><img src="<?php echo c_get_assets_url(); ?>images/house.jpg" alt=""  /></div>
-            <div class="smallhousetxt"> <span class="star_headdrop">It has survived not only five centuries, </span>
-                <p>electronic typesetting, remaining essentially 
-                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                passages.</p>
-                <a href="my_voice_detail.php">Read More</a>
-            </div>
-        </div>
-        <div class="brdrgratop">
-            <div class="container_705 margnten">
-                <div class="radio leftsinpthide">
-                    <input type="radio" value="male" name="gender" id="male" />
-                    <label for="male" class="test">I SEE IT</label>
-                    <input type="radio" value="female" name="gender" id="female" />
-                    <label for="female" class="test">I DON'T SEE IT</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
-            <div class="starheadcont">
-                <h2><span class="star_head">Christoph Zierz</span> posted Voice</h2>
-                <p>It was popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages.</p>
-            </div>
-            <div class="hours">2h Ago</div>
-        </div>
-        <div class="brdrgratop">
-            <div class="container_705 margnten">
-                <div class="radio leftsinpthide">
-                    <input type="radio" id="male" name="gender" value="male" />
-                    <label class="test" for="male">I SEE IT</label>
-                    <input type="radio" id="female" name="gender" value="female" />
-                    <label class="test" for="female">I DON'T SEE IT</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
-            <div class="starheadcont">
-                <h2><span class="star_head">Christoph Zierz</span> posted Voice</h2>
-                <p>It was popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages.</p>
-            </div>
-            <div class="hours">2h Ago</div>
-        </div>
-        <div class="brdrgratop">
-            <div class="container_705 margnten">
-                <div class="radio leftsinpthide">
-                    <input type="radio" id="male" name="gender" value="male" />
-                    <label class="test" for="male">I SEE IT</label>
-                    <input type="radio" id="female" name="gender" value="female" />
-                    <label class="test" for="female">I DON'T SEE IT</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
-            <div class="starheadmar">
-                <h2><span class="star_head">Christoph Zierz</span> Posted Voice</h2>
-            </div>
-            <div class="hoursin">2h Ago</div>
-            <div class="smallhouseimg"><img alt="" src="<?php echo c_get_assets_url(); ?>images/house.jpg"></div>
-            <div class="smallhousetxt"> <span class="star_headdrop">It has survived not only five centuries, </span>
-                <p>electronic typesetting, remaining essentially 
-                unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                passages.</p>
-                <a href="my_voice_detail.php">Read More</a>
-            </div>
-        </div>
-        <div class="brdrgratop">
-            <div class="container_705 margnten">
-                <div class="radio leftsinpthide">
-                    <input type="radio" id="male" name="gender" value="male" />
-                    <label class="test" for="male">I SEE IT</label>
-                    <input type="radio" id="female" name="gender" value="female" />
-                    <label class="test" for="female">I DON'T SEE IT</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
-</div>    
+</div>
 
-<!-- Right Section -->
-    
+<!-- Right Section --> 
 <div class="rightcont">
-    <div class="headblack">Relationships</div>
-    <div class="headlarge">51</div>
-    <div class="headsky">Voices Posted</div>
-    <div class="headblack">&nbsp;</div>
-    <div class="headlarge">05</div>
-    <div class="headsky">Stream Followed</div>
-    <div class="headblack">&nbsp;</div>
-    <div class="headlarge">03</div>
-    <div class="headsky">Rivers Joined</div>
-    <div class="headblack">PREMIUM ADS</div>
-    <div class="headlarge"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad1.jpg" alt="" /></div>
-    <div class="headsky"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad2.jpg" alt="" /></div>
+    <div class="headblack">Voices You Might Like To <br />HEAR</div>
+    <ul class="headlarge">
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+    </ul>
+    <div class="brdrall"></div>
+    <div class="headblack mrgntopnone">Collaborate with these <br />Members</div>
+    <ul class="headlarge">
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
+    </ul>
+    <div class="brdrall"></div>
+    <div class="headblack mrgntopnone">Streams you might<br /> want to JOIN</div>    
+    <div class="wwf_the_outer rightpan" title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat">
+        <div class="image_wwf"><img src="<?php echo c_get_assets_url(); ?>images/apple_1.png" alt="" /></div>
+        <h4>Lorem ipsum dolor si...</h4>
+        <p style="padding:0px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum d...</p>
+        <a class="yellow_btn" href="/voice/2">Vote</a>
+        <p>1min ago</p>
+    </div>
+    <div class="brdrall"></div>
+    <div class="headblack mrgntopnone">Rivers you might want<br /> to Follow</div>
+    
+    <div class="wwf_the_outer rightpan" title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat">
+        <div class="image_wwf"><img src="<?php echo c_get_assets_url(); ?>images/apple_1.png" alt="" /></div>
+        <h4>Lorem ipsum dolor si...</h4>
+        <p style="padding:0px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum d...</p>
+        <a class="yellow_btn" href="/voice/2">Vote</a>
+        <p>1min ago</p>
+    </div>
+    <div class="brdrall"></div>
+    <div class="headblack mrgntopnone">PREMIUM ADS</div>
+    <div class="headlarge bkgrnd"><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad1.jpg" alt="" /></a></div>
+    <div class="headsky"><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad2.jpg" alt="" /></a></div>
+</div>
 </div>
 
 <!-- 2 CSS files are required: -->
@@ -196,6 +128,10 @@
             tagLimit: 5
         });
         
+        // preview voie picture
+        $("#original").change(function(){
+            readURL(this);
+        });
         
         // create voice button action
         $('.btn-create-voice').bind('click', function(){
@@ -214,7 +150,7 @@
             }
             
             // fild upload must
-            else if($('.floatlft').val() == ""){
+            else if($('#original').val() == ""){
                 metroAlert("Select voice picture.", {theme: metroStyle.ERROR});
             }
             else{
@@ -233,7 +169,7 @@
             $("#voc_more").css("display", "none");
             $("#voc_loader").css("display", "inline-block");            
             loadMyVoices(++st);
-        })
+        });
         
         <?php if($this->session->userdata('create_voice_message')){ $msg = $this->session->userdata('create_voice_message'); ?>
             metroAlert("<?php echo $msg["message"]; ?>", {theme: "<?php echo $msg["level"] ?>"});
@@ -257,9 +193,6 @@
                         $("#voc_loader").css("display", "none");
                         $("#voc_more").css("display", "inline-block");
                         $('#my_voice_data').append(res.data);
-                        
-                        // rebind clicks
-                        rebindVotes();
                     }
                     
                     // no data is available
@@ -281,50 +214,15 @@
         });
     }
     
-    function rebindVotes(){
-        // rebind clicks
-        // vote up
-        $('.vote-up').unbind('click').bind('click', function(){
-            voteUp($(this).attr('data-vid'));
-        });
-        
-        // vote down
-        $('.vote-down').unbind('click').bind('click', function(){
-            voteDown($(this).attr('data-vid'));
-        });
-    }
-    
-    function voteUp(vid){
-        vote(vid, 1);
-    }
-    
-    function voteDown(vid){
-        vote(vid, 0);
-    }
-    
-    function vote(vid, vac){
-        var url = "<?php echo base_url() . $config['voices_url']; ?>/ajax_vote_action";
-        var data = {vocid: vid, votva: vac};
-        
-        processData(url, data, function(res){
-            try{
-                res = JSON.parse(res);
-                console.log(res);
-                // check return status is true
-                if(res.status){
-                                        
-                }
-                
-                // something wrong
-                else{
-                    metroAlert(res.message, {theme: metroStyle.ERROR});
-                }  
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();    
+            reader.onload = function (e) {
+                $('.vpp').attr('src', e.target.result);
             }
-            catch(e){
-                
-            }
-        });
-    }
     
+            reader.readAsDataURL(input.files[0]);
+        }
+    }        
     
 </script>
