@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mod_My_Voices extends Mod_Voice {
+class Mod_My_Streams extends Mod_Voice {
     
     /////////////////////////////////////////////////
     // PRIVATE VAR
@@ -14,7 +14,7 @@ class Mod_My_Voices extends Mod_Voice {
     
     public function __construct(){
         parent::__construct();
-        $this->log("Model Mod_My_Voices loaded.");
+        $this->log("Model Mod_My_Streams loaded.");
         
         $this->_config = c_get_config();
         // load models
@@ -25,8 +25,7 @@ class Mod_My_Voices extends Mod_Voice {
     // PRIVATE FUNCTIONS
     /////////////////////////////////////////////////
     
-    private function _load_models(){
-        $this->load->model("Mod_Vote");
+    private function _load_models(){        
         $this->load->model("Mod_User");
     }
     
@@ -34,7 +33,7 @@ class Mod_My_Voices extends Mod_Voice {
     // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
-    public function get_my_voices($bundle = array()){
+    public function get_my_streams($bundle = array()){
         
         // set return result
         $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
@@ -51,7 +50,7 @@ class Mod_My_Voices extends Mod_Voice {
             // calculate start
             $start = $start * $limit;
             
-            $query = "SELECT * FROM user_voices WHERE user_id=%d AND is_blocked=0 ORDER BY id DESC LIMIT %d, %d";
+            $query = "SELECT * FROM streams_voice WHERE user_id=%d AND is_blocked=0 ORDER BY id DESC LIMIT %d, %d";
             $sql = sprintf($query, $uid, $start, $limit);
             
             $bundle = array("sql" => $sql);
@@ -75,7 +74,7 @@ class Mod_My_Voices extends Mod_Voice {
         return $result;
     }
     
-    public function mv_to_html($data = array()){
+    public function ms_to_html($data = array()){
         
         // set return result
         $result = array("status" => false, "message" => "", "data" => "");
@@ -103,14 +102,14 @@ class Mod_My_Voices extends Mod_Voice {
                     $detail = strip_tags($voice["voice_details"]);
                     $detail = make_url_to_link($detail);
                     $detail = str_replace('\n\r', '<br />', $detail);
-                    $detail = preg_replace('/^(?:<br\s*\/?>\s*)+/', '', $detail);                    
+                    $detail = preg_replace('/^(?:<br\s*\/?>\s*)+/', '', $detail);
                     $detail = word_limiter($detail, 10);
                     $userdata = $this->session->userdata('user_data');
                     $uid = $userdata['uid'];
-                    $user = $this->Mod_User->get_user($uid);                    
+                    $user = $this->Mod_User->get_user($uid);
                     $user_image = $user['data']['profile_pic'];
                     
-                    $single_voice_url = base_url() . $this->_config['single_voice_url'] . '/' . $voice_id;
+                    $single_stream_url = base_url() . $this->_config['single_stream_url'] . '/' . $voice_id;
                     
                     ++$serial;
                     
@@ -131,7 +130,7 @@ class Mod_My_Voices extends Mod_Voice {
                                     </div>
                                     <h4>{$title}</h4>
                                     <p>{$detail}</p>
-                                    <a href='{$single_voice_url}' class='yellow_btn'>Vote</a>
+                                    <a href='{$single_stream_url}' class='yellow_btn'>View</a>
                                     <p>{$since}</p>
                                 </div>
                             </li>

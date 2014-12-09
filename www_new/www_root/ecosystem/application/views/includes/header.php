@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>My Voice</title>
+		<title><?php echo $title; ?></title>
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <link rel="shortcut icon" href="https://www.collaborateusa.com/favicon.ico" />
@@ -117,13 +117,13 @@
             </div>
             <div class="menus">
                 <div class="centercontainer">
-                    <h1 class="mrgnleft">MY VOICES</h1>
+                    <h1 class="mrgnleft"><?php echo $heading; ?></h1>
                     <span class="menussigns">//</span>
                     <ul class="mnright">
                         <li class="brdrnone mrgntopnone"><a href="news_feed.php"><img src="<?php echo c_get_assets_url(); ?>images/home.png" alt="" title="" /></a></li>
                         <li><a href="<?php echo base_url() . $config['my_voices_url']; ?>">My Voices</a></li>
-                        <li><a href="my_votes.php">My Votes</a></li>
-                        <li><a href="my_streams.php">My Streams</a></li>
+                        <li><a href="<?php echo base_url() . $config['my_votes_url']; ?>"">My Votes</a></li>
+                        <li><a href="<?php echo base_url() . $config['my_streams_url']; ?>">My Streams</a></li>
                         <li><a href="my_river.php">My Rivers</a></li>
                         <li class="brdrnone paddright"><a href="my_oceans.php">My Oceans</a></li>
                     </ul>

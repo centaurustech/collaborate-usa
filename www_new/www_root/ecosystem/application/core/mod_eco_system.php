@@ -130,12 +130,27 @@ class Mod_Eco_System extends CI_Model {
         $query = $this->db->query($sql, array($uid));
         
         if($query->num_rows() > 0){
-            return $query->result_array();
+            $user = $query->row_array();
+            $user['name'] = manage_name($user);
+            return $user;
         }
         else{
             return false;
         }
-    }            
+    }
+    
+    public function is_valid_eco_system_id($sid = 0){
+        
+        $sql = "SELECT * FROM eco_system WHERE id=?";
+        $query = $this->db->query($sql, array($sid));
+        
+        if($query->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
     /*
     public function get_folder_by_uid($uid = 0){

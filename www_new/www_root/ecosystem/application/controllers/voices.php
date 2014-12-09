@@ -42,6 +42,7 @@ class Voices extends Voice {
         $this->load->model('Mod_Voices');
         $this->load->model('Mod_Tags');
         $this->load->model('Mod_Vote');
+        $this->load->model('Mod_Sidebar');
     }
     
     /////////////////////////////////////////////////
@@ -86,9 +87,17 @@ class Voices extends Voice {
                 $this->page_data['total_vote_down'] = $this->Mod_Vote->count_vote($this->page_data['voice']['id'], $this->_config['vote_down']);
                 $this->page_data['user_vote_cast'] = $this->Mod_Vote->is_vote_cast($this->page_data['user_id'], $this->page_data['voice']['id']);
                 $this->page_data['vote_up_users'] = $this->Mod_Vote->get_vote_users($this->page_data['voice']['id'], $this->_config['vote_up']);
-                $this->page_data['vote_down_users'] = $this->Mod_Vote->get_vote_users($this->page_data['voice']['id'], $this->_config['vote_down']);                
+                $this->page_data['vote_down_users'] = $this->Mod_Vote->get_vote_users($this->page_data['voice']['id'], $this->_config['vote_down']);
                 
-                $this->load_header();
+                $sidebar_data = $this->Mod_Sidebar->get_default_sidebar();        
+                $this->page_data['sidebar'] = ($sidebar_data['status'] == true) ? $sidebar_data['data'] : '';
+                
+                $data = array(
+                    "heading" => "MY VOICE",
+                    "title" => $this->page_data['voice']['question_text']
+                );
+                
+                $this->load_header($data);
                 $this->load->view('single_voice', $this->page_data);
                 $this->load_footer();
             }

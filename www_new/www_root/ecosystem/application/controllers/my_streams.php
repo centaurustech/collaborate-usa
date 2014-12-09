@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class MY_Voices extends Voice {
+class MY_Streams extends Voice {
     
     /////////////////////////////////////////////////
     // PRIVATE VAR
@@ -22,7 +22,7 @@ class MY_Voices extends Voice {
         // load all my voice models
         $this->_load_models();
         
-        $this->log("Controller MY_Voices loaded.");
+        $this->log("Controller MY_Streams loaded.");
     }
     
     /////////////////////////////////////////////////
@@ -31,18 +31,16 @@ class MY_Voices extends Voice {
     
     public function index(){
         
-        $this->page_data["voice_categories"] = $this->Mod_My_Voices->get_voice_categories();
-        
         $data = array(
-            "heading" => "MY VOICES",
-            "title" => "My Voices"
+            "heading" => "MY STREAMS",
+            "title" => "My Streams"
         );
         
         $sidebar_data = $this->Mod_Sidebar->get_default_sidebar();        
         $this->page_data['sidebar'] = ($sidebar_data['status'] == true) ? $sidebar_data['data'] : '';
         
         $this->load_header($data);
-        $this->load->view('my_voices', $this->page_data);
+        $this->load->view('my_streams', $this->page_data);
         $this->load_footer();
     }
     
@@ -51,18 +49,18 @@ class MY_Voices extends Voice {
     /////////////////////////////////////////////////
     
     private function _load_models(){
-        $this->load->model('Mod_My_Voices'); 
-        $this->load->model('Mod_Sidebar');       
+        $this->load->model('Mod_My_Streams');
+        $this->load->model('Mod_Sidebar');
     }
     
     /////////////////////////////////////////////////
     // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
-    public function my_voices_ajax(){
+    public function my_streams_ajax(){
         
         $start = $this->input->post('s', true);
-        $limit = (isset($this->_config['my_voice_per_page_limit'])) ? $this->_config['my_voice_per_page_limit'] : 10;
+        $limit = (isset($this->_config['my_stream_per_page_limit'])) ? $this->_config['my_stream_per_page_limit'] : 10;
         
         if( ! is_numeric($start)){
             $start = 0;
@@ -70,19 +68,19 @@ class MY_Voices extends Voice {
         
         $bundle = array("start" => $start, "limit" => $limit);
         
-        $voices = $this->Mod_My_Voices->get_my_voices($bundle);
+        $streams = $this->Mod_My_Streams->get_my_streams($bundle);
         
-        if($voices["is_data"]){
+        if($streams["is_data"]){
             
-            $voice_to_html = $this->Mod_My_Voices->mv_to_html($voices["data"]);
+            $voice_to_html = $this->Mod_My_Streams->ms_to_html($streams["data"]);
             
             if($voice_to_html["status"] == true){
-                $voices["data"] = $voice_to_html["data"];
+                $streams["data"] = $voice_to_html["data"];
             }
             
-            $voices["message"] = $voice_to_html["message"];
+            $streams["message"] = $voice_to_html["message"];
         }
             
-        echo @json_encode($voices);               
+        echo @json_encode($streams);
     }
 }

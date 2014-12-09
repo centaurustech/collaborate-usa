@@ -3,7 +3,7 @@
     $voice_id = $voice['id'];
     $title = strip_tags($voice['question_text']);
     
-    $image = "../../user_files/prof/" . $user_id . "/voices/" . $voice['voice_pic'];
+    $image = "../../user_files/prof/" . $voice['user_id'] . "/voices/" . $voice['voice_pic'];
     //$since = c_get_time_elapsed(strtotime($voice['added_on']));
     $detail = strip_tags($voice["voice_details"]);
     $detail = make_url_to_link($detail);
@@ -24,23 +24,23 @@
     <!-- voice detail --> 
     <span class="mainbanner"><img alt="My Voice" src="<?php echo $image; ?>" style="width: 100%;" /></span>
     <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png"></span>
+        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/voice.png" /></span>
             <div class="starheadmar">
                 <h2><span class="star_head"><a href="#"><?php echo $title; ?></a></span></h2>
             </div>
             <div class="hourseye">
-                <?php if($total_vote_up > 0){ ?>
+                
                     <div class="eyeimg"><img style="cursor:pointer" onclick="show_hide_div('t1');" alt="" src="<?php echo c_get_assets_url(); ?>images/drop_color.png" /></div>
                     <div class="eyetxt"><?php echo $total_vote_up; ?></div>
-                <?php }if($total_vote_down > 0){ ?>
+                
                     <div class="eyeimg"><img style="cursor:pointer" onclick="show_hide_div('t2');" alt="" src="<?php echo c_get_assets_url(); ?>images/drop_wtcolor.png" /></div>
                     <div class="eyetxt"><?php echo $total_vote_down; ?></div>
-                <?php } ?>
+                
             </div>
             <p><?php echo $detail; ?></p>
             <p> 
                 <strong>Category</strong> : <?php echo $cat_name; ?><br />
-                <strong>Tags</strong> : <?php echo $tag; ?>
+                <?php if($tag != ''){ ?><strong>Tags</strong> : <?php echo $tag; ?> <?php } ?> 
             </p>
         </div>
         
@@ -93,54 +93,7 @@
 </div>
 
 <!-- Right Section --> 
-<div class="rightcont">
-    <div class="headblack">Voices You Might Like To <br />HEAR</div>
-    <ul class="headlarge">
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-    </ul>
-    <div class="brdrall"></div>
-    <div class="headblack mrgntopnone">Collaborate with these <br />Members</div>
-    <ul class="headlarge">
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-        <li><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/img_right.jpg" alt="" /></a></li>
-    </ul>
-    <div class="brdrall"></div>
-    <div class="headblack mrgntopnone">Streams you might<br /> want to JOIN</div>    
-    <div class="wwf_the_outer rightpan" title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat">
-        <div class="image_wwf"><img src="<?php echo c_get_assets_url(); ?>images/apple_1.png" alt="" /></div>
-        <h4>Lorem ipsum dolor si...</h4>
-        <p style="padding:0px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum d...</p>
-        <a class="yellow_btn" href="/voice/2">Vote</a>
-        <p>1min ago</p>
-    </div>
-    <div class="brdrall"></div>
-    <div class="headblack mrgntopnone">Rivers you might want<br /> to Follow</div>
-    
-    <div class="wwf_the_outer rightpan" title="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat">
-        <div class="image_wwf"><img src="<?php echo c_get_assets_url(); ?>images/apple_1.png" alt="" /></div>
-        <h4>Lorem ipsum dolor si...</h4>
-        <p style="padding:0px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum d...</p>
-        <a class="yellow_btn" href="/voice/2">Vote</a>
-        <p>1min ago</p>
-    </div>
-    <div class="brdrall"></div>
-    <div class="headblack mrgntopnone">PREMIUM ADS</div>
-    <div class="headlarge bkgrnd"><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad1.jpg" alt="" /></a></div>
-    <div class="headsky"><a href="#"><img class="mrgntop" src="<?php echo c_get_assets_url(); ?>images/ad2.jpg" alt="" /></a></div>
-</div>
+<?php echo $sidebar; ?>
 </div>
 
 <script type="text/javascript">

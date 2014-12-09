@@ -43,7 +43,8 @@ class Mod_Vote extends Mod_Voice {
                         FROM voices_votes AS vote
                         INNER JOIN users ON users.id = vote.user_id
                         WHERE vote.voice_id=?
-                        AND vote.vote_value=?";
+                        AND vote.vote_value=?
+                        ORDER BY vote.id DESC";
                 
                 $query = $this->db->query($sql, array($voc_id, $vot_val));
             }
@@ -51,7 +52,8 @@ class Mod_Vote extends Mod_Voice {
                 $sql = "SELECT vote.id AS vote_id, vote.voice_id, vote.vote_value, vote.voted_on, users. *
                         FROM voices_votes AS vote
                         INNER JOIN users ON users.id = vote.user_id
-                        WHERE vote.voice_id =?";
+                        WHERE vote.voice_id =?
+                        ORDER BY vote.id DESC";
                 
                 $query = $this->db->query($sql, array($voc_id));
             }

@@ -21,11 +21,22 @@ if( ! function_exists('is_logged_in')){
                 "company" => "Meritocracy"
             );
             
-            $CI->session->set_userdata('user_data', $dummy_logged_in_data);            
+            $CI->session->set_userdata('user_data', $dummy_logged_in_data);
             return true;
         }
         else{
-                        
+            $dummy_logged_in_data = array(
+                "uid" => 2,
+                "uemail" => "dp.owaisali@gmail.com", 
+                "screen_name" => "Syed Owais Ali",
+                "profile_pic" => "v.jpg",
+                "fname" => "Syed",
+                "mname" => "Owais",
+                "lname" => "Ali",
+                "company" => "Meritocracy"
+            );
+            
+            $CI->session->set_userdata('user_data', $dummy_logged_in_data);
             return true;
         }
     }

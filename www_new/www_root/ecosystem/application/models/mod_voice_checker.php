@@ -48,7 +48,7 @@ class Mod_Voice_Checker extends Mod_Voice {
                     $this->move_to_stream($voice);
                 }
                 else{
-                    $this->purge_voice($voice);
+                    #$this->purge_voice($voice);
                 }
             }
         }
@@ -58,7 +58,7 @@ class Mod_Voice_Checker extends Mod_Voice {
     }
     
     public function move_to_stream($voice = array()){
-        
+        exit("Move to stream<br />");
         // eco system data
         $data = array(
             "moderator_id" => $voice["user_id"],
@@ -83,7 +83,7 @@ class Mod_Voice_Checker extends Mod_Voice {
                 "question_text" => $voice["question_text"],
                 "voice_details" => $voice["voice_details"],
                 "voice_pic"     => $voice["voice_pic"],
-                "added_on"      => $voice["added_on"]
+                "added_on"      => c_now()
             );
             
             // insert stream data
@@ -91,16 +91,21 @@ class Mod_Voice_Checker extends Mod_Voice {
             
             if($insert){
                 
-                // eco members data
-                $data = array(
-                    "eco_sys_id"    => $row["id"],
-                    "user_id"       => $voice["user_id"],
-                    "joined_on"     => c_now()
-                );
+                $sql = "SELECT * FROM voices_votes WHERE voice_id=?";
+                $rsl = $this->db->query($sql, array($voice["id"]));
                 
-                // insert eco members data
-                $this->db->insert("eco_members", $data);
-                
+                foreach($rsl->result_array() as $vote){
+                    // eco members data
+                    $data = array(
+                        "eco_sys_id"    => $row["id"],
+                        "user_id"       => $vote["user_id"],
+                        "joined_on"     => c_now()
+                    );
+                    
+                    // insert eco members data
+                    $this->db->insert("eco_members", $data);
+                }
+                                                
                 // delete vote from voices votes
                 $sql = "DELETE FROM voices_votes WHERE voice_id=?";
                 $this->db->query($sql, array($voice["id"]));
@@ -113,7 +118,7 @@ class Mod_Voice_Checker extends Mod_Voice {
     }
     
     public function purge_voice($voice = array()){
-        
+        exit("Move to purge<br />");
         $data = array(
             "id"            => $voice["id"],
             "user_id"       => $voice["user_id"],

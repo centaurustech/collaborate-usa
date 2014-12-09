@@ -39,12 +39,19 @@
 */
 
 $route['default_controller'] = "my_voices";
+$route['my-votes'] = "my_vote_voices";
+$route['my-votes/(:any)'] = "my_vote_voices/$1";
 $route['my-voices'] = "my_voices";
 $route['my-voices/(:any)'] = "my_voices/$1";
 $route['voices/(:any)'] = "voices/$1";
-$route['voice/(:any)'] = "voices/single_voice/$1";
+$route['voice/(:num)'] = "voices/single_voice/$1";
 $route['create-voice'] = "create_voice";
 $route['check-voice'] = "voice_checker";
+$route['my-streams'] = "my_streams";
+$route['my-streams/(:any)'] = "my_streams/$1";
+$route['stream/(:num)'] = "stream/single_stream/$1";
+$route['stream/(:any)'] = "stream/$1";
+
 $route['404_override'] = '';
 
 

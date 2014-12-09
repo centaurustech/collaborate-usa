@@ -75,7 +75,7 @@ class Mod_Create_Voices extends Mod_Voice {
         		$config['max_size']	= '2048';
                 $config['encrypt_name'] = true;
                 
-                return $this->Mod_File_System->create_file($config, true, 160, 160);
+                return $this->Mod_File_System->create_file($config, true, 820, 820);
             }
             
             // folder not created

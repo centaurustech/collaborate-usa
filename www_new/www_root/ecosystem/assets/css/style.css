@@ -49,6 +49,15 @@ h1 {
 	padding: 0;
 	width: auto;
 }
+h3 {
+	color: #fff;
+	float: left;
+	font-size: 50px;
+	line-height: 40px;
+	margin: 0;
+	min-width: 100px;
+	padding: 0;}
+
 p {
 	font-size: 14px;
 	color: #000;
@@ -74,6 +83,9 @@ h2 a:hover{ color:#000; text-decoration:none;}
 .mrgntop {
 	margin-top: 6px;
 }
+.mrgntoptn {
+	margin-top: 14px;
+}
 .mrgntoptwn {
 	margin-top: 20px;
 }
@@ -94,6 +106,9 @@ h2 a:hover{ color:#000; text-decoration:none;}
 .floatlft {
 	float: left !important;
 }
+.floatrght {
+	float: right !important;
+}
 .brdrnone {
 	border: none !important;
 }
@@ -106,6 +121,9 @@ h2 a:hover{ color:#000; text-decoration:none;}
 .brdrnonebot {
 	border-bottom: none !important;
 }
+.brdrnonerght {
+	border-right: none !important;
+}
 .paddright {
 	padding-right: 0px !important;
 }
@@ -113,6 +131,8 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	background: none !important;
 }
 .btnminus{ margin-top:-47px !important;}
+.toptabs{top:50px !important;}
+.mrgnrghtten{ margin-right:10px;}
 .brdrgratop {
 	border-top: 1px solid #e3e3e3;
 	float: left;
@@ -133,6 +153,7 @@ h2 a:hover{ color:#000; text-decoration:none;}
 }
 .marginrighrspc{ margin-right:5px !important;}
 .colorblack{ color:#000 !important;}
+.wdththr{ width:33%; float:left; text-align:center;}
 .widthhundr {
 	width: 100%;
 	text-align: center;
@@ -184,32 +205,6 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	padding: 6px 3px;
 	width: 98%;
 }
-.searchhead .seargo {
-	background: none repeat scroll 0 0 #53a9e9;
-	border-bottom-right-radius: 5px;
-	border-top-right-radius: 5px;
-	box-shadow: inset 0 0 2px 0 #000;
-	float: left;
-	line-height: 29px;
-	margin: 0;
-	text-align: center;
-	width: 30px;
-}
-.searchhead .seargo a {
-	color: #fff;
-	text-decoration: none;
-}
-.searchhead .seargo a:hover {
-	background: none repeat scroll 0 0 #0153ad;
-	border-bottom-right-radius: 5px;
-	border-top-right-radius: 5px;
-	box-shadow: inset 0 0 2px 0 #000;
-	float: left;
-	line-height: 29px;
-	margin: 0;
-	text-align: center;
-	width: 30px;
-}
 .usericons {
 	width: 176px;
 	margin: 0px;
@@ -225,7 +220,7 @@ h2 a:hover{ color:#000; text-decoration:none;}
     color: #f44e4e;
     float: left;
     left: 25px;
-    margin: -15px 0 0 3px;
+    margin: -6px 0 0 3px;
     min-width: 20px;
     position: absolute;
     top: 1px;
@@ -259,7 +254,7 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	border-right: 1px solid #fff;
 	color: #fff;
 	float: left;
-	font-size: 17px;
+	font-size: 16px;
 	line-height: 15px;
 	list-style-type: none;
 	margin-top: 11px;
@@ -277,7 +272,7 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	width: 815px;
 	border-right: 1px solid #dcdbdb;
 	border-bottom: 1px solid #dcdbdb;
-	background: #fff;
+	/*background: #fff;*/
 	padding-bottom: 20px;
 	float: left;
 }
@@ -285,6 +280,47 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	width: 815px;
 	margin-top: 5px;
 	float: left;
+}
+.newsfeedbanner {
+	width: 100%;
+	height:192px;
+	background:url(../images/news_feed.jpg) no-repeat;
+	margin-top: 5px;
+	float: left;
+    background-size: 100%;
+}
+.aboutbanner {
+	width: 815px;
+	/*background:url(../images/news_feed.jpg) no-repeat;*/
+	background:#0253ae;
+	margin-top: 5px;
+	float: left;
+	font-size:14px;
+	padding-bottom:10px;
+
+	color:#fff;
+}
+.connbutton_drop {
+    background: none repeat scroll 0 0 #f5b619;
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #fff;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 29px;
+    margin: 6px 0 0 0px;
+    min-width: 60px;
+    padding: 0 28px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+}	
+.connbutton_drop:hover {
+    background: none repeat scroll 0 0 #0146a2;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-decoration: none;
 }
 .cont_632 {
 	width: 632px;
@@ -322,6 +358,18 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	float: left;
 	height: 27px;
 	background: #fff;
+	padding: 0px 3px;
+	color:#7e7c7c;
+	font-size:14px;
+	font-weight:bold;
+}
+.leftsinptshow {
+	font-family:"Lato", Times, serif;
+	width: 350px;
+	line-height: 27px;
+	margin: 0px 0px 8px 0px;
+	float: left;
+	height: 27px;
 	padding: 0px 3px;
 	color:#7e7c7c;
 	font-size:14px;
@@ -380,10 +428,58 @@ h2 a:hover{ color:#000; text-decoration:none;}
     padding: 0 3px;
     width: 35%;
 }
+.searchhead .seargo {
+	background: none repeat scroll 0 0 #53a9e9;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	float: left;
+	line-height: 29px;
+	margin: 0;
+	text-align: center;
+	width: 30px;
+}
+.searchhead .seargo a {
+	color: #fff;
+	text-decoration: none;
+}
+.searchhead .seargo a:hover {
+	color: #fff;
+	background: #72b7ea;
+	 box-shadow:1px 1px 5px #888;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	float: left;
+	line-height: 29px;
+	margin: 0;
+	text-align: center;
+	width: 30px;
+}
+.bluebutton_drop {
+	 background: none repeat scroll 0 0 #53a9e9;
+    border-radius: 5px;
+    box-shadow:1px 1px 4px #aaa;
+    color: #fff;
+    float: none;
+    font-size: 14px;
+    line-height: 29px;
+    margin: 0 auto;
+    min-width: 60px;
+    padding: 4px 17px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+}
+
+.bluebutton_drop:hover {
+	color: #fff;
+	background: #72b7ea;
+	 box-shadow:1px 1px 5px #888;
+	text-decoration: none;
+}
 .mainsave {
 	background: none repeat scroll 0 0 #53a9e9;
 	border-radius: 5px;
-	box-shadow: 0 0 2px 0 #000 inset;
+	box-shadow:1px 1px 4px #aaa;
 	float: right;
 	line-height: 29px;
 	margin: 0;
@@ -393,13 +489,14 @@ h2 a:hover{ color:#000; text-decoration:none;}
 	text-decoration: none;
 }
 .mainsave:hover {
-	background: none repeat scroll 0 0 #0146a2;
+	background: none repeat scroll 0 0 #72b7ea;
 	text-decoration: none;
+	 box-shadow:1px 1px 5px #888;
 }
 .mainbrowse {
-	 background: none repeat scroll 0 0 #53a9e9;
+	 background: none repeat scroll 0 0 #72b7ea;
     border-radius: 5px;
-    box-shadow: 0 0 2px 0 #000 inset;
+    box-shadow:1px 1px 4px #aaa;
     color: #fff;
     float: left;
     font-size: 14px;
@@ -413,6 +510,7 @@ h2 a:hover{ color:#000; text-decoration:none;}
 .mainbrowse:hover {
 	background: none repeat scroll 0 0 #0146a2;
 	text-decoration: none;
+	 box-shadow:1px 1px 5px #888;
 }
 /**/
 .wrapper-dropdown-3 {
@@ -839,10 +937,10 @@ input[type=radio]:checked + label:before {
 	padding:0px;
 }
 .brdrall {
-    background: none repeat scroll 0 0 #fff;
-    border-top: 1px solid #dcdbdb;
+    background: none repeat scroll 0 0 #f5f4f4;
     float: left;
-    margin: 30px 0;
+	height:2px;
+    margin: 10px 0;
     width: 100%;
 }
 .headsky {
@@ -947,7 +1045,7 @@ input[type=radio]:checked + label:before {
 }
 .withbor {
 	width: 815px;
-	border-top: 1px solid #dcdbdb;
+	border-top: 2px solid #f5f4f4;
 	/*border-bottom: 1px solid #dcdbdb;*/
 	background: #fff;
 	margin: 5px 0px;
@@ -962,7 +1060,7 @@ input[type=radio]:checked + label:before {
 .container_588 {
 	width: 588px;
 	background: #fff;
-	margin: 20px 0 20px 108px;
+	margin: 40px 0 20px 108px;
 	float: left;
 }
 .voiceimgcont {
@@ -983,7 +1081,7 @@ input[type=radio]:checked + label:before {
 }
 .star_head {
 	color: #000;
-	font-size: 18px;
+	font-size: 17px;
 }
 .star_head a{
 	color: #000;
@@ -1097,11 +1195,11 @@ input[type=radio]:checked + label:before {
 	font-weight: bold;
 	width: 100%;
 }
-.bluebutton_drop {
-	 background: none repeat scroll 0 0 #53a9e9;
+.tags{
+	background: none repeat scroll 0 0 #e6e5e5;
+	
     border-radius: 5px;
-    box-shadow: 0 0 2px 0 #000 inset;
-    color: #fff;
+    color: #464444;
     float: none;
     font-size: 14px;
     line-height: 29px;
@@ -1112,8 +1210,25 @@ input[type=radio]:checked + label:before {
     text-decoration: none;
     width: auto;
 }
+.yellbutton_drop {
+	 background: none repeat scroll 0 0 #f5b619;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 #000 inset;
+    color: #fff;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 29px;
+    margin: 127px 0 0 56px;
+    min-width: 60px;
+    padding: 9px 69px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+}
 
-.bluebutton_drop:hover {
+.yellbutton_drop:hover {
 	color: #fff;
 	background: #0955ac;
 	text-decoration: none;
@@ -1143,7 +1258,7 @@ input[type=radio]:checked + label:before {
 	width: 480px;
 }
 .smallhousetxt a {
-	color: #53a9e9;
+	color: #fff;
 	text-decoration: none;
 }
 .smallhousetxt a:hover {
@@ -1252,6 +1367,13 @@ input[type=radio]:checked + label:before {
 	color:#316bbd;
 }
 @media only screen and (min-width: 320px) and (max-width: 640px) {
+		.yellbutton_drop{
+    margin: 14% 0 0 56px !important;
+    padding: 2px 29px !important;}
+	.newsfeedbanner {
+		height:148px !important;
+}
+	.tab label{ font-size:13px !important;}
 	.marginuliniph {
     margin: 0 0 22px -243px !important;
 }
@@ -1660,8 +1782,106 @@ h2 {
 .leftsinpt {
     width: 97% !important;
 }
+	.aboutbanner {
+    width: 100%;
+	font-size:13px;
+}
+
+.membersign {
+    float: left;
+    margin-top: 32px;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.circlepic {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #000;
+    border-radius: 50px;
+    clear: both !important;
+    color: #fff;
+    float: none !important;
+    height: 101px;
+    margin: 0 auto !important;
+    width: 101px;
+}
+.monthaja{background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cdd7dd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #dddddd inset;
+    color: #7e7c7c;
+    float: left;
+    font-family: "Lato",Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 4.5px 8px;
+    padding: 0 3px;
+    width: 16%;}	
+.membersign{ width:29%; float:left; margin-top:32px;}	
+
+.abtbannurg {
+    float: left;
+    margin: 24px 0 0 28px !important;
+    width: 85% !important;
+}
+#file_browse {
+    margin: 2px 0px 0px -116px !important;
+    width: 36% !important;
+}
+#file_browse_wrapper {
+     font-size: 17px !important;
+    line-height: 28px !important;
+    margin: 10px 0 0 !important;
+    padding: 0 2px !important;
+	clear:both !important;
+}
+h3{ font-size:33px !important;}
 }
 @media only screen and (min-width: 641px) and (max-width: 767px) {
+	.yellbutton_drop{
+    margin: 14% 0 0 56px !important;
+    padding: 2px 29px !important;}
+	.newsfeedbanner {
+		height:148px !important;
+}
+	.aboutbanner {
+    width: 100%;
+	font-size:13px;
+}
+		.circlepic{
+     background: none repeat scroll 0 0 #fff;
+    border: 1px solid #000;
+    border-radius: 50px;
+    color: #fff;
+    float: left;
+    margin: 4px 5px 10px 8% !important;
+	}
+.monthaja{background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cdd7dd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #dddddd inset;
+    color: #7e7c7c;
+    float: left;
+    font-family: "Lato",Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 4.5px 8px;
+    padding: 0 3px;
+    width: 16%;}	
+.membersign{ width:29%; float:left; margin-top:32px;}	
+.abtbannurg{float: left;
+    margin: 24px 0 0 50px;
+    width: 62%;}
+
+#file_browse_wrapper {
+    line-height: 28px !important;
+    margin: -31px 0 0 152px !important;
+    padding: 0 8px !important;
+}
 	
 .leftsinpt {
     width: 97% !important;
@@ -2134,7 +2354,62 @@ h1 {
 }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-	
+	.yellbutton_drop{
+    margin: 14% 0 0 56px !important;
+    padding: 2px 29px !important;}
+	.newsfeedbanner {
+		height:148px !important;
+}
+	.circlepic{
+    margin: -2px 5px 10px 6% !important}
+.monthaja{background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cdd7dd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #dddddd inset;
+    color: #7e7c7c;
+    float: left;
+    font-family: "Lato",Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 9px 8px 0px !important;
+    padding: 0 3px;
+    width: 15% !important;}	
+.membersign{ width:29%; float:left; margin-top:32px;}	
+.abtbannurg{float: left;
+    margin: 24px 0 0 50px;
+    width: 62%;}
+
+#file_browse_wrapper {
+    line-height: 28px !important;
+    margin: -31px 0 0 152px !important;
+    padding: 0 8px !important;
+}
+
+	.aboutbanner {
+	width: 100%;
+	/*background:url(../images/membership_banner.jpg) no-repeat;*/
+	background:#0253ae;
+	background-size:100%;
+	margin-top: 5px;
+	float: left;
+	font-size:13px;
+}
+	.monthaja{background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cdd7dd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #dddddd inset;
+    color: #7e7c7c;
+    float: left;
+    font-family: "Lato",Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 4.5px 8px;
+    padding: 0 3px;
+    width: 16%;}
 .invitimg {
     float: left;
     text-align: center !important;
@@ -2358,7 +2633,9 @@ h1 {
 }
 }
 @media only screen and (min-width: 800px) and (max-width: 980px) {
-	
+	.monthaja{
+    margin: 0 3px 8px !important;
+    width: 13% !important;}
 .leftsinpt {
     width: 40% !important;
 }
@@ -2517,6 +2794,7 @@ h1 {
 	position: absolute;
 	visibility: hidden;
 	margin: 0px 0px 22px -151px;
+	z-index:99999;
 }
 #nav ul ul ul {
 	position: absolute;
@@ -2734,7 +3012,7 @@ h1 {
 
 .wwf_the_outer h4 {
     color: #000000;
-    font-family: "calibribold";
+    font-family: "calibri";
     font-size: 18px;
     margin: 0;
     padding: 0 0 10px;
@@ -2784,8 +3062,8 @@ h1 {
 	
 	.tabs {
     clear: both;
-    margin: 15px 0;
-    min-height: 2000px;
+    margin: 4px 0;
+    min-height: 1898px;
 	height:auto;
     position: relative;
 }
@@ -2794,8 +3072,7 @@ h1 {
     }
     .tab label {
 		
-      border-right: 1px solid #0153ad;
-	border-left:1px solid #fff;
+      border-right: 1px solid #fff;
     color: #fff;
     float: left;
     font-size: 14px;
@@ -2851,17 +3128,16 @@ h1 {
     padding: 0;
     width: 33%;
 }
-.width_390{ width:300px !important; float:left;}
-.marginulin{ margin:0px 0px 22px -315px !important;}
+.width_390{ width:250px !important; float:left;}
+.marginulin{ margin:0px 0px 22px -191px !important;}
 .notsmall{ width:41px; float:left; margin-top:2px;}
 .notsmallp {
-font-size: 11px;
-color: #000 !important;
-float: left;
-float: left;
-margin: 0px 0px 0px 10px;
-width: 82%;
-line-height:22px;
+ color: #000 !important;
+    float: left;
+    font-size: 11px;
+    line-height: 18px;
+    margin: 0 0 0 10px;
+    width: 76%;
 }
 .notsmallp a{
 color: #000 !important;
@@ -2876,7 +3152,7 @@ float: none;
 font-size: 14px;
 line-height: 29px;
 margin: 8px auto;
-width: 27% !important;
+width: 33% !important;
 padding: 4px 17px;
 text-align: center;
 text-decoration: none;
@@ -2942,21 +3218,21 @@ text-decoration: none;
 .starheamsg {
     float: none;
     margin: 0 auto;
-    width: 70%;
+    width: 76%;
 }	
-.msginbx{ width:100%; margin:0px; padding:0px; float:left;}
-.msginbx li{ width:100%; margin:0px; padding:0px; float:left; list-style-type:none; border-left:1px solid #ccc;}
+.msginbx{ width:100%; margin-top:23px; padding:0px; float:left;}
+.msginbx li{ width:100%; margin:0px; padding:0px; float:left; list-style-type:none; }
 .msginbx li .usrimgmsg {
     float: left;
     margin: 0 1% 0 1%;
-    width: 10%;
+    width: 8%;
 }
 
 .msginbx li .usritxtmsg {
     float: left;
     font-size: 13px;
     margin: 0;
-    width: 87%;
+    width: 82%;
 }
 
 #my-button {
@@ -2990,6 +3266,112 @@ text-decoration: none;
     position: relative;
     width: 100%;
 }
+.bgblue{background:#11a7e7; width:100%; float:left; margin-bottom:10px; padding:6px 0px;}
+.checks{ width:15px; float:right; margin:10px 32px 10px 0px;}
+.checkstrash{   color: #fff;
+    float: right;
+    margin: 5px 5px 10px 0;
+    width: 45px;}
+.checkstrash a{
+	color: #fff;
+    float: right;
+    margin: 0px;
+	text-decoration:none;
+	}	
+
+#my_custom_button {
+    width: 93px;
+    height: 28px;
+    background: url('../images/button_normal.png') 0 0 no-repeat;
+    border:none;
+    padding: 0 4px 8px 0;
+    font-weight:bold
+}
+#my_custom_button:hover {
+    background: url('../images/button_hover.png') 0 0 no-repeat;
+}
+#my_custom_button:active {
+    background: url('../images/button_pressed.png') 0 0 no-repeat;
+}
+
+
+#file_browse_wrapper {
+    background: none repeat scroll 0 0 #f5b619;
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #fff;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 29px;
+    margin: 13px 0 0;
+    min-width: 60px;
+    padding: 0 28px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+    z-index: 99999;
+	cursor:pointer;
+}
+#file_browse_wrapper:hover {
+    background: none repeat scroll 0 0 #0146a2;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-decoration: none;
+}
+#file_browse_wrapper:active {
+    background: none repeat scroll 0 0 #0146a2;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#file_browse{
+    cursor: pointer;
+    margin-left: -163px;
+    opacity: 0;
+    position: absolute;
+    width: 15%;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.circlepic{     background: none repeat scroll 0 0 #fff;
+    border: 1px solid #000;
+    border-radius: 50px;
+    color: #fff;
+    float: left;
+    height: 101px;
+    margin: -7px 5px 10px 69px;
+    width: 101px;}
+.monthaja{background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cdd7dd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #dddddd inset;
+    color: #7e7c7c;
+    float: left;
+    font-family: "Lato",Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 4.5px 8px;
+    padding: 0 3px;
+    width: 16%;}	
+.membersign{ width:29%; float:left; margin-top:32px;}	
+.abtbannurg{float: left;
+    margin: 24px 0 0 50px;
+    width: 62%;}
+.abtbannurg p{ color:#fff !important;}
+.headlargeball {
+    background: url("../images/points.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    color: #fff;
+    float: left;
+    font-size: 87px;
+    height: 183px;
+    line-height: 173px;
+    text-align: center;
+    width: 100%;
+}	
 
 /* -------------------------- CUSA STYLE --------------------------- */
 

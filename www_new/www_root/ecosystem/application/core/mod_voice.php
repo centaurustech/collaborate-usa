@@ -188,4 +188,66 @@ class Mod_Voice extends Mod_Eco_System {
             return false;
         }
     }
+    
+    public function get_single_stream($id = 0){
+        
+        // set return result
+        $result = array("status" => false, "message" => "", "data" => "");
+        
+        if(is_logged_in()){
+            
+            $sql = "SELECT * FROM streams_voice WHERE id=? AND is_blocked=0";
+            $rsl = $this->db->query($sql, array($id));
+            
+            if($rsl->num_rows() > 0){
+                $result["status"] = true;
+                $result["message"] = "Stream found.";
+                $result["data"] = $rsl->row_array();
+            }
+            else{
+                $result["message"] = "Stream id {$id} invalid or stream not exist's associated this id {$id}.";
+            }    
+        }
+        else{
+            $result["message"] = "Login first.";
+        }
+                
+        return $result;
+    }
+    
+    public function is_valid_stream($id = 0){
+        
+        $sql = "SELECT * FROM streams_voice WHERE id=? AND is_blocked=0";
+        $rsl = $this->db->query($sql, array($id));
+        
+        if($rsl->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public function get_comments_data($bundle = array()){
+        
+        // set return result
+        $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
+        
+        $sql = c_pick_param($bundle, "sql", "SELECT * FROM eco_discussion_comments");
+        $query = $this->db->query($sql);
+        
+        // check query have data
+        if($query->num_rows() > 0){
+            
+            $result["message"] = "Data successfully load.";
+            $result["is_data"] = true;
+            $result["data"] = $query->result_array();
+        }
+        else{
+            $result["message"] = "There is no data available.";
+        }
+        
+        // return result
+        return $result;
+    }
 }

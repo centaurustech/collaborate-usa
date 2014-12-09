@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mod_My_Voices extends Mod_Voice {
+class Mod_My_Vote_Voices extends Mod_Voice {
     
     /////////////////////////////////////////////////
     // PRIVATE VAR
@@ -34,7 +34,7 @@ class Mod_My_Voices extends Mod_Voice {
     // PUBLIC FUNCTIONS
     /////////////////////////////////////////////////
     
-    public function get_my_voices($bundle = array()){
+    public function get_my_vote_voices($bundle = array()){
         
         // set return result
         $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
@@ -51,7 +51,14 @@ class Mod_My_Voices extends Mod_Voice {
             // calculate start
             $start = $start * $limit;
             
-            $query = "SELECT * FROM user_voices WHERE user_id=%d AND is_blocked=0 ORDER BY id DESC LIMIT %d, %d";
+            $query = "SELECT voice.* FROM user_voices AS voice
+                     INNER JOIN voices_votes AS vote
+                     ON voice.id = vote.`voice_id`
+                     WHERE vote.`user_id`=%d 
+                     AND voice.is_blocked=0 
+                     ORDER BY voice.id DESC 
+                     LIMIT %d, %d";
+                    
             $sql = sprintf($query, $uid, $start, $limit);
             
             $bundle = array("sql" => $sql);
@@ -75,7 +82,7 @@ class Mod_My_Voices extends Mod_Voice {
         return $result;
     }
     
-    public function mv_to_html($data = array()){
+    public function mvv_to_html($data = array()){
         
         // set return result
         $result = array("status" => false, "message" => "", "data" => "");
@@ -131,7 +138,7 @@ class Mod_My_Voices extends Mod_Voice {
                                     </div>
                                     <h4>{$title}</h4>
                                     <p>{$detail}</p>
-                                    <a href='{$single_voice_url}' class='yellow_btn'>Vote</a>
+                                    <a href='{$single_voice_url}' class='yellow_btn'>View</a>
                                     <p>{$since}</p>
                                 </div>
                             </li>

@@ -379,12 +379,17 @@ $config['cusa_log'] = FALSE;
 $config['cusa_log_path'] = '';
 $config['vote_down'] = 'i_dont_see';
 $config['vote_up'] = 'i_see';
+$config['my_votes_url'] = 'my-votes';
 $config['my_voices_url'] = 'my-voices';
 $config['voices_url'] = 'voices';
 $config['single_voice_url'] = 'voice';
 $config['voice_create_url'] = 'create-voice';
+$config['my_streams_url'] = 'my-streams';
+$config['single_stream_url'] = 'stream';
 $config['my_voice_per_page_limit'] = 9;
-$config['voice_deadline'] = 30;
+$config['my_stream_per_page_limit'] = 9;
+$config['comments_load_limit'] = 5;
+$config['voice_deadline'] = 1;
 $config['voice_minimum_vote'] = 10;
 
 /* End of file config.php */
