@@ -1,5 +1,9 @@
 <?php
 
+// bridging between eco system and cusa
+include('bridge.php');
+
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -35,7 +39,7 @@ if (defined('ENVIRONMENT'))
 		case 'development':
 			error_reporting(E_ALL);
 		break;
-	
+
 		case 'testing':
 		case 'production':
 			error_reporting(0);
@@ -56,7 +60,9 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = 'system';
+	//$system_path = 'system';
+	$system_path = MAIN_ROOT.'/includes/CI_2.2/system';
+    
 
 /*
  *---------------------------------------------------------------

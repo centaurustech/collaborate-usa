@@ -1,5 +1,5 @@
 <?php
-if(!isset($seo_tag_id) || empty($seo_tag_id)){if($ro<=0){redirect_me('404');}else{exit;}}
+if(!isset($seo_tag_id) || empty($seo_tag_id)){redirect_me('404');}
 
 #/ get Page Info
 $page_info = @mysql_exec("SELECT * FROM site_pages WHERE seo_tag_id='{$seo_tag_id}' AND is_active='1'", 'single');
@@ -16,7 +16,7 @@ $pg_meta = array(
     'meta_keywords'=>format_str($page_info['meta_keywords']),
     'meta_descr'=>format_str($page_info['meta_descr']),
 );
-$page_heading = format_str($page_info['title']);
+$page_heading = format_str($page_info['page_heading']);
 
 include_once("includes/header.php");
 /////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ include_once("includes/header.php");
 
 <div class="mid_bdy body-main" style="padding-top:30px;">
 
-    <h1><strong><?=$page_heading?></strong></h1>
+    <h1><strong><?=format_str($pg_meta['page_title'])?></strong></h1>
 
     <div>
         <div id="listpage_content">
@@ -39,7 +39,7 @@ include_once("includes/header.php");
                 <ul class="tree">
                 <?php if((isset($user_idc)) && ($user_idc<=0)) { ?>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>signin">Sign-In to your Account</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>signup">Join / Signup</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>join">Join / Signup</a></li>
                 <?php } else { ?>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>logout">Logout</a></li>
                 <?php } ?>

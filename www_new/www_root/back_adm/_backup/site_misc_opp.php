@@ -30,7 +30,7 @@ $cur_page = cur_page();
 if(isset($_POST['title']))
 {
     $misc_id = (int) getgpcvar("misc_id", "P");
-
+    //die('x');
 
     ##/ Validate Fields
     include_once('../../includes/form_validator.php');
@@ -327,10 +327,11 @@ $(document).ready(function(){
                 echo $edit_obj->show_editor('m_value_html', '300', '500', format_str(@$empt['m_value_html']));
                 ?>
                 <span style="color:#CC0000;">&nbsp;&nbsp;*</span><br />
-                <span class="submsg">&nbsp;&nbsp;First do Italic, then Bold</span><br /><br />
+                <span class="submsg">&nbsp;&nbsp;Firefox: first do Italic, then Bold. Chrome: Bold, then Italic</span><br /><br />
             </div>
 
-            <input type="hidden" name="m_value" id="m_value" value="" />
+            <!--<input type="hidden" name="m_value" id="m_value" value="" />-->
+            <input type="text" name="m_value" id="m_value" style="font-size:1px; border:none; background:none;" />
         </div>
 
 
@@ -341,7 +342,7 @@ $(document).ready(function(){
 
         <div style="width:130px; float:left;">Setting / Value2:</div>
         <div style="float:left;"><input type="text" id="content_settings" name="content_settings" maxlength="150" value="<?=format_str(@$empt['content_settings'])?>" style="width:250px; border:1px solid #000261;" />
-        <span class="submsg">&nbsp;&nbsp;for technical values only / will not be displayed</span><br /><br />
+        <span class="submsg">&nbsp;&nbsp;for technical values only (will not be displayed) / please dont alter this</span><br /><br />
         </div>
 
         <div style="clear:both; height:15px;"></div>

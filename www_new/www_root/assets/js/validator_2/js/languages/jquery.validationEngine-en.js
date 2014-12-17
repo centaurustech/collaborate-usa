@@ -106,6 +106,12 @@
 					"regex": /^[0-9\.]+$/,
 					"alertText": "* Numeric only"
                 },
+
+                "Alpha_Numeric":{
+					"regex": /^[a-z0-9\-_]{1,}$/i,
+					"alertText": "* AlphaNumeric with Underscore only"
+                },
+
 				"price":{
 					"regex": /^[1-9][0-9]{0,}[.]{0,1}[0-9]{0,}$/,
 					"alertText": "* Numbers only"

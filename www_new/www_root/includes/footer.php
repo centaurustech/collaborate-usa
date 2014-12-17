@@ -10,6 +10,7 @@
     //var_dump("<pre>", $foot_menu);
 
     $terms = array();
+    $_SESSION['global_vars']['terms'] = $terms; //due to CI..
     ?>
 
     <div class="footer">
@@ -29,6 +30,7 @@
                 {
                     if(@in_array($fm_v['id'], array('pg_1', 'pg_2', 'pg_4'))){ //remove TOS, Privacy, IS
                     $terms[] = $fm_v;
+                    $_SESSION['global_vars']['terms'] = $terms;
                     //$fi++;
                     //continue;
                     }
@@ -99,7 +101,7 @@
                     <li><a href="<?=DOC_ROOT?>signin">Sign-In to your Account</a></li><li>
                     <a href="<?=DOC_ROOT?>join">Join / Signup</a></li>
                     <?php } else { ?>
-                    <a href="<?=DOC_ROOT?>logout">Logout</a>
+                    <a href="<?=DOC_ROOT?>ecosystem/logout">Signout</a>
                     <?php } ?>
                 </ul>
             </div>
@@ -125,8 +127,10 @@
 
         <div class="terms">
         <?php
+        $terms = @$_SESSION['global_vars']['terms'];
         if(is_array($terms) && count($terms)>0)
         {
+            if(!isset($consts)){global $consts;} //due to CI..
             echo "<ul>";
 
             $tms_ar = array();
@@ -144,7 +148,13 @@
         ?>
         </div>
 
-        <div class="copyright"><p>Copyright text &copy; <?=date('Y');?> CollaborateUSA, LLC - All Rights Reserved</p></div>
+        <div class="copyright"><p>Copyright text &copy; <?=@date('Y');?> CollaborateUSA, LLC - All Rights Reserved</p></div>
+
+        <?php if(in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))==false){ ?>
+        <div style="text-align: center; margin-top:10px;">
+            <span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=yM6Js7lyszgZ0mAs3ydPwr6ye43ODlOsJtV4zqwbozdgxJNZHGUvpwL"></script></span>
+        </div>
+        <?php } ?>
 
         <div class="clear"></div>
     </div>

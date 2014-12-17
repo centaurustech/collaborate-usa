@@ -359,6 +359,7 @@ function clear_all()
             if($seo_tag=='--continue--continue--continue--continue--') {$skip_flag = true;}
             }
 
+            $delete_locked = ($recrd["delete_locked"]);
             $is_active = ($recrd["is_active"]);
             $popup_only = ($recrd["popup_only"]);
 
@@ -371,13 +372,13 @@ function clear_all()
             $tr_bg = "#FFF0F0";
             ?>
             <tr style="background:<?php echo $tr_bg; ?>">
-                <td valign="top"><input type="checkbox" name="RecordID[]" value="<?php echo $recrd["sp_id"]; ?>" /></td>
+                <td valign="top"><?php if($delete_locked=='0'){ ?><input type="checkbox" name="RecordID[]" value="<?php echo $recrd["sp_id"]; ?>" /><?php } ?></td>
                 <td valign="top"><?php echo cut_str(($title), 130); ?></td>
                 <td valign="top"><?php echo $seo_tag; ?></td>
                 <td valign="top"><?php echo empty($recrd["cat_title"])? '-':$recrd["cat_title"]; ?></td>
 
                 <td valign="top"><?php echo ($is_active)?'Yes':'No'; ?></td>
-                <td valign="top"><?php echo ($popup_only)?'Yes':'No'; ?></td>
+                <td valign="top"><?php echo ($popup_only)?'No':'Yes'; ?></td>
 
                 <td valign="top" align="right">
                     <?php if($is_active=='0') {?><img src="<?=DOC_ROOT_ADMIN?>/images/red.png" width="10" border="none" title="in-active" /><?php } ?>

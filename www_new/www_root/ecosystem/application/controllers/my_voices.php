@@ -52,7 +52,7 @@ class MY_Voices extends Voice {
     
     private function _load_models(){
         $this->load->model('Mod_My_Voices'); 
-        $this->load->model('Mod_Sidebar');       
+        $this->load->model('Mod_Sidebar');
     }
     
     /////////////////////////////////////////////////

@@ -15,7 +15,7 @@ $_GET = format_str($_GET);
 
 ##/ Break URL Components into identifiers
 include_once('../includes/url_components.php');
-//var_dump("<pre>", $_SERVER['REQUEST_URI'], $REQUEST_URI, $url_path, $url_comp); die();
+//var_dump("<pre>", $_SERVER['REQUEST_URI'], $REQUEST_URI, $url_path, $url_comp, $_GET); die();
 #-
 
 ////////////////////////////////////////////////////////////////////////

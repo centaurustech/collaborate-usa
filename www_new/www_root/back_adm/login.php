@@ -25,7 +25,7 @@ if(isset($_POST['email_add']))
     #/ Check Attempts
     include_once('../../includes/check_attempts.php');
     #/*
-    if(check_attempts(10, 'CUSA_ADMIN_MSG_GLOBAL')==false){
+    if(check_attempts(4, 'CUSA_ADMIN_MSG_GLOBAL')==false){
     update_attempt_counts(); redirect_me("{$consts['DOC_ROOT_ADMIN']}login", true);
     }
     #*/

@@ -250,4 +250,79 @@ class Mod_Voice extends Mod_Eco_System {
         // return result
         return $result;
     }
+    
+    public function is_more_data($sql = ""){
+        
+        $rsl = $this->db->query($sql);
+        if($rsl->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public function is_my_stream($sid = 0, $uid = 0){
+        
+        $sql = "SELECT * FROM streams_voice WHERE id=? AND user_id=? AND is_blocked=0";
+        $rsl = $this->db->query($sql, array($sid, $uid));
+        
+        if($rsl->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public function filter_tags($tags = array()){
+        
+        // set return result
+        $result = array("status" => true, "message" => "", "data" => array());
+        
+        foreach($tags as $tag){
+            
+            $sql = "SELECT * FROM voice_tags WHERE tag=?";
+            $query = $this->db->query($sql, array(strtolower($tag)));
+            
+            // if tag is already found simple get this id
+            if($query->num_rows() > 0){
+                
+                $rsl = (object)$query->row_array();
+                
+                // push tag id to return tags id array
+                array_push($result['data'], $rsl->id);
+            }
+            
+            // else tag is not found entry this tag
+            else{
+                
+                $user_id = $this->get_logged_uid();
+                if($user_id){
+                    
+                    $data = array('user_id' => $user_id, 'tag' => $tag, 'added_on' => c_now());
+                    $this->db->insert('voice_tags', $data);
+                    
+                    $sql = "SELECT * FROM voice_tags ORDER BY id DESC LIMIT 1";
+                    $query = $this->db->query($sql);
+                    
+                    if($query->num_rows() > 0){
+                        $row = (object)$query->row_array();
+                    
+                        // push tag id to return tags id array                    
+                        array_push($result['data'], $row->id);    
+                    }                    
+                }
+                else{
+                    
+                    // invalid user login
+                    $result['status'] = false;
+                    $result['message'] = 'You are not valid user.';
+                }
+            }
+        }
+        
+        // return tags id
+        return $result;
+    }
 }

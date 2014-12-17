@@ -56,8 +56,11 @@
                     // check data is available on response
                     if(res.is_data === true){
                         $("#voc_loader").css("display", "none");
-                        $("#voc_more").css("display", "inline-block");
                         $('#my_stream_data').append(res.data);
+                    }
+                    
+                    if(res.is_more_data === true){
+                        $("#voc_more").css("display", "inline-block");
                     }
                     
                     // no data is available

@@ -20,10 +20,14 @@ $param2 = http_build_query(array_diff_key($_GET, $ignore));
 
 if(!empty($param2)) $param2 = '?'.$param2.'&'; else $param2 = '?';
 
-$conf_id = (int) getgpcvar("conf_id", "G");
+$conf_id = (int)getgpcvar("conf_id", "G");
 
 $back_page = "system_config.php";
 $cur_page = cur_page();
+
+if($conf_id<=0){
+redirect_me("{$consts['DOC_ROOT_ADMIN']}{$back_page}{$param2}", true); //prevent add
+}
 /////////////////////////////////////////////////////////////////
 
 if(isset($_POST['title']))

@@ -42,5 +42,4 @@ class Mod_Tags extends Mod_Voice {
         }
         return $result;
     }
-    
 }

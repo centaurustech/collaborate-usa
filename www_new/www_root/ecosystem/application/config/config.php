@@ -377,6 +377,7 @@ function __autoload($class)
 // setup custom configs
 $config['cusa_log'] = FALSE;
 $config['cusa_log_path'] = '';
+$config['merger_url'] = "merger";
 $config['vote_down'] = 'i_dont_see';
 $config['vote_up'] = 'i_see';
 $config['my_votes_url'] = 'my-votes';
@@ -388,9 +389,24 @@ $config['my_streams_url'] = 'my-streams';
 $config['single_stream_url'] = 'stream';
 $config['my_voice_per_page_limit'] = 9;
 $config['my_stream_per_page_limit'] = 9;
+$config['my_river_per_page_limit'] = 9;
+$config['my_ocean_per_page_limit'] = 9;
 $config['comments_load_limit'] = 5;
 $config['voice_deadline'] = 1;
 $config['voice_minimum_vote'] = 10;
+$config['my_rivers_url'] = 'my-rivers';
+$config['river_create_url'] = 'my-rivers/create';
+$config['single_river_url'] = 'river';
+$config['my_oceans_url'] = 'my-oceans';
+$config['ocean_create_url'] = 'my-oceans/create';
+$config['single_ocean_url'] = 'ocean';
+$config['logout_key'] = '6c3ffa338864df96f306857936f708facd68454780573fa4b0b5c4eee0e7aed7';
+$config['notification_url'] = "notification";
+$config['invitation_url'] = "invitation";
+$config['inbox_url'] = "messages";
+$config['new_message_url'] = "messages/create";
+$config['sent_message_url'] = "messages/sent";
+$config['trash_message_url'] = "messages/trash";
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

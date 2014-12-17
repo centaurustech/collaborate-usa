@@ -181,7 +181,7 @@ function clear_all()
 
 	$orderby = (int) getgpcvar("orderby", "G");
 	if (in_array($orderby, array(1, 2, 3)) == false) {
-	$orderby = 1;
+	$orderby = 3;
 	}
 
 	switch($orderby)

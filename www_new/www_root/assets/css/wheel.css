@@ -1,0 +1,235 @@
+#button {
+	display: inline-block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+
+    -webkit-transition: -webkit-box-shadow .1s ease-in-out;
+	-moz-transition: -moz-box-shadow .1s ease-in-out;
+	-o-transition: -o-box-shadow .1s ease-in-out;
+	transition: box-shadow .1s ease-in-out;
+
+	font-size: 50px;
+	color: #fff;
+	float: left;
+}
+#button span {
+	display: inline-block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+
+    font-family: 'Pacifico', Arial, sans-serif;
+	line-height: 1;
+	text-shadow: 0 -1px 1px rgba(175, 49, 95, .7);
+	-webkit-transition: background-color .2s ease-in-out, -webkit-transform .1s ease-in-out;
+	-moz-transition: background-color .2s ease-in-out, -moz-transform .1s ease-in-out;
+	-o-transition: background-color .2s ease-in-out, -o-transform .1s ease-in-out;
+	transition: background-color .2s ease-in-out, transform .1s ease-in-out;
+}
+#button:active span {
+	-webkit-transform: translate(0, 4px);
+	-moz-transform: translate(0, 4px);
+	-o-transform: translate(0, 4px);
+	transform: translate(0, 4px);
+}
+
+.wheelp {
+    height: 360px;
+    max-height:100%;
+    width: 377px;
+    max-width:100%;
+    text-align:center;
+    display:inline-block;
+}
+.wheel {
+	background: url("../images/Wheel.png") no-repeat scroll center 8px rgba(0, 0, 0, 0);
+	/*float: left;*/
+	margin: 0;
+	width: inherit;
+    height: inherit;
+    display: inline-block;
+    background-size:90.5%;
+}
+
+.imgaha {
+	background: url(../images/join.png) center top no-repeat;
+	width: 91px;
+	height: 70px;
+	float: left;
+	margin: 14px 0 0 149px;
+}
+.imgaha:hover {
+	background: url(../images/join.png) center bottom no-repeat;
+	width: 91px;
+	height: 70px;
+	float: left;
+}
+.imgshare {
+	background: url(../images/share.png) center top no-repeat;
+	width: 91px;
+	height: 91px;
+	float: left;
+	margin: 24px 0 0 -20px;
+}
+.imgshare:hover {
+	background: url(../images/share.png) center bottom no-repeat;
+	width: 91px;
+	height: 91px;
+	float: left;
+}
+.imgvoice {
+	background: url("../images/voice.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 100px;
+	margin: 78px 0 0 -47px;
+	position: absolute;
+	width: 91px;
+}
+.imgvoice:hover {
+	background: url(../images/voice.png) center bottom no-repeat;
+	width: 91px;
+	height: 100px;
+	float: left;
+}
+.imgvote {
+	background: url("../images/vote.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 88.5px;
+	margin: 164px 0 0 -42px;
+	position: absolute;
+	width: 91px;
+}
+.imgvote:hover {
+	background: url(../images/vote.png) center bottom no-repeat;
+	width: 91px;
+	height: 88.5px;
+	float: left;
+}
+.imgbuy {
+	background: url("../images/buy.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 88.5px;
+	margin: 229px 0 0 -67px;
+	position: absolute;
+	width: 91px;
+}
+.imgbuy:hover {
+	background: url(../images/buy.png) center bottom no-repeat;
+	width: 91px;
+	height: 88.5px;
+	float: left;
+}
+.imgsall {
+	background: url("../images/sell.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 81.5px;
+	margin: 270px 0 0 -140px;
+	position: absolute;
+	width: 100px;
+}
+.imgsall:hover {
+	background: url(../images/sell.png) center bottom no-repeat;
+	width: 100px;
+	height: 81.5px;
+	float: left;
+}
+.imgcive {
+	background: url("../images/give.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 81.4px;
+	margin: 269px 0 0 -210px;
+	position: absolute;
+	width: 78px;
+}
+.imgcive:hover {
+	background: url(../images/give.png) center bottom no-repeat;
+	width: 78px;
+	height: 81.4px;
+	float: left;
+}
+.imgfund {
+	background: url("../images/fund.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 90px;
+	margin: 226px 0 0 -268px;
+	position: absolute;
+	width: 78px;
+}
+.imgfund:hover {
+	background: url(../images/fund.png) center bottom no-repeat;
+	width: 78px;
+	height: 90px;
+	float: left;
+}
+.imgrefer {
+	background: url("../images/refer.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 100px;
+	margin: 146px 0 0 -294px;
+	position: absolute;
+	width: 78px;
+}
+.imgrefer:hover {
+	background: url(../images/refer.png) center bottom no-repeat;
+	margin: 146px 0 0 -294px;
+	width: 78px;
+	height: 100px;
+	float: left;
+}
+.imglearn {
+	background: url("../images/learn.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 79px;
+	margin: 81px 0 0 -283px;
+	position: absolute;
+	width: 78px;
+}
+.imglearn:hover {
+	background: url(../images/learn.png) center bottom no-repeat;
+	margin: 81px 0 0 -283px;
+	width: 78px;
+	height: 79px;
+	float: left;
+}
+.imgearn {
+	background: url("../images/earn.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+	float: right;
+	height: 88px;
+	margin: 26px 0 0 -244px;
+	position: absolute;
+	width: 100px;
+}
+.imgearn:hover {
+	background: url(../images/earn.png) center bottom no-repeat;
+	margin: 26px 0 0 -244px;
+	width: 100px;
+	height: 88px;
+	float: left;
+}
+
+@media (max-width: 400px){
+    .wheelp {
+        /*transform: translate(0);
+        transform: scale(0.75);*/
+        display: none;
+    }
+
+    .circle_image {
+        display:block !important;
+    }
+
+    .wheel {
+        ransform: scale(0.70);
+        /*-moz-transform: scale(0.75);
+        -ms-transform: scale(0.75);
+        -webkit-transform: scale(0.75);*/
+    }
+
+    .wheel a {
+    }
+
+    .imgaha {
+        /*background-size:100%;*/
+    }
+}

@@ -17,8 +17,6 @@ $pg_meta = array(
 );
 
 $page_heading = "404 - Content Not Found";
-
-$current_menus = array();
 include_once("includes/header.php");
 ?>
 

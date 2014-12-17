@@ -44,6 +44,7 @@ if(isset($_POST['seo_tag']))
         $rules = [
         'required' => [['title'], ['seo_tag']],
         'lengthMax' => [['title', 60], ['seo_tag', 30]],
+        'slug' => [['seo_tag']],
         ];
     }
     else if($content_type=='html')
@@ -53,6 +54,7 @@ if(isset($_POST['seo_tag']))
             $rules = [
             'required' => [['title'], ['seo_tag'], ['page_heading']],
             'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150]], //['head_msg', 200]
+            'slug' => [['seo_tag']],
             ];
         }
         else
@@ -60,6 +62,7 @@ if(isset($_POST['seo_tag']))
             $rules = [
             'required' => [['title'], ['seo_tag'], ['page_heading'], ['pg_content']],
             'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150]], //['head_msg', 200]
+            'slug' => [['seo_tag']],
             ];
         }
     }
@@ -525,14 +528,12 @@ function check_this()
 
         <div style="width:130px; float:left;">Meta Keywords:</div>
         <div style="float:left;"><input type="text" id="meta_keywords" name="meta_keywords" maxlength="250" value="<?=format_str(@$empt['meta_keywords'])?>" style="width:350px; border:1px solid #000261;" />
-        <span class="submsg">&nbsp;&nbsp;Ignore for popup contents</span>
         </div>
 
         <div style="clear:both; height:10px;"></div>
 
         <div style="width:130px; float:left;">Meta Description:</div>
         <div style="float:left;"><input type="text" id="meta_descr" name="meta_descr" maxlength="250" value="<?=format_str(@$empt['meta_descr'])?>" style="width:350px; border:1px solid #000261;" />
-        <span class="submsg">&nbsp;&nbsp;Ignore for popup contents</span>
         </div>
 
         <div style="<?php if(@$empt['self_managed']=='1') { ?>display:none;<?php } ?>">

@@ -288,7 +288,7 @@ $(document).ready(function(){
             ?>
             <span class="submsg">for reference and grouping only / will not be displayed</span><br /><br />
             <div id="m_cat_select">
-                <select id="m_cat_sel" name="m_cat" onchange="toggle_cat(this, 'm_cat_field');">
+                <select id="m_cat_sel" name="m_cat" onchange="toggle_cat(this, 'm_cat_field');" style="width: 160px;">
                 <option value="-">-Please Select-</option>
                 <option value="other">{New Value}</option>
                 <?php if(@count($categories)>0)foreach($categories as $cat_v){

@@ -195,7 +195,7 @@ function upload_img_rs($field_name, $img_width, $img_height, $up_loc, $img_title
         }
 
         $new_c_image = strtolower($t1[0]).'_'.$tmx.$insert_name_part;
-        //var_dump($new_c_image); die();
+        //var_dump($array_index, $tmx, $new_c_image); die();
 
         list($g_width, $g_height) = @getimagesize($tmp_name);
         if(($img_width>0) && (($g_width>$img_width) || ($g_width<($img_width-1)))) $g_width = $img_width;

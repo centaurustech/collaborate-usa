@@ -45,9 +45,15 @@ class Mod_Voice_Checker extends Mod_Voice {
                 $total_vote = intval($voice['total_vote']);
                 
                 if($total_vote >= $minimum_vote){
-                    $this->move_to_stream($voice);
+                    echo "----------------STREAM---------------<br />";
+                    echo "<pre>";print_r($voice);echo "</pre>";
+                    echo "---------------------------------<br />";
+                    #$this->move_to_stream($voice);
                 }
                 else{
+                    #echo "=================PURGE=================<br />";
+                    #echo "<pre>";print_r($voice);echo "</pre>";
+                    #echo "===================================<br />";
                     #$this->purge_voice($voice);
                 }
             }
@@ -58,7 +64,7 @@ class Mod_Voice_Checker extends Mod_Voice {
     }
     
     public function move_to_stream($voice = array()){
-        exit("Move to stream<br />");
+        
         // eco system data
         $data = array(
             "moderator_id" => $voice["user_id"],
@@ -95,15 +101,18 @@ class Mod_Voice_Checker extends Mod_Voice {
                 $rsl = $this->db->query($sql, array($voice["id"]));
                 
                 foreach($rsl->result_array() as $vote){
-                    // eco members data
-                    $data = array(
-                        "eco_sys_id"    => $row["id"],
-                        "user_id"       => $vote["user_id"],
-                        "joined_on"     => c_now()
-                    );
                     
-                    // insert eco members data
-                    $this->db->insert("eco_members", $data);
+                    if($vote['user_id'] != $voice["user_id"]){
+                        // eco members data
+                        $data = array(
+                            "eco_sys_id"    => $row["id"],
+                            "user_id"       => $vote["user_id"],
+                            "joined_on"     => c_now()
+                        );
+                        
+                        // insert eco members data
+                        $this->db->insert("eco_members", $data);
+                    }                                        
                 }
                                                 
                 // delete vote from voices votes
@@ -118,17 +127,17 @@ class Mod_Voice_Checker extends Mod_Voice {
     }
     
     public function purge_voice($voice = array()){
-        exit("Move to purge<br />");
+        
         $data = array(
-            "id"            => $voice["id"],
-            "user_id"       => $voice["user_id"],
-            "voice_cat_id"  => $voice["voice_cat_id"],
-            "voice_tag_ids" => $voice["voice_tag_ids"],
-            "question_text" => $voice["question_text"],
-            "voice_details" => $voice["voice_details"],
-            "voice_pic"     => $voice["voice_pic"],
-            "added_on"      => $voice["added_on"],
-            "dumped_on"     => c_now()
+            "original_voice_id" => $voice["id"],
+            "user_id"           => $voice["user_id"],
+            "voice_cat_id"      => $voice["voice_cat_id"],
+            "voice_tag_ids"     => $voice["voice_tag_ids"],
+            "question_text"     => $voice["question_text"],
+            "voice_details"     => $voice["voice_details"],
+            "voice_pic"         => $voice["voice_pic"],
+            "added_on"          => $voice["added_on"],
+            "dumped_on"         => c_now()
         );
         
         // dump voice data

@@ -38,10 +38,21 @@ class Mod_Comments extends Mod_Voice {
                     if($this->db->insert('eco_discussion_comments', $data)){
                         $since = c_get_time_elapsed(strtotime(c_now()));
                         
+                        
+                        
+                        $host = str_replace('ecosystem/', '', base_url());
+                        $uid = $user['id'];
+                        $user_image = $user['profile_pic'];
+                        $user_image = "{$host}user_files/prof/{$uid}/{$user_image}";
+                        
+                        if(!remote_file_exists($user_image)){
+                            $user_image = "/assets/images/ep.png";
+                        }
+                        
                         $result['status'] = true;
                         $result['message'] = "Comment posted successfully.";
                         $result['data']['user']['name'] = $user['name'];
-                        $result['data']['user']['profile_pic'] = $user['profile_pic'];
+                        $result['data']['user']['profile_pic'] = $user_image;
                         $result['data']['comment_data'] = array();
                         $result['data']['comment_data']['comment'] = $com;
                         $result['data']['comment_data']['added_on'] = c_now();
@@ -69,7 +80,7 @@ class Mod_Comments extends Mod_Voice {
     public function get_comments($bundle = array()){
         
         // set return result
-        $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
+        $result = array("status" => true, "message" => "", "is_data" => false, "is_more_data" => false, "data" => array());
                            
         $stream_id = c_pick_param($bundle, "stream_id", 0);
         $start = c_pick_param($bundle, "start", 0);
@@ -86,7 +97,8 @@ class Mod_Comments extends Mod_Voice {
                 if($this->is_valid_eco_system_id($eco_system_id)){
                     
                     // calculate start
-                    $start = $start * $limit;
+                    $next_start = ($start + 1) * $limit;
+                    $start = $start * $limit;                    
                     
                     $query = "SELECT * FROM eco_discussion_comments WHERE eco_sys_id=%d ORDER BY id DESC LIMIT %d, %d";
                     $sql = sprintf($query, $eco_system_id, $start, $limit);
@@ -96,8 +108,9 @@ class Mod_Comments extends Mod_Voice {
                     // get comments
                     $comments = $this->get_comments_data($bundle);
                     
+                    $result["is_more_data"] = $this->is_more_data(sprintf($query, $eco_system_id, $next_start, $limit));
                     $result["status"]  = $comments["status"];
-                    $result["message"] = $bundle;
+                    $result["message"] = $comments["message"];
                     $result["is_data"] = $comments["is_data"];
                     $result["data"]    = $comments["data"];            
                 }
@@ -114,6 +127,44 @@ class Mod_Comments extends Mod_Voice {
         else{
             $result['status'] = false;
             $result['message'] = "Invalid stream id.";
+        }
+                                
+        // return result with info
+        return $result;
+    }
+    
+    public function get_eco_comments($bundle = array()){
+        
+        // set return result
+        $result = array("status" => true, "message" => "", "is_data" => false, "is_more_data" => false, "data" => array());
+                           
+        $id    = c_pick_param($bundle, "id", 0);
+        $start = c_pick_param($bundle, "start", 0);
+        $limit = c_pick_param($bundle, "limit", 10);
+        
+        if($this->is_valid_river($id)){
+            
+            // calculate start
+            $next_start = ($start + 1) * $limit;
+            $start = $start * $limit;                    
+            
+            $query = "SELECT * FROM eco_discussion_comments WHERE eco_sys_id=%d ORDER BY id DESC LIMIT %d, %d";
+            $sql = sprintf($query, $id, $start, $limit);
+            
+            $bundle = array("sql" => $sql);
+            
+            // get comments
+            $comments = $this->get_comments_data($bundle);
+            
+            $result["is_more_data"] = $this->is_more_data(sprintf($query, $id, $next_start, $limit));
+            $result["status"]  = $comments["status"];
+            $result["message"] = $comments["message"];
+            $result["is_data"] = $comments["is_data"];
+            $result["data"]    = $comments["data"];  
+        }
+        else{
+            $result['status'] = false;
+            $result['message'] = "Invalid river id.";
         }
                                 
         // return result with info

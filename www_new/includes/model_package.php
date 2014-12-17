@@ -1,5 +1,5 @@
 <?php
-function get_all_packages()
+function get_all_packages($get_benefits=true)
 {
     #/ get Packages
     $packs_sql = "SELECT mp.*, mp.id AS mp_id
@@ -10,6 +10,11 @@ function get_all_packages()
 
     $packages = @format_str(@mysql_exec($packs_sql));
     //var_dump("<pre>", $packages); die();
+
+    if($get_benefits==false)
+    {
+        return $packages;
+    }
 
     $services = array();
     if(is_array($packages) && count($packages)>0)
@@ -36,4 +41,24 @@ function get_all_packages()
     return array($packages, $services);
 
 }//end func..
+
+
+function get_package_info($pk_id, $get_benefits=false)
+{
+    if(empty($pk_id)) return false;
+
+    $sql_part = '';
+    if($get_benefits!=false)
+    $sql_part = "";
+
+    $sql_1= "SELECT title, cost, is_basic, is_recursive, recursive_cost
+    FROM membership_packages mp
+    WHERE is_active='1'
+    AND id='{$pk_id}'
+    ";
+
+    $package_info = @format_str(@mysql_exec($sql_1));
+
+    return $package_info;
+}
 ?>

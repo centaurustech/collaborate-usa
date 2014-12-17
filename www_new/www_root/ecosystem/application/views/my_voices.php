@@ -18,7 +18,7 @@
                   <textarea name="voc_desc" cols="1" rows="2" class="leftstxtarea wdthnin" placeholder="Voice Description"></textarea>
                   <!-- <input name="" type="text"  class="leftsinpt wdthnin" placeholder='Tags' /> -->
                   <div class="voice-tags"><ul id="voice_tags" class="ul-voice-tags"></ul></div>
-                <input type="hidden" name="voc_tags" class="hid-voice-tags" value="" />
+                    <input type="hidden" name="voc_tags" class="hid-voice-tags" value="" />
                   <select name="voc_cat" class="leftsinptselct">
                 <?php foreach($voice_categories["data"] as $category){ ?>
                 <option value="<?php echo $category["id"]; ?>"><?php echo $category["category"]; ?></option>
@@ -30,7 +30,6 @@
         </form>
     </div>
     <div class="withbor" style="border: none;">
-        <div class="brdrall"></div>
         
         <!-- my voices data -->
         <div id="my_voice_data">
@@ -70,6 +69,7 @@
 <script type="text/javascript">
 
     var lock = false;
+    var preTags = [];
     
     $(document).ready(function(){
         
@@ -78,7 +78,29 @@
         // setup tags
         $('#voice_tags').tagit({
             placeholderText: "Tags",
-            tagLimit: 5
+            tagLimit: 5,
+            autocomplete: {                
+                minLength: 3,
+                delay: 300,
+                source: function(request, response){
+
+                    $.ajax({
+                        dataType: "json",
+                        type : 'Get',
+                        url: "<?php echo DOC_ROOT; ?>voice-tags-list?search_it=1&ro=1",
+                        data:{term: request.term},
+    
+                    }).always(function(){
+                        $('.ui-autocomplete-input').removeClass('ui-autocomplete-loading');
+                        //$('#load_x').css('display', 'none');
+    
+                    }).done(function(msg){
+                        //console.log(msg);
+                        if(typeof(msg['json'])!='undefined')
+                        response(msg['json']);
+                    });
+                },
+            }            
         });
         
         // preview voie picture
@@ -143,9 +165,12 @@
                     
                     // check data is available on response
                     if(res.is_data === true){
-                        $("#voc_loader").css("display", "none");
-                        $("#voc_more").css("display", "inline-block");
+                        $("#voc_loader").css("display", "none");                        
                         $('#my_voice_data').append(res.data);
+                    }
+                    
+                    if(res.is_more_data === true){
+                        $("#voc_more").css("display", "inline-block");
                     }
                     
                     // no data is available

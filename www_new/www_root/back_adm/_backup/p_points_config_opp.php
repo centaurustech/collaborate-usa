@@ -24,6 +24,10 @@ $conf_id = (int) getgpcvar("conf_id", "G");
 
 $back_page = "p_points_config.php";
 $cur_page = cur_page();
+
+if($conf_id<=0){
+redirect_me("{$consts['DOC_ROOT_ADMIN']}{$back_page}{$param2}", true); //prevent add
+}
 /////////////////////////////////////////////////////////////////
 
 if(isset($_POST['action_title']))
@@ -38,8 +42,8 @@ if(isset($_POST['action_title']))
     $rules = [
     'required' => [['action_title'], ['points'], ['limits_per_day']],
     'lengthMax' => [['action_title', 70]],
-    'integer' => [['points'], ['limits_per_day']],
-    'min' => [['points', 1]]
+    'integer' => [['points'], ['limits_per_day'], ['percentage_points']],
+    //'min' => [['points', 1]]
     ];
 
     $form_v->rules($rules);
@@ -52,6 +56,7 @@ if(isset($_POST['action_title']))
     {
         $_POST['is_active'] = (int)@$_POST['is_active'];
         $_POST['points'] = (int)$_POST['points'];
+        $_POST['percentage_points'] = (int)$_POST['percentage_points'];
         $_POST['limits_per_day'] = (int)$_POST['limits_per_day'];
 
         if($conf_id>0)  //Edit Mode
@@ -59,8 +64,8 @@ if(isset($_POST['action_title']))
             ###/ Updating Database
             #/ system_config
     		$sql_tb1 = "UPDATE patronage_points_config SET category='{$_POST['category']}',
-            action_title='{$_POST['action_title']}', points='{$_POST['points']}', limits_per_day='{$_POST['limits_per_day']}',
-            is_active='{$_POST['is_active']}'
+            action_title='{$_POST['action_title']}', points='{$_POST['points']}', percentage_points='{$_POST['percentage_points']}',
+            limits_per_day='{$_POST['limits_per_day']}', is_active='{$_POST['is_active']}'
             WHERE id='{$conf_id}'";
     		mysql_exec($sql_tb1, 'save');
             #-
@@ -141,6 +146,15 @@ function check_this()
         err += 'Please enter the Points in Numebers / Decimals only!\n';
     }
 
+    if(document.getElementById('percentage_points').value=='')
+    {
+        //err += 'Please enter the Points!\n';
+    }
+    else if(document.getElementById('percentage_points').value.search(/^[0-9]{0,}$/)<0)
+    {
+        err += 'Please enter the Percentage in numeric only!\n';
+    }
+
     if(document.getElementById('limits_per_day').value=='')
     {
         err += 'Please enter the Limits per Day!\n';
@@ -219,10 +233,20 @@ function check_this()
         <div style="float:left;"><input type="text" id="points" name="points" maxlength="5" value="<?=format_str(@$empt['points'])?>" style="width:40px; border:1px solid #000261;" />
         <span style="color:#CC0000;">&nbsp;&nbsp;*</span>
         <span class="submsg">&nbsp;(numbers only)</span>
-        <span class="submsg">&nbsp;Patronage Points for this Action</span>
+        <span class="submsg">&nbsp;Patronage Points for this Action.</span>
         </div>
 
         <div style="clear:both; height:10px;"></div>
+
+
+        <div style="width:130px; float:left;">Percentage Points:</div>
+        <div style="float:left;"><input type="text" id="percentage_points" name="percentage_points" maxlength="2" value="<?=format_str(@$empt['percentage_points'])?>" style="width:40px; border:1px solid #000261;" /> %
+        <span class="submsg">&nbsp;(numeric only)</span>
+        <span class="submsg">&nbsp;Percentage based Patronage Points for this Action.</span>
+        <span class="submsg">&nbsp;Applied only if Direct Points is set to '0' in the above field.</span>
+        </div>
+
+        <div style="clear:both; height:20px;"></div>
 
         <div style="width:130px; float:left;">Limits Per Day:</div>
         <div style="float:left;"><input type="text" id="limits_per_day" name="limits_per_day" maxlength="3" value="<?=format_str(@$empt['limits_per_day'])?>" style="width:40px; border:1px solid #000261;" />
@@ -255,6 +279,11 @@ function check_this()
     </table>
 
 </form>
+
+<br /><br />
+<div style="float:left; font-style:italic;">This Section is used to set <b>Patronage Points</b> allocation configurations.<br />
+Direct "<b>Points</b>" will take precedence over "<b>Percentage Points</b>", hence they must be '0' for Percentage to take effect.
+</div>
 
 <?php
 include_once("includes/footer.php");

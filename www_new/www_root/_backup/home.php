@@ -3,6 +3,7 @@ if(!isset($seo_tag_id) || empty($seo_tag_id)){redirect_me('404');}
 
 include_once('../includes/model_home.php');
 
+
 #/ get Page Info
 $page_info = @mysql_exec("SELECT * FROM site_pages WHERE seo_tag_id='{$seo_tag_id}' AND is_active='1'", 'single');
 if(!is_array($page_info)){redirect_me('404');}
@@ -17,7 +18,7 @@ $site_media = get_site_media($sm_array);
 //var_dump("<pre>", $site_media); die();
 
 #/ get site_misc_data
-$smd = array('website_functions_copy', 'home_sliders', 'why_collaborate_copy', 'learn_functions', 'home_vide'); //'home_video' when live
+$smd = array('website_functions_copy', 'home_sliders', 'why_collaborate_copy', 'learn_functions', 'home_video'); //'home_video' when live
 $site_misc_data = get_site_misc_data($smd);
 //var_dump("<pre>", $site_misc_data); die();
 
@@ -28,6 +29,15 @@ $home_packages = get_home_packages();
 //var_dump("<pre>", $home_packages); die();
 }
 
+
+#/ Home Voices
+$home_voices = get_home_voices();
+//var_dump("<pre>", $home_voices); die();
+
+
+#/ Other info
+$other_pg_inf = get_page_info('12');
+//var_dump("<pre>", $other_pg_inf); die();
 /////////////////////////////////////////////////////////////////////
 
 #/ Fill pg_meta
@@ -58,8 +68,11 @@ include_once("includes/header.php");
             echo "<h2>{$site_misc_data['website_functions_copy'][0]['title']}</h2>
             <p>{$site_misc_data['website_functions_copy'][0]['m_value']}</p>";
         }
+
+        #/*
+        //old but working
         ?>
-        <div class="circle_image">
+        <div class="circle_image" style="display: none;">
         	<img src="<?=DOC_ROOT?>assets/images/website_functions.png"  usemap="#Map" border="0" />
 
             <map name="Map" id="Map">
@@ -76,6 +89,24 @@ include_once("includes/header.php");
                 <area shape="poly" coords="222,284,203,290,178,293,160,324,176,353,207,354,229,345,251,336,225,323" href="#learn_about_sell" title="About SELL" class="fbox" />
                 <area shape="poly" coords="163,291,146,286,128,279,121,275,87,293,87,329,112,342,127,348,160,352,146,322" href="#learn_about_give" title="About GIVE" class="fbox" />
             </map>
+        </div>
+        <?php #*/ ?>
+
+        <link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/wheel.css" />
+        <div class="wheelp">
+        <div class="wheel">
+            <a id="button" href="#learn_about_join" title="ABOUT JOIN (MEMBERSHIP)" class="fbox"><span class="imgaha">&nbsp;</span></a>
+            <a id="button" href="#learn_about_share" title="About SHARE" class="fbox"><span class="imgshare">&nbsp;</span></a>
+            <a id="button" href="#learn_about_voice" title="About VOICE" class="fbox"><span class="imgvoice">&nbsp;</span></a>
+            <a id="button" href="#learn_about_vote" title="About VOTE" class="fbox"><span class="imgvote">&nbsp;</span></a>
+            <a id="button" href="#learn_about_buy" title="About BUY" class="fbox"><span class="imgbuy">&nbsp;</span></a>
+            <a id="button" href="#learn_about_sell" title="About SELL" class="fbox"><span class="imgsall">&nbsp;</span></a>
+            <a id="button" href="#learn_about_give" title="About GIVE" class="fbox"><span class="imgcive">&nbsp;</span></a>
+            <a id="button" href="#learn_about_fund" title="About FUND" class="fbox"><span class="imgfund">&nbsp;</span></a>
+            <a id="button" href="#learn_about_refer" title="About REFER" class="fbox"><span class="imgrefer">&nbsp;</span></a>
+            <a id="button" href="#learn_about_learn" title="About Learn" class="fbox"><span class="imglearn">&nbsp;</span></a>
+            <a id="button" href="#learn_about_earn" title="About Earn" class="fbox"><span class="imgearn">&nbsp;</span></a>
+        </div>
         </div>
 
         <?php
@@ -126,9 +157,41 @@ include_once("includes/header.php");
     <h2>Your Ideas and Opinion Matters<br />Express Your VOICE<br />VOTE on What You Care About</h2>
 
     <div class="wwf_boxes">
+    <?php if(is_array($home_voices) && count($home_voices)>0) { ?>
     <ul class="bxslider2">
+    <?php
+    $i = 0;
+    //for($ij=0; $ij<=13; $ij++){ //debug
+    foreach($home_voices as $hv_k=>$hv_v)
+    {
+        $vc_bg = '';
+        if(!empty($hv_v['voice_pic'])){
+        $vc_bg = "{$consts['DOC_ROOT']}user_files/prof/{$hv_v['user_id']}/voices/{$hv_v['voice_pic']}";
+        }
 
+        $prf_pic = '';
+        if(!empty($hv_v['profile_pic'])){
+        $prf_pic = "{$consts['DOC_ROOT']}user_files/prof/{$hv_v['user_id']}/{$hv_v['profile_pic']}";
+        }
+
+        $question_text = cut_str($hv_v['question_text'], 20);
+        $voice_details = cut_str($hv_v['voice_details'], 100);
+
+        echo "<li>";
+            echo "<div class=\"wwf_the_outer\" style=\"background-image:url('{$vc_bg}');\" title=\"{$hv_v['question_text']}\">
+                <div class=\"image_wwf\"><img src=\"{$prf_pic}\" /></div>
+                <h4>{$question_text}</h4>
+                <p>{$voice_details}</p>
+                <a class=\"yellow_btn\" href=\"{$consts['DOC_ROOT']}voice/{$hv_v['id']}\">Vote</a>
+            </div>
+            ";
+        echo "</li>";
+
+    }//end foreach....
+    //}
+    ?>
     </ul>
+    <?php } ?>
     </div>
 </div>
 </div>
@@ -157,9 +220,19 @@ include_once("includes/header.php");
             $cost = (float)$hp_v['cost'];
             $cost_dis = number_format($cost, 2);
 
-            $ttle_x=''; if($cost<=0) {$ttle_x='Free';}else{
-            $ttle_x="\${$cost}";
-            if($hp_v['is_recursive']=='0'){$ttle_x.=" One Time";}else{$ttle_x.=" Periodic";}
+            $ttle_x = $subtltx = '';
+            if($cost<=0){$ttle_x='Free';}
+            else
+            {
+                $ttle_x="\${$cost} One Time";
+                if($hp_v['is_recursive']!='0')
+                {
+                    $ttle_x.=" *";
+
+                    $dues = (float)$hp_v['recursive_cost'];
+                    $dues_dis = number_format($dues, 2);
+                    $subtltx = "<div style='font-size:12px; text-align:center; padding:8px;'>(* with \${$dues_dis} periodic dues)</div>";
+                }
             }
 
             echo "<div class=\"pckhead {$clsx}\">{$ttle_x}</div>";
@@ -206,7 +279,11 @@ include_once("includes/header.php");
 
                     #/ Signup button
                     $cls_btn='yellow_btn'; if(($i%2)!=0){$cls_btn='green_btn';}
-                    echo "<a href=\"{$consts['DOC_ROOT']}signup/{$hp_v['mp_id']}\" class=\"signup {$clsx} {$cls_btn}\">Signup</a>";
+                    echo "<a href=\"{$consts['DOC_ROOT']}signup/{$hp_v['mp_id']}\" ";
+                    if(!empty($subtltx)){echo " style='margin-bottom:10px !important;' ";}
+                    echo "class=\"signup {$clsx} {$cls_btn}\">Signup</a>";
+
+                    if(!empty($subtltx)){echo "{$subtltx}";}
 
                 echo "</div>";
             echo "</div>";
@@ -220,7 +297,9 @@ include_once("includes/header.php");
 
     <div style="clear: both;"></div><br />
     <div class="two_btns">
-        <a class="white_btn" href="<?=DOC_ROOT?>learnmore">Learn More</a>
+        <?php if(is_array($other_pg_inf) && array_key_exists('pg_12', $other_pg_inf)) { ?>
+        <a class="white_btn" href="<?php echo DOC_ROOT."{$other_pg_inf['pg_12']['seo_tag']}"; ?>"><?php echo "{$other_pg_inf['pg_12']['title']}"; ?></a>
+        <?php } ?>
         <a class="white_btn" href="<?=DOC_ROOT?>signin">Sign In</a>
     </div>
     <div style="clear: both;"></div><br />

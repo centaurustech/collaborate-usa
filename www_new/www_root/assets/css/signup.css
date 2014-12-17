@@ -1,0 +1,9 @@
+.paypal_img table td {
+    text-align:left;
+}
+
+@media (max-width: 580px){
+.paypal_img table td {
+    text-align:center;
+}
+}

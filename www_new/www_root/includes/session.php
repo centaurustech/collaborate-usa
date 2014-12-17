@@ -19,8 +19,8 @@ else
         }
 
 
-        @header("Location: {$consts['DOC_ROOT']}logout");
-        echo "<script language=\"javascript\">location.href='{$consts['DOC_ROOT']}logout';</script>";
+        @header("Location: {$consts['DOC_ROOT']}ecosystem/logout");
+        echo "<script language=\"javascript\">location.href='{$consts['DOC_ROOT']}ecosystem/logout';</script>";
     	exit;
     }
 

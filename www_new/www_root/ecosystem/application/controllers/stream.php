@@ -75,8 +75,23 @@ class Stream extends Voice {
                 
                 $this->page_data['is_follower'] = $this->Mod_Eco_Member->is_eco_member($this->page_data['stream']['eco_sys_id'], $this->page_data['user_id']);
                 
+                $sql = "SELECT str.* 
+                        FROM streams_voice AS str
+                        INNER JOIN eco_system AS sys
+                        ON str.`eco_sys_id` = sys.`id`
+                        WHERE sys.`parent_id`=0
+                        AND sys.`moderator_id`=%d
+                        ORDER BY str.`id` DESC";
+                $sql = sprintf($sql, (int)@$this->page_data['user_id']);
+                $bundle = array("sql" => $sql);
+                $my_streams_data = $this->Mod_Stream->get_voices($bundle);
+                $this->page_data['my_streams'] = $my_streams_data['data'];
+                $this->page_data['is_possible_to_join'] = $this->Mod_Stream->is_possible_to_join($this->page_data['user_id'], $this->page_data['stream']['eco_sys_id']);
+                $this->page_data['is_possible_to_create_river'] = $this->Mod_Stream->is_possible_to_create_river($this->page_data['stream']['eco_sys_id'], $this->page_data['user_id']);
+                $this->page_data['has_river'] = $this->Mod_Stream->has_river($this->page_data['stream']['eco_sys_id']);
+                
                 $data = array(
-                    "heading" => "MY STREAM",
+                    "heading" => "STREAM",
                     "title" => $this->page_data['stream']['question_text']
                 );
                 
@@ -212,5 +227,10 @@ class Stream extends Voice {
         }
             
         echo @json_encode($comments);
+    }
+    
+    public function merge(){
+                        
+        echo @json_encode($this->Mod_Stream->merge_to_river());
     }
 }

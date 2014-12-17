@@ -120,6 +120,7 @@ if(isset($_POST['first_name']))
             #/ admin_permissions
             update_permissions($au_id, $permissions);
             #-
+            //die(mysql_error());
 
             $_SESSION["CUSA_ADMIN_MSG_GLOBAL"] = array(true, 'The Admin User data successfully Updated');
             reset_attempt_counts(); redirect_me("{$consts['DOC_ROOT_ADMIN']}admin_users_opp.php{$param2}&au_id={$au_id}", true);

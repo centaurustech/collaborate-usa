@@ -36,7 +36,7 @@ class Mod_My_Streams extends Mod_Voice {
     public function get_my_streams($bundle = array()){
         
         // set return result
-        $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
+        $result = array("status" => true, "message" => "", "is_data" => false, "is_more_data" => false, "data" => array());
         
         // get valid logging id
         $uid = $this->get_logged_uid();
@@ -48,6 +48,7 @@ class Mod_My_Streams extends Mod_Voice {
             $limit = c_pick_param($bundle, "limit", 10);
             
             // calculate start
+            $next_start = ($start + 1) * $limit;
             $start = $start * $limit;
             
             $query = "SELECT * FROM streams_voice WHERE user_id=%d AND is_blocked=0 ORDER BY id DESC LIMIT %d, %d";
@@ -58,6 +59,7 @@ class Mod_My_Streams extends Mod_Voice {
             // get voices
             $voices = $this->get_voices($bundle);
             
+            $result["is_more_data"] = $this->is_more_data(sprintf($query, $uid, $next_start, $limit));
             $result["status"]  = $voices["status"];
             $result["message"] = $voices["message"];
             $result["is_data"] = $voices["is_data"];

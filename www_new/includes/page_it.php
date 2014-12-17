@@ -127,7 +127,7 @@ class page_it
 
 
             	if($b==$page_x)
-            	$pr_x.= "font-size:11pt; border:solid 1px #A9CBE7; padding:13px 3px;";
+            	$pr_x.= "font-size:11pt; border:solid 1px #A9CBE7; padding:5px 3px; border-radius:5px;";
                 else
                 $pr_x.= "padding:0 1px;";
 

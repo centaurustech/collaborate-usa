@@ -1,7 +1,9 @@
 <?php
 if(in_array($_SERVER['SERVER_NAME'], array('cusa-local', 'localhost'))==false) //SERVER
 {
-    define('DOC_ROOT2', '/home/rancan1102/public_html/collaborateusa.com/www_new/www_root/back_adm/');
+    //define('DOC_ROOT2', '/home/rancan1102/public_html/collaborateusa.com/www_new/www_root/back_adm/');
+    //define('DOC_ROOT2', '/home/collabusanew/public_html/www_new/www_root/back_adm/');
+    define('DOC_ROOT2', '/home/collabusanew/public_html/www/back_adm/');
 }
 else
 {

@@ -1,7 +1,7 @@
 Header append X-FRAME-OPTIONS "SAMEORIGIN"
 
 # Secure htaccess File
-<FilesMatch "\.(htaccess|ini|htpasswd|log)$">
+<FilesMatch "\.(htaccess|ini|htpasswd|log|ftpquota)$">
  Order Allow,Deny
  Deny from all
 </FilesMatch>
@@ -14,17 +14,47 @@ IndexIgnore *
 
 #/ Extra settings due to php.ini not available
 <IfModule mod_php5.c>
+    php_flag short_open_tag On
     php_flag register_globals Off
     php_flag magic_quotes_gpc Off
     php_value upload_max_filesize '5M'
+    php_value post_max_size '8M'
+
+    php_flag zlib.output_compression On
+    php_value zlib.output_compression_level 3
+
+    #php_value output_buffering '4096'
 </IfModule>
+
+##########################output compression  = nothing works#########################
+
+#<ifModule mod_gzip.c>
+#    mod_gzip_on Yes
+#    mod_gzip_dechunk Yes
+#    mod_gzip_item_include file .(html?|txt|css|js|php|pl)$
+#    mod_gzip_item_include handler ^cgi-script$
+#    mod_gzip_item_include mime ^text/.*
+#    mod_gzip_item_include mime ^application/x-javascript.*
+#    mod_gzip_item_exclude mime ^image/.*
+#    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+#</ifModule>
+
+
+#<IfModule mod_deflate.c>
+#    <FilesMatch "\.(html|txt|css|js|php|pl)$">
+#    SetOutputFilter DEFLATE
+#    </FilesMatch>
+#</IfModule>
+
+#SetEnv HTTP_ACCEPT_ENCODING 'gzip,deflate,sdch'
 
 #Output Compression using DEFLATE. if there is issue, use php's zlib.output compression
 <IfModule mod_deflate.c>
+
     # HTML, TXT, CSS, JavaScript, JSON, XML, HTC:
     <IfModule filter_module>
-        #<IfModule version.c>
-        #<IfVersion >= 2.4>
+        <IfModule version.c>
+        <IfVersion >= 2.4>
           FilterDeclare   COMPRESS
           FilterProvider  COMPRESS  DEFLATE "%{CONTENT_TYPE} = 'text/html'"
           FilterProvider  COMPRESS  DEFLATE "%{CONTENT_TYPE} = 'text/css'"
@@ -44,11 +74,30 @@ IndexIgnore *
           FilterProvider  COMPRESS  DEFLATE "%{CONTENT_TYPE} = 'font/opentype'"
           FilterChain     COMPRESS
           FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
-        #</IfVersion>
+        </IfVersion>
 
-        #<IfVersion <= 2.2>
-        #</IfVersion>
-        #</IfModule>
+        <IfVersion <= 2.2>
+          FilterDeclare   COMPRESS
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/plain
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/x-component
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/javascript
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/json
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xhtml+xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/rss+xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/atom+xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/vnd.ms-fontobject
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/svg+xml
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/x-icon
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/x-font-ttf
+          FilterProvider  COMPRESS  DEFLATE resp=Content-Type $font/opentype
+          FilterChain     COMPRESS
+          FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
+        </IfVersion>
+        </IfModule>
     </IfModule>
 
     # For legecy versions of apache
@@ -61,11 +110,12 @@ IndexIgnore *
     </IfModule>
 </IfModule>
 
-
+###################################################
 # serve custom error pages
 ErrorDocument 403 "<title>410 Gone</title><h2>GONE / 410</h2><b>Resource is no longer available!</b><p>The requested URL is no longer available on this server and there is no forwarding address. If you followed a link from a foreign page, please contact the author of this page.</p><p>If you think this is a server error, please contact the <a href=#>webmaster</a>.</p><h2>Error 410</h2>"
-ErrorDocument 404 http://cusa-local/404
-#ErrorDocument 404 http://new.collaborateusa.com/404
+#ErrorDocument 404 http://cusa-local/404
+ErrorDocument 404 https://www.collaborateusa.com/404
+#ErrorDocument 404 http://166.62.35.176/~collabusanew/www_new/www_root/404
 
 
 #/ Prevent XSS
@@ -88,8 +138,14 @@ RewriteRule .* - [G]
 RewriteEngine On
 #RewriteBase /
 
+# Rewite to run signup on https instead - tested
+# RewriteCond %{HTTPS} off
+# RewriteCond %{REQUEST_URI} ^/(signup|signup\-*) [NC]
+# RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
+
+
 #/ External 3rd party systems
-rewriteRule ^(blog|blog/.*)$ /blog/index.php [L,QSA]
+#rewriteRule ^(blog|blog/.*)$ /blog/index.php [L,QSA]
 
 #/ Home
 rewriteRule ^index$ index.php [L]
@@ -103,7 +159,7 @@ rewriteRule ^secure-captcha secure_captcha.php [L]
 #/ Send all others into index
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [PT,L] #/ godaddy
+RewriteRule ^(.*)$ index.php?/$1 [PT,L,QSA] #/ godaddy
 
 
 #////////////////////////////////////////////////////////////////////////////////

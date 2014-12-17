@@ -1,0 +1,207 @@
+.fields-big label {
+    float: left;
+    width: 273px;
+    margin-top:5px;
+}
+
+.fields-big .right_fl {
+    float: left;
+}
+
+.fields-big .submsg{
+    display:block;
+    margin:-10px 0 10px 0;
+    clear: both;
+}
+
+.fields-big input[type='text'],
+.fields-big input[type='password'],
+.fields-big input[type='checkbox'],
+.fields-big input[type='radio'],
+.fields-big textarea,
+.fields-big select {
+    border: 1px solid #CDD7DD;
+    border-radius: 5px;
+    color: #333;
+    font-family: arial;
+    padding: 7px;
+    box-shadow: inset 0px 0px 5px 0px #dddddd;
+}
+
+.fields-big input[type='text'],
+.fields-big input[type='password']
+{
+	width: 100%;
+	max-width: 500px;
+	margin-bottom: 10px !important;
+}
+
+.fields-big textarea{
+	width: 100%;
+	max-width: 500px;
+    margin-bottom: 10px !important;
+}
+
+.fields-big select{
+    width:100%;
+    max-width: 500px;
+    margin-bottom: 10px !important;
+}
+
+.fields-big .required{
+    color:#CC0000;
+    vertical-align:top;
+    display:inline-block;
+    margin-left:6px;
+}
+
+.userDp{
+    width:80px !important;
+    height:80px !important;
+    border:1px #ddd solid !important;
+}
+
+
+@media (max-width: 979px) {
+
+.fields-big label {
+    width: 190px;
+}
+
+}
+
+@media (min-width: 770px) and (max-width: 979px) {
+
+.fields-big input.a2flds {
+    width:36.4% !important;
+}
+
+}
+
+
+@media (max-width: 769px){ /*779*/
+
+.fields-big input.a2flds {
+    width:88% !important;
+}
+
+}
+
+
+@media (max-width: 700px){
+
+.fields-big label {
+    width: auto;
+    float:none;
+    display:block;
+}
+
+.fields-big .right_fl {
+    float:none;
+}
+
+.fields-big .required{
+    margin-top:1px;
+    position: absolute;
+}
+
+.fields-big input,
+.fields-big textarea,
+{
+    max-width: 90%;
+}
+
+.fields-big input.blue_btn {
+    max-width: 100%;
+    display: inline-block;
+}
+
+.fields-big select{
+    -webkit-appearance:none;
+}
+
+.fields-big select::-ms-expand {
+    display: none;
+}
+
+.fields-big .no_pos{
+    position: relative;
+}
+
+}
+
+@media (max-width: 499px){
+
+.fields-big input[type='text'],
+.fields-big input[type='password'],
+.fields-big textarea
+{
+    width: 100% !important;
+    max-width: 88% !important;
+}
+
+.fields-big select,
+.in_put{
+    width: 100% !important;
+    max-width: 92% !important;
+}
+
+.in_put div div input[type='file'] {
+    width:100% !important;
+}
+
+.fields-big .required{
+    margin-left: -15px;
+    margin-top:6px !important;
+    position: absolute;
+    font-size: 22px;
+}
+
+.fields-big .no_marlef{
+    margin-left:-8px;
+    margin-top:4px !important;
+}
+
+.fields-big .veri_block div {
+    display:block !important;
+    float: none !important;
+    padding: 0 !important;
+}
+}
+
+
+@media (max-width: 440px){
+
+.fields-big .toolIT {
+    display:none;
+}
+
+.fields-big form input[type='text'],
+.fields-big form input[type='password']
+ {
+    /*max-width:75%;*/
+}
+
+.fields-big form textarea {
+    /*max-width:75%;*/
+}
+
+.fields-big form select, .in_put {
+    width: 100% !important;
+    max-width: 93% !important;
+}
+
+.in_put >div>div>div:first-child {
+    max-width: 80% !important;
+}
+
+}
+
+
+@media (max-width: 370px){
+
+.in_put >div>div>div:first-child {
+    max-width: 76% !important;
+}
+
+}

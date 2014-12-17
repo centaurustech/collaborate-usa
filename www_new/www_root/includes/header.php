@@ -17,8 +17,9 @@
 
     <link rel="shortcut icon" href="<?=DOC_ROOT?>favicon.ico" />
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css' />
-    <!--<link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/font.css" />-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css' />-->
+    <link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/font_googleapis.css" />
+
     <link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/style.css" />
 
     <script type="text/javascript" src="<?=DOC_ROOT?>assets/js/jquery-2.1.1.min.js"></script>
@@ -60,6 +61,15 @@
     </script>
 
 
+    <script>
+    var DOC_ROOT = '<?=DOC_ROOT?>';
+
+    $(document).ready(function() {
+    $.windowsize = $(window).width();
+    });
+    </script>
+
+
     <?php if(isset($load_bx_slider)) { ?>
     <!-- bx slider -->
     <link href="<?=DOC_ROOT?>assets/css/jquery.bxslider.css" rel="stylesheet" />
@@ -79,13 +89,10 @@
     <link rel="stylesheet" href="<?=DOC_ROOT?>assets/js/validator_2/css/validationEngineDarkRed.jquery.css" type="text/css" media="screen" charset="utf-8" />
     <script src="<?=DOC_ROOT?>assets/js/validator_2/js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
     <script src="<?=DOC_ROOT?>assets/js/validator_2/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>$(document).ready(function() {loc='topLeft'; if($.windowsize > 700){loc='topRight';}});</script>
     <?php } ?>
 
-
-
-    <script>
-    var DOC_ROOT = '<?=DOC_ROOT?>';
-    </script>
 
     <script type="text/javascript" src="<?=DOC_ROOT?>assets/js/var_dump.js"></script>
 
@@ -108,7 +115,7 @@ opacity: 0.15;">&nbsp;&nbsp;</div>
 
 <script>
 $(document).ready(function(){
-   var body_ht = parseInt($('.section-main').outerHeight())+parseInt($('.mar-page').outerHeight());
+   var body_ht = parseInt($('body').outerHeight());
    $('#mask_1').css('height', (body_ht+90)+'px');
 });
 </script>
@@ -123,6 +130,17 @@ $site_media_main = get_site_media($sm_array);
 #/ get other needed info
 $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_key');
 //var_dump("<pre>", $site_contact_info); die();
+
+
+#/ Set User Profile Pic
+$prf_pic = DOC_ROOT."assets/images/ep_th.png";
+if($user_idc>0)
+{
+    if(!@empty($_SESSION['CUSA_Main_usr_info']['profile_pic'])){
+    $prf_pic = DOC_ROOT."user_files/prof/{$user_idc}/{$_SESSION['CUSA_Main_usr_info']['profile_pic']}";
+    }
+}
+$prf_pic_th = @substr_replace($prf_pic, '_th.', @strrpos($prf_pic, '.'), 1);
 ?>
 
 <div class="header">
@@ -135,14 +153,14 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
         <?php if($user_idc<=0) { ?>
         <link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/top_login.css" />
         <div class="loginform">
-        <form action="<?=DOC_ROOT?>signin" method="POST">
+        <form action="<?=DOC_ROOT?>signin" method="POST" <?=AUTO_COMPLETE?>>
             <div class="login_left" style="vertical-align: top;">
                 <input type="text" name="email_add" id="email_add" placeholder="Enter Email Address" /><br />
 				<?php /*<input type="checkbox" name='remember_me' id="remember_me" value='1' /><span>Remember Me</span>*/ ?>
             </div>
 
             <div class="login_right">
-                <input type="password" name="p_wd" id="p_wd" placeholder="Your Password" />
+                <input type="password" name="pass_w" id="p_wd" placeholder="Your Password" />
                 <input type="submit" name="submit" value="Sign In"/><br />
                 <a href="<?=DOC_ROOT?>recover-access">Forgot Password?</a>
             </div>
@@ -150,14 +168,20 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
         </form>
         </div>
 
-        <?php } else { ?>
-
-        <?php } ?>
+        <?php
+        } else {
+        if(array_key_exists('engine', $_SESSION) && ($_SESSION['engine']=='generic'))
+        include_once('includes/head_boxes.php');
+        else if(array_key_exists('engine', $_SESSION) && ($_SESSION['engine']=='CI'))
+        include_once(CONTEXT_DOCUMENT_ROOT.'/includes/head_boxes.php');
+        }
+        ?>
 
         <div class="clear"></div>
 
     </div>
 </div>
+
 
 <?php if(isset($current_pgx) && ($current_pgx=='home')){ ?>
 <!-- Home -->
@@ -173,14 +197,14 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
             foreach($site_misc_data['home_sliders'] as $hms_v)
             {
                 echo '<li>';
-                echo "<img src=\"{$consts['DOC_ROOT']}assets/images_2/misc/{$hms_v['m_image']}\" />
+                echo "<img src=\"".DOC_ROOT."assets/images_2/misc/{$hms_v['m_image']}\" />
                 <div class=\"slider_area {$hms_v['content_settings']}\">
                     <h2>{$hms_v['title']}</h2>
                     <p>{$hms_v['m_value']}</p>";
 
 
                 if($user_idc<=0){
-                echo "<a class=\"yellow_sbtn\" href=\"{$consts['DOC_ROOT']}join\">Join The Movement</a>";}
+                echo "<a class=\"yellow_sbtn\" href=\"".DOC_ROOT."join\">Join The Movement</a>";}
 
                 echo "</div>";
                 echo '</li>';
@@ -196,6 +220,8 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
 <?php } else { ?>
 <!-- non-Home -->
 
+    <?php if(array_key_exists('engine', $_SESSION) && ($_SESSION['engine']=='generic')) { ?>
+
     <div class="header2">
     <div class="container">
         <div class="head_ttles">
@@ -203,6 +229,10 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
         </div>
     </div>
     </div>
+
+    <?php } else { ?>
+
+    <?php }  ?>
 
 <?php } ?>
 
@@ -216,12 +246,21 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
 //$_SESSION["CUSA_MSG_GLOBAL"] = array(false, 'Unable to proceed with your search request at this moment!<br />Please try again later.');
 if (@array_key_exists("CUSA_MSG_GLOBAL", $_SESSION))
 {
-    echo '<br /><div class="container">';
+    ?>
+    <div class="website_fun">
+    <div class="container" style="background:#FFF">
+    <div class="content_holder">
+    <?php
+    echo '<br />';
     if ($_SESSION["CUSA_MSG_GLOBAL"][0]==false){ echo '<div class="error" id="err_gd2"><b class="red-txt">ERROR:&nbsp;&nbsp;</b> '.$_SESSION['CUSA_MSG_GLOBAL'][1].'</div>'; }
     if ($_SESSION["CUSA_MSG_GLOBAL"][0]==true) { echo '<div class="infor" id="err_gd2">'.$_SESSION['CUSA_MSG_GLOBAL'][1].'</div>'; }
     //echo '<script type="text/javascript">time_id("err_gd2", "div", 60000);</script>';
     unset($_SESSION["CUSA_MSG_GLOBAL"]);
-    echo '</div>';
+    ?>
+    </div>
+    </div>
+    </div>
+    <?php
 }
 #-
 ?>

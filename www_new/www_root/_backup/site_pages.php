@@ -22,7 +22,8 @@ if(!is_array($page_info)){if($ro<=0){redirect_me('404');}else{exit;}}
 ##/Special Process for PDF Content
 if(isset($page_info['pdf_content']) && @strlen($page_info['pdf_content'])>10)
 {
-    $pdf = DOC_ROOT.'assets/media/docs/'.$page_info['pdf_content'];
+    //$pdf = DOC_ROOT.'assets/media/docs/'.$page_info['pdf_content'];
+    $pdf = 'assets/media/docs/'.$page_info['pdf_content'];
 
     header("Cache-Control: no-cache, must-revalidate");
     header("Pragma: no-cache");

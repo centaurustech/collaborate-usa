@@ -79,6 +79,10 @@ function get_dynamic_menu($footer=false)
 {
     $menu = array();
 
+    $sql_inc = '';
+    if($footer!=false)
+    $sql_inc = "AND show_in_footer='1'";
+
     $sql_1 = "(SELECT pc.id, 0 as parent_id, pc.title, '' as seo_tag, '0' AS popup_only
     FROM page_categories pc
     WHERE pc.is_active='1'
@@ -92,7 +96,7 @@ function get_dynamic_menu($footer=false)
     (SELECT CONCAT('pg_', sp.id) AS id, sp.cat_id AS parent_id, title, st.seo_tag, popup_only
     FROM site_pages sp
     LEFT JOIN seo_tags st ON st.id=sp.seo_tag_id
-    WHERE sp.is_active='1' AND show_in_footer='1'
+    WHERE sp.is_active='1' {$sql_inc}
     )";
 
     $sql_1.= "
@@ -105,6 +109,28 @@ function get_dynamic_menu($footer=false)
     $menu = @array_recursive_tree($menu);
     $menu = @$menu[0];
     //var_dump("<pre>", $menu); die();
+
+    return $menu;
+
+}//end func...
+
+
+/** Get basic dynamic Page Info from the table site_pages
+ * $pg_id = CSV of pages
+*/
+function get_page_info($pg_id)
+{
+    if(empty($pg_id)) return false;
+
+    $sql_1= "SELECT CONCAT('pg_', sp.id) AS id, sp.cat_id AS parent_id, title, st.seo_tag, popup_only
+    FROM site_pages sp
+    LEFT JOIN seo_tags st ON st.id=sp.seo_tag_id
+    WHERE sp.is_active='1'
+    AND sp.id in ({$pg_id})
+    ";
+
+    $menu = @format_str(@mysql_exec($sql_1));
+    $menu = @cb89($menu, 'id');
 
     return $menu;
 

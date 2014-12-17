@@ -37,14 +37,31 @@ include_once("includes/header.php");
             <div class="categTree">
                 <div class="tree_top"><h3>User Account</h3></div>
                 <ul class="tree">
-                <?php if((isset($user_idc)) && ($user_idc<=0)) { ?>
+                <?php if((!isset($user_idc)) || ($user_idc<=0)) { ?>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>signin">Sign-In to your Account</a></li>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>join">Join / Signup</a></li>
                 <?php } else { ?>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>logout">Logout</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/notification">Notifications</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/messages">Messages</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/logout">Signout</a></li>
                 <?php } ?>
                 </ul>
             </div>
+
+
+            <?php if((isset($user_idc)) && ($user_idc>0)) { //EcoSystem ?>
+            <div class="categTree">
+                <div class="tree_top"><h3>Eco-System</h3></div>
+                <ul class="tree">
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-voices">My Voices</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-votes">My Votes</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-streams">My Streams</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-rivers">My Rivers</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-oceans">My Oceans</a></li>
+                </ul>
+            </div>
+            <?php } ?>
+
         </div>
 
 

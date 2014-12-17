@@ -36,6 +36,10 @@
     ";
     } ?>
     </style>
+
+    <script>
+    var DOC_ROOT_ADMIN = '<?=DOC_ROOT_ADMIN?>';
+    </script>
 </head>
 
 <body>
@@ -151,17 +155,15 @@ if(usercheck())
             <li><a href="<?=DOC_ROOT_ADMIN?>newsltr_subsc.php" <?php if($cur_page=='newsltr_subsc.php' || $cur_page=='newsltr_subsc_opp.php') echo "class='selected'"; ?>>Newsletter Subscribers</a></li>
             </ul>
 		</li>
-        <?php } ?>
+        <?php }*/ ?>
 
 
         <?php if(is_array($cusa_adm_perm) && in_array(7, $cusa_adm_perm)) { ?>
         <li style="width:180px;">
-            <span id="m_7"><b>User Management</b></span>
+            <span id="m_7"><b>Members Management</b></span>
 			<ul class="leftmenusub">
-            <li><a href="<?=DOC_ROOT_ADMIN?>users.php" <?php if($cur_page=='users.php' || $cur_page=='users_opp.php') echo "class='selected'"; ?>>Users</a></li>
-            <li><a href="<?=DOC_ROOT_ADMIN?>user_payments.php" <?php if($cur_page=='user_payments.php' || $cur_page=='user_payment_opp.php') echo "class='selected'"; ?>>Users Payments</a></li>
-            <li><a href="<?=DOC_ROOT_ADMIN?>coupon_users.php" <?php if($cur_page=='coupon_users.php') echo "class='selected'"; ?>>Coupon Users</a></li>
-            <li><a href="<?=DOC_ROOT_ADMIN?>user_questionnaires.php" <?php if($cur_page=='user_questionnaires.php') echo "class='selected'"; ?>>Users Questionnaires</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>users.php" <?php if($cur_page=='users.php' || $cur_page=='users_opp.php') echo "class='selected'"; ?>>Members</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>user_payments.php" <?php if($cur_page=='user_payments.php' || $cur_page=='user_payment_opp.php') echo "class='selected'"; ?>>Member Payments</a></li>
             </ul>
 		</li>
         <?php } ?>
@@ -169,12 +171,15 @@ if(usercheck())
 
         <?php if(is_array($cusa_adm_perm) && in_array(8, $cusa_adm_perm)) { ?>
         <li style="width:180px;">
-            <span id="m_8"><b>Order Management</b></span>
+            <span id="m_8"><b>Voices Management</b></span>
 			<ul class="leftmenusub">
-            <li><a href="<?=DOC_ROOT_ADMIN?>user_orders.php" <?php if($cur_page=='user_orders.php' || $cur_page=='user_order_opp.php') echo "class='selected'"; ?>>Users Orders</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>voice_cats.php" <?php if($cur_page=='voice_cats.php' || $cur_page=='voice_cats_opp.php') echo "class='selected'"; ?>>Voice Categories</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>voice_tags.php" <?php if($cur_page=='voice_tags.php' || $cur_page=='voice_tags_opp.php') echo "class='selected'"; ?>>Voice Tags</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>voices.php" <?php if($cur_page=='voices.php' || $cur_page=='voices_opp.php') echo "class='selected'"; ?>>Voices (active)</a></li>
+            <li><a href="<?=DOC_ROOT_ADMIN?>voices_dump.php" <?php if($cur_page=='voices_dump.php' || $cur_page=='voices_dump_opp.php') echo "class='selected'"; ?>>Voices (archive)</a></li>
             </ul>
 		</li>
-        <?php }*/ ?>
+        <?php } ?>
 
 
         <li style="width:180px;">

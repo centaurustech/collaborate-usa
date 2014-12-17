@@ -24,6 +24,10 @@ $cont_id = (int) getgpcvar("cont_id", "G");
 
 $back_page = "site_contacts.php";
 $cur_page = cur_page();
+
+if($cont_id<=0){
+redirect_me("{$consts['DOC_ROOT_ADMIN']}{$back_page}{$param2}", true); //prevent add
+}
 /////////////////////////////////////////////////////////////////
 
 if(isset($_POST['c_value']))

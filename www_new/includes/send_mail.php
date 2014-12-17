@@ -6,7 +6,7 @@ function send_mail($to, $subject, $heading, $body_in, $frm_nm='collaborateUSA.co
 
     ##define Body
     $messg  = '';
-    $messg .= '<div style="width:650px; padding:2px; color:#464646; font-family:Arial, Helvetica, sans-serif; font-size:13px;">';
+    $messg .= '<div style="width:650px; padding:2px; color:#464646; font-family:Arial, Helvetica, sans-serif !important; font-size:13px;">';
     $messg .= '<div style="padding:20px 15px 12px 15px;">';
 
     $messg .= '<div>';
@@ -16,7 +16,7 @@ function send_mail($to, $subject, $heading, $body_in, $frm_nm='collaborateUSA.co
     //$messg .= "<div style='padding:3px 5px 3px 1px; border:none; border-bottom:solid 1px #53A9E9;'><b style='font-size:15px; color:#53A9E9;'>".$heading."</b></div><br />";
     $messg .= "<div style='padding:10px; border:none; background:#53A9E9; border-radius:3px;'><b style='font-size:15px; color:#FFFFFF;'>".$heading."</b></div><br />"; //2nd design
     $messg .= "<div style='padding:10px 10px 3px 0; color:#464646;'>".$body_in."</div>";
-    $messg .= "<br /><br /><b style='color:#2CA1F4; font-size:14px;'>Regards,<br />collaborateUSA.com</b>";
+    $messg .= "<br /><br /><b style='color:#2CA1F4; font-size:14px;'>Support Team,<br />collaborateUSA.com | Collaborate CoOp</b>";
 
     $messg.= "<hr style='text-align:left; border:none; background:none; height:1px; border-bottom:solid 1px #eee; margin:10px 0 5px 0; width:90%;' />";
     $messg .= "<div style='font-size:11px; color:#aaa; font-style:italic;'>This is an auto-generated email. Please do not reply as it will not be received.</div>";

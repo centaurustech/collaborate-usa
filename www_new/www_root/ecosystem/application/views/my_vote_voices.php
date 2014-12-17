@@ -60,6 +60,10 @@
                         $('#my_voice_data').append(res.data);
                     }
                     
+                    if(res.is_more_data === true){
+                        $("#voc_more").css("display", "inline-block");
+                    }
+                    
                     // no data is available
                     else{
                         $(".voice-loader").css("display", "none");                        

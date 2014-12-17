@@ -37,7 +37,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
     public function get_my_vote_voices($bundle = array()){
         
         // set return result
-        $result = array("status" => true, "message" => "", "is_data" => false, "data" => array());
+        $result = array("status" => true, "message" => "", "is_data" => false, "is_more_data" => false, "data" => array());
         
         // get valid logging id
         $uid = $this->get_logged_uid();
@@ -49,6 +49,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
             $limit = c_pick_param($bundle, "limit", 10);
             
             // calculate start
+            $next_start = ($start + 1) * $limit;
             $start = $start * $limit;
             
             $query = "SELECT voice.* FROM user_voices AS voice
@@ -66,6 +67,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
             // get voices
             $voices = $this->get_voices($bundle);
             
+            $result["is_more_data"] = $this->is_more_data(sprintf($query, $uid, $next_start, $limit));
             $result["status"]  = $voices["status"];
             $result["message"] = $voices["message"];
             $result["is_data"] = $voices["is_data"];
@@ -105,7 +107,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
                     $voice_id = $voice['id'];
                     $title = strip_tags($voice['question_text']);
                     $title = word_limiter($title, 7);
-                    $image = "../user_files/prof/" . $this->get_logged_uid() . "/voices/" . $voice['voice_pic'];
+                    $image = "../user_files/prof/" . $voice['user_id'] . "/voices/" . $voice['voice_pic'];
                     $since = c_get_time_elapsed(strtotime($voice['added_on']));
                     $detail = strip_tags($voice["voice_details"]);
                     $detail = make_url_to_link($detail);
@@ -113,7 +115,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
                     $detail = preg_replace('/^(?:<br\s*\/?>\s*)+/', '', $detail);                    
                     $detail = word_limiter($detail, 10);
                     $userdata = $this->session->userdata('user_data');
-                    $uid = $userdata['uid'];
+                    $uid = $voice['user_id'];
                     $user = $this->Mod_User->get_user($uid);                    
                     $user_image = $user['data']['profile_pic'];
                     

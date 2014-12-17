@@ -17,14 +17,15 @@ IndexIgnore *
 ErrorDocument 403 "<title>410 Gone</title><h2>GONE / 410</h2><b>Resource is no longer available!</b><p>The requested URL is no longer available on this server and there is no forwarding address. If you followed a link from a foreign page, please contact the author of this page.</p><p>If you think this is a server error, please contact the <a href=#>webmaster</a>.</p><h2>Error 410</h2>"
 ErrorDocument 401 "<title>410 Gone</title><h2>GONE / 410</h2><b>Resource is no longer available!</b><p>The requested URL is no longer available on this server and there is no forwarding address. If you followed a link from a foreign page, please contact the author of this page.</p><p>If you think this is a server error, please contact the <a href=#>webmaster</a>.</p><h2>Error 410</h2>"
 ErrorDocument 404 http://cusa-local/back_adm/404
-#ErrorDocument 404 http://new.collaborateusa.com/back_adm/404
+#ErrorDocument 404 https://www.collaborateusa.com/back_adm/404
 
 
 # Password Protection - tested
 AuthName "CUSA Admin"
 AuthType Basic
 #AuthUserFile "/home/rancan1102/public_html/collaborateusa.com/www_new/htpassx/.htpasswd"
-AuthUserFile "D:/xampp/htdocs/collaborate_usa/www_new/htpassx/.htpasswd"
+#AuthUserFile "/home/collabusanew/public_html/htpassx/.htpasswd"
+AuthUserFile "F:/Projects/collaborate_usa/www_new/htpassx/.htpasswd"
 require valid-user
 
 <FilesMatch "\.(img|png|gif|jpeg|jpg|swf)$">

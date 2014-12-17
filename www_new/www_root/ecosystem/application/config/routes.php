@@ -39,6 +39,14 @@
 */
 
 $route['default_controller'] = "my_voices";
+$route['logout'] = "logout";
+
+$route['merger/(:any)'] = "merger/$1";
+$route['notification'] = "notification";
+$route['invitation'] = "invitation";
+$route['messages'] = "messages";
+$route['messages/(:any)'] = "messages/$1";
+
 $route['my-votes'] = "my_vote_voices";
 $route['my-votes/(:any)'] = "my_vote_voices/$1";
 $route['my-voices'] = "my_voices";
@@ -47,10 +55,24 @@ $route['voices/(:any)'] = "voices/$1";
 $route['voice/(:num)'] = "voices/single_voice/$1";
 $route['create-voice'] = "create_voice";
 $route['check-voice'] = "voice_checker";
+
 $route['my-streams'] = "my_streams";
 $route['my-streams/(:any)'] = "my_streams/$1";
 $route['stream/(:num)'] = "stream/single_stream/$1";
 $route['stream/(:any)'] = "stream/$1";
+
+$route['my-rivers/create'] = "create_river/create";
+$route['my-rivers/create/(:any)'] = "create_river/index/$1";
+$route['river/(:num)'] = "river/single_river/$1";
+$route['my-rivers'] = "my_rivers";
+$route['my-rivers/(:any)'] = "my_rivers/$1";
+
+$route['my-oceans/create'] = "create_ocean/create";
+$route['my-oceans/create/(:any)'] = "create_ocean/index/$1";
+$route['ocean/(:num)'] = "ocean/single_ocean/$1";
+$route['my-oceans'] = "my_oceans";
+$route['my-oceans/(:any)'] = "my_oceans/$1";
+
 
 $route['404_override'] = '';
 

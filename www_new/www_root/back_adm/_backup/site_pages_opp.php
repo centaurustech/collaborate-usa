@@ -44,6 +44,7 @@ if(isset($_POST['seo_tag']))
         $rules = [
         'required' => [['title'], ['seo_tag']],
         'lengthMax' => [['title', 60], ['seo_tag', 30]],
+        'slug' => [['seo_tag']],
         ];
     }
     else if($content_type=='html')
@@ -52,21 +53,23 @@ if(isset($_POST['seo_tag']))
         {
             $rules = [
             'required' => [['title'], ['seo_tag'], ['page_heading']],
-            'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150], ['head_msg', 200]],
+            'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150]], //['head_msg', 200]
+            'slug' => [['seo_tag']],
             ];
         }
         else
         {
             $rules = [
             'required' => [['title'], ['seo_tag'], ['page_heading'], ['pg_content']],
-            'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150], ['head_msg', 200]],
+            'lengthMax' => [['title', 60], ['seo_tag', 30], ['page_heading', 150]], //['head_msg', 200]
+            'slug' => [['seo_tag']],
             ];
         }
     }
 
     $form_v->labels(array(
     'page_heading' => 'Top Heading',
-    'head_msg' => 'Sub Heading',
+    //'head_msg' => 'Sub Heading',
     'pg_content' => 'HTML Content',
     ));
 
@@ -96,6 +99,7 @@ if(isset($_POST['seo_tag']))
         $_POST['cat_id'] = (int)@$_POST['cat_id'];
         $_POST['popup_only'] = (int)@$_POST['popup_only'];
         $_POST['is_active'] = (int)@$_POST['is_active'];
+        $_POST['show_in_footer'] = (int)@$_POST['show_in_footer'];
 
         $m_type = $pg_content = '';
         $sql_prt = $new_pdf_content = '';
@@ -171,13 +175,14 @@ if(isset($_POST['seo_tag']))
         	mysql_exec($sql_seo_tags, 'save');
 
             #/ update site_pages
+            //head_msg='{$_POST['head_msg']}',
     		$sql_tb1 = "UPDATE site_pages SET
             cat_id='{$_POST['cat_id']}', title='{$_POST['title']}',
-            page_heading='{$_POST['page_heading']}', head_msg='{$_POST['head_msg']}', pg_content='{$pg_content}',
+            page_heading='{$_POST['page_heading']}', pg_content='{$pg_content}',
             {$sql_prt}
             seo_tag_id='{$seo_tag_id}',
             meta_keywords='{$_POST['meta_keywords']}', meta_descr='{$_POST['meta_descr']}',
-            popup_only='{$_POST['popup_only']}', is_active='{$_POST['is_active']}'
+            popup_only='{$_POST['popup_only']}', is_active='{$_POST['is_active']}', show_in_footer='{$_POST['show_in_footer']}'
             WHERE id='{$sp_id}'";
     		mysql_exec($sql_tb1, 'save');
 
@@ -199,10 +204,11 @@ if(isset($_POST['seo_tag']))
             $seo_tag_id = (int)@mysql_insert_id();
 
             #/ insert site_pages
+            //'{$_POST['head_msg']}',
             $sql_tb1 = "INSERT INTO site_pages
-            (cat_id, title, page_heading, head_msg, pg_content, pdf_content, seo_tag_id, meta_keywords, meta_descr, popup_only, is_active)
-        	VALUES('{$_POST['cat_id']}', '{$_POST['title']}', '{$_POST['page_heading']}', '{$_POST['head_msg']}', '{$pg_content}', '{$new_pdf_content}',
-            '{$seo_tag_id}', '{$_POST['meta_keywords']}', '{$_POST['meta_descr']}', '{$_POST['popup_only']}', '{$_POST['is_active']}')";
+            (cat_id, title, page_heading, pg_content, pdf_content, seo_tag_id, meta_keywords, meta_descr, popup_only, is_active, show_in_footer)
+        	VALUES('{$_POST['cat_id']}', '{$_POST['title']}', '{$_POST['page_heading']}', '{$pg_content}', '{$new_pdf_content}',
+            '{$seo_tag_id}', '{$_POST['meta_keywords']}', '{$_POST['meta_descr']}', '{$_POST['popup_only']}', '{$_POST['is_active']}', '{$_POST['show_in_footer']}')";
             mysql_exec($sql_tb1, 'save');
             $sp_id = (int)@mysql_insert_id();
             //var_dump($sp_id); echo mysql_error(); die();
@@ -260,7 +266,9 @@ if(isset($_POST['seo_tag']))
 {
     $empt = $_POST;
     $empt['is_active'] = (int)@$empt['is_active'];
+    $empt['show_in_footer'] = (int)@$empt['show_in_footer'];
 }
+//var_dump((@$empt['self_managed']=='0'));
 ///////////////////////////////////////////////////////////////////
 
 $pg_title = "Site Pages";
@@ -324,7 +332,7 @@ function check_this()
         document.getElementById('pg_content').value=oEdit1_pg_content.getHTMLBody();
         if((document.getElementById('pg_content').value=='') || (document.getElementById('pg_content').value=='<br>'))
         {
-            <?php if(@$empt['self_managed']=='0') { ?>
+            <?php if(@$empt['self_managed']!='1') { ?>
             err += 'Please enter the Page Content!\n';
             <?php } ?>
         }
@@ -375,7 +383,7 @@ function check_this()
         <div style="clear:both; height:10px;"></div>
 
         <div style="width:130px; float:left;">SEO Tag / URL Part:</div>
-        <div style="float:left;"><input type="text" id="seo_tag" name="seo_tag" maxlength="30" value="<?=format_str(@$empt['seo_tag'])?>" style="width:150px; border:1px solid #000261;" /><span style="color:#CC0000;">&nbsp;&nbsp;*</span>
+        <div style="float:left;"><input type="text" id="seo_tag" name="seo_tag" maxlength="30" value="<?=format_str(@$empt['seo_tag'])?>" style="width:150px; border:1px solid #000261;" <?php if(@$empt['self_managed']=='1') { ?>readonly="readonly"<?php } ?> /><span style="color:#CC0000;">&nbsp;&nbsp;*</span>
         <span class="submsg">must be unique and in alpha_numberic only</span>
         </div>
 
@@ -416,6 +424,13 @@ function check_this()
 
         <div style="width:130px; float:left;">Is Active?</div>
         <div style="float:left;"><input type="checkbox" name="is_active" id="is_active" value="1" <?php if (@$empt['is_active']!='0') echo "checked='checked'"; ?> />
+        </div>
+
+
+        <div style="clear:both; height:10px;"></div>
+
+        <div style="width:130px; float:left;">Show Footer Link?</div>
+        <div style="float:left;"><input type="checkbox" name="show_in_footer" id="show_in_footer" value="1" <?php if (@$empt['show_in_footer']!='0') echo "checked='checked'"; ?> />
         </div>
 
 
@@ -470,6 +485,7 @@ function check_this()
 <div id="html_cont_div" style="display: none;">
 <table border="0" cellpadding="0" cellspacing="0" class="datagrid" width="100%">
 
+    <?php /*
     <tr>
 	<th>HEADING SECTION</th>
 	</tr>
@@ -482,34 +498,42 @@ function check_this()
 
         <div style="clear:both; height:10px;"></div>
 
+        <?php /*
         <div style="width:130px; float:left;">Sub Heading:</div>
         <div style="float:left;"><textarea id="head_msg" name="head_msg" rows="2" style="width:355px; border:1px solid #000261; float:left;"><?=format_str(@$empt['head_msg'])?></textarea>
-        </div>
+        </div>* / ?>
 
         <div style="clear:both;"></div>
     </td>
     </tr>
 
     <tr><td>&nbsp;</td></tr>
-
+    */ ?>
 
     <tr>
-	<th>PAGE INFO</th>
+	<th>PAGE INFO & CONTENT</th>
 	</tr>
 
     <tr>
     <td valign="middle" style="padding:6px 4px;"><br />
 
+        <div style="width:130px; float:left;">Heading:</div>
+        <div style="float:left;"><input type="text" id="page_heading" name="page_heading" maxlength="150" value="<?=format_str(@$empt['page_heading'])?>" style="width:350px; border:1px solid #000261;" /><span style="color:#CC0000;">&nbsp;&nbsp;*</span>
+        </div>
+
+        <div style="clear:both; height:15px;"></div>
+        <div style="width:130px; float:left;">&nbsp;</div><div><hr /></div>
+        <div style="clear:both; height:15px;"></div>
+
+
         <div style="width:130px; float:left;">Meta Keywords:</div>
         <div style="float:left;"><input type="text" id="meta_keywords" name="meta_keywords" maxlength="250" value="<?=format_str(@$empt['meta_keywords'])?>" style="width:350px; border:1px solid #000261;" />
-        <span class="submsg">&nbsp;&nbsp;Ignore for popup contents</span>
         </div>
 
         <div style="clear:both; height:10px;"></div>
 
         <div style="width:130px; float:left;">Meta Description:</div>
         <div style="float:left;"><input type="text" id="meta_descr" name="meta_descr" maxlength="250" value="<?=format_str(@$empt['meta_descr'])?>" style="width:350px; border:1px solid #000261;" />
-        <span class="submsg">&nbsp;&nbsp;Ignore for popup contents</span>
         </div>
 
         <div style="<?php if(@$empt['self_managed']=='1') { ?>display:none;<?php } ?>">
@@ -520,7 +544,9 @@ function check_this()
         <span class="submsg">Content will be shown only in a PopUp, instead of a separate Independent Page</span>
         </div>
 
-        <div style="clear:both; height:20px;"></div>
+        <div style="clear:both; height:15px;"></div>
+        <div style="width:130px; float:left;">&nbsp;</div><div><hr /></div>
+        <div style="clear:both; height:15px;"></div>
 
 
         <div style="width:130px; float:left;">HTML Content:</div>

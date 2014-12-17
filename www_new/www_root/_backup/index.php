@@ -15,7 +15,7 @@ $_GET = format_str($_GET);
 
 ##/ Break URL Components into identifiers
 include_once('../includes/url_components.php');
-//var_dump("<pre>", $_SERVER['REQUEST_URI'], $REQUEST_URI, $url_path, $url_comp); die();
+//var_dump("<pre>", $_SERVER['REQUEST_URI'], $REQUEST_URI, $url_path, $url_comp, $_GET); die();
 #-
 
 ////////////////////////////////////////////////////////////////////////
@@ -33,6 +33,7 @@ if(is_array($url_comp) && !@empty($url_comp[0]))
 
     $seo_tag_id_e = mysql_exec("SELECT * FROM seo_tags WHERE seo_tag='{$seo_tag}'", 'single');
     $seo_tag_id = @$seo_tag_id_e['id'];
+    //var_dump("<pre>", $seo_tag_id); die();
 
     if(!empty($seo_tag_id))
     {
@@ -42,6 +43,7 @@ if(is_array($url_comp) && !@empty($url_comp[0]))
         (SELECT 'site_pages' AS pg FROM site_pages sp WHERE seo_tag_id='{$seo_tag_id}' AND is_active='1' AND self_managed='0')
         LIMIT 1
         ";
+        //var_dump("<pre>", $sql_seo); die();
 
         $seo_info = @mysql_exec($sql_seo, 'single');
 
@@ -57,6 +59,10 @@ else
     $controller = 'home';
     $seo_tag_id = 11;
 }
+
+if($seo_tag_id == 14) //manually change route of 'index' to 'home'
+$seo_tag_id = 11;
+
 //@var_dump("<pre>", $seo_info, $controller, $seo_tag, $seo_tag_id); die();
 #-
 ////////////////////////////////////////////////////////////////////////

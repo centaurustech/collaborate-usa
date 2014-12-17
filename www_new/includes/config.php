@@ -9,7 +9,7 @@ if(in_array($_SERVER['SERVER_NAME'], array('cusa-local', 'localhost'))==false) /
     ini_set('display_errors', "On");
     ini_set('display_startup_errors', true);
 
-    ##/ ini force as php.ini is not working on godaddy
+    #/*##/ ini force as php.ini is not working on godaddy
     ini_set('short_open_tag', 'On');
     ini_set('register_globals', 'Off');
     ini_set('magic_quotes_gpc', 'Off');
@@ -19,28 +19,40 @@ if(in_array($_SERVER['SERVER_NAME'], array('cusa-local', 'localhost'))==false) /
     ini_set('max_execution_time', '2400');
     ini_set('session.cookie_httponly', '1');
     ini_set('session.use_only_cookies', '1');
-    #-
+    #*/-
 
 
     $host = 'localhost';
-	$user = 'merit0_cUSA_web';
-	$pass = 'M89s{+aZwg8q';
-    $dbname = 'cusa_new';
+	$user = 'collabus_cUSA01w';
+	$pass = 'WsAh5OrXB}s}';
+    $dbname = 'collabus_cusa_new';
 	$cn1 = $cn = @mysql_connect($host, $user, $pass);
 	$db = @mysql_select_db($dbname, $cn);
 
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {define('URL_PREFIX', 'https');}
     else {define('URL_PREFIX', 'http');}
 
-    define('SITE_URL', URL_PREFIX.'://new.collaborateusa.com/'); //www.collaborateusa.com/www_new/www_root/
-    define('SITE_URL_WWW', URL_PREFIX.'://collaborateusa.com/'); //collaborateusa.com/www_new/www_root
+    //define('SITE_URL', URL_PREFIX.'://new.collaborateusa.com/'); //www.collaborateusa.com/www_new/www_root/
+    //define('SITE_URL', URL_PREFIX.'://166.62.35.176/~collabusanew/www_new/www_root/');
+    define('SITE_URL', URL_PREFIX.'://www.collaborateusa.com/');
 
-    //define('DOC_ROOT', '/home/rancan1102/www_new/www_root/');
-    define('DOC_ROOT', '/');//www_new/www_root/
+    //define('SITE_URL_WWW', URL_PREFIX.'://collaborateusa.com/'); //collaborateusa.com/www_new/www_root
+    //define('SITE_URL_WWW', URL_PREFIX.'://166.62.35.176/~collabusanew/www_new/www_root/');
+    define('SITE_URL_WWW', URL_PREFIX.'://collaborateusa.com/');
+
+    define('TOP_ROOT', '/www/');
+    define('DOC_ROOT', '/');//www_new/www_root/ or /home/rancan1102/www_new/www_root/
+    //define('DOC_ROOT', '/~collabusanew/www_new/www_root/');
+    #define('DOC_ROOT', '/www_new/www_root/');
+
     define('DOC_ROOT_ADMIN', '/back_adm/');//www_new/www_root/back_adm/
+    //define('DOC_ROOT_ADMIN', '/~collabusanew/www_new/www_root/back_adm/');
+    #define('DOC_ROOT_ADMIN', '/www_new/www_root/back_adm/');
+
 
     define('AUTO_COMPLETE', 'autocomplete="off"');
     define('support_em', 'support@collaborateusa.com');
+    define('mem_support_em', 'membersupport@collaborateusa.com');
     define('SERVER_TYPE', 'LIVE');
 
 
@@ -92,11 +104,13 @@ else //LOCALHOST
     define('SITE_URL', 'http://cusa-local/');
     define('SITE_URL_WWW', 'http://cusa-local/');
 
+    define('TOP_ROOT', '/www_root/');
     define('DOC_ROOT', '/');
     define('DOC_ROOT_ADMIN', '/back_adm/');
 
     define('AUTO_COMPLETE', '');
     define('support_em', 'support@collaborateusa.com');
+    define('mem_support_em', 'membersupport@collaborateusa.com');
     define('SERVER_TYPE', 'LOCAL');
 }
 
@@ -118,4 +132,9 @@ if(stristr($browser, 'chrome')!=false) {$browser = str_ireplace('safari', '', $b
 define('BROWSER', $browser);
 
 $consts = get_defined_constants();
+
+//////////////////////////////////////////////////////////////
+
+@$_SESSION['global_vars'] = array();
+$_SESSION['engine'] = 'generic';
 ?>
