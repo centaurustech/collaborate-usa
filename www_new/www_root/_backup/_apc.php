@@ -1,6 +1,6 @@
 <?php
 #/ Redirect if not in our IP
-if(in_array($_SERVER['REMOTE_ADDR'], array('110.93.203.122', '127.0.0.1'))==false){
+if(in_array($_SERVER['REMOTE_ADDR'], array('110.93.203.122', '110.93.203.14', '127.0.0.1'))==false){
 @header("Location: nf.php");
 echo "<script language=\"javascript\">location.href='nf.php';</script>";
 exit;

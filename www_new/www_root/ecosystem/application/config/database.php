@@ -49,9 +49,17 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
+
+if(in_array($_SERVER['SERVER_NAME'], array('cusa-local', 'localhost'))==false){ //SERVER
+$db['default']['username'] = 'collabus_cUSA01w';
+$db['default']['password'] = 'WsAh5OrXB}s}';
+$db['default']['database'] = 'collabus_cusa_new';
+} else {
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
 $db['default']['database'] = 'cusa';
+}
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

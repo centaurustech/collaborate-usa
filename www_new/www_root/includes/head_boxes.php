@@ -3,9 +3,11 @@
 <div class="head_boxes">
 
 <div class="searchhead">
-    <div class="seartxt">Search</div>
-    <div class="searinpt"><input name="" type="text" /></div>
-    <div class="seargo"><a href="#">Go</a></div>
+    <form name="search_form" id="search_form" action="<?php echo base_url(); ?>search" method="post">
+        <div class="seartxt">Search</div>    
+        <div class="searinpt"><input name="sk" type="text" /></div>
+        <div class="seargo"><a href="javascript:search_form.submit();">Go</a></div>
+    </form>
 </div>
 
 <?php /*<div class="usericons"></div>*/ ?>
@@ -16,9 +18,8 @@
     <li>
         <?php
         if(function_exists('time_elapsed_string')!=true){
-        include_once('../includes/func_time.php');
+            include_once('../includes/func_time.php');
         }
-
 
         #/ Get list of messages to display
         $msgs_count = 0;
@@ -26,7 +27,7 @@
         ?>
 
         <div class="iconsusrnav">
-            <a href="<?=DOC_ROOT?>ecosystem/messages">
+            <a href="#_">
             <img src="<?=DOC_ROOT?>ecosystem/assets/images/message.jpg" /></a>
             <?php if($msgs_count>0){ ?>
             <span class="posabt" id="msgs_count" style=""><?=$msgs_count?></span>
@@ -127,7 +128,7 @@
         </script>
 
         <div class="iconsusrnav">
-            <a href="<?=DOC_ROOT?>ecosystem/notification">
+            <a href="#_">
                 <img src="<?=DOC_ROOT?>ecosystem/assets/images/ghanta.jpg" />
             </a>
             <?php if($notifs_count>0){ ?>
@@ -169,7 +170,10 @@
                 $img_v = DOC_ROOT."user_files/prof/{$notif_data['from_user_id']}/{$img_vp}";
                 }
 
-                $notif_dtx = @time_elapsed_string(@strtotime($notif_data['created_on']));
+                $notif_dtx = '';
+                if($notif_data['template_id']!='5'){ //hide time for certain templates
+                $notif_dtx = @time_elapsed_string(@strtotime($notif_data['created_on'])).' -';
+                }
 
 
                 #/ Display notif
@@ -180,7 +184,7 @@
                 echo "<div class=\"notsmall\"><img src=\"{$img_v}\" /></div>";
 
                 echo "<div class=\"notsmallp\">{$notif_data2['notification']}</div>";
-                echo "<div class=\"notsmallp dtx\">{$notif_dtx} -</div>";
+                echo "<div class=\"notsmallp dtx\">{$notif_dtx}</div>";
                 echo "</li>";
             }
 
@@ -214,14 +218,15 @@
     <!-- Accounts -->
     <li>
         <div class="iconsusrnav">
-            <a href="#">
+            <a href="#_">
             <img src="<?=@$prf_pic_th?>" style="width:35px; height:35px;" class="round_borders" /></a>
         </div>
 
         <ul class="marginuliniph pad_2 width_300 nav_3">
             <?php #/* ?><li class="title"><h2>My Account ::</h2></li>
-            <li class="brdrnonebot"><a href="#_">My Profile</a></li>
-            <li class="brdrnonebot"><a href="#_">Update Password</a></li><?php #*/ ?>
+            <li class="brdrnonebot"><a href="<?=DOC_ROOT?>ecosystem/">My Eco-System</a></li>
+            <li class="brdrnonebot"><a href="<?=DOC_ROOT?>member">My Profile</a></li>
+            <li class="brdrnonebot"><a href="<?=DOC_ROOT?>update-password">Update Password</a></li><?php #*/ ?>
             <li><a href="<?=DOC_ROOT?>ecosystem/logout">Sign Out</a></li>
         </ul>
     </li>

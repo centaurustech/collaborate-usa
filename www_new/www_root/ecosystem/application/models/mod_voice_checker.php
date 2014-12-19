@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mod_Voice_Checker extends Mod_Voice {
+class Mod_Voice_Checker extends CI_Model {
     
     /////////////////////////////////////////////////
     // PRIVATE VAR
@@ -14,7 +14,7 @@ class Mod_Voice_Checker extends Mod_Voice {
     
     public function __construct(){
         parent::__construct();
-        $this->log("Model Mod_Tag loaded.");
+        #$this->log("Model Mod_Voice_Checker loaded.");
         
         $this->_config = c_get_config();
     }
@@ -31,11 +31,11 @@ class Mod_Voice_Checker extends Mod_Voice {
                 
                 SELECT vote.voice_id AS voice_id, count( * ) AS total_vote
                 FROM voices_votes AS vote
+                where vote_value='i_see'
                 GROUP BY vote.voice_id
                 ) AS v ON v.voice_id = voice.id
-                WHERE DATE_SUB( CURDATE( ) , INTERVAL ?
-                DAY ) >= voice.added_on
-                AND is_blocked =0";
+                WHERE DATE_SUB( CURDATE( ) , INTERVAL ? DAY ) <= voice.added_on
+                AND voice.is_blocked =0";
                 
         $rsl = $this->db->query($sql, array($deadline));
         
@@ -51,9 +51,9 @@ class Mod_Voice_Checker extends Mod_Voice {
                     #$this->move_to_stream($voice);
                 }
                 else{
-                    #echo "=================PURGE=================<br />";
-                    #echo "<pre>";print_r($voice);echo "</pre>";
-                    #echo "===================================<br />";
+                    echo "=================PURGE=================<br />";
+                    echo "<pre>";print_r($voice);echo "</pre>";
+                    echo "===================================<br />";
                     #$this->purge_voice($voice);
                 }
             }

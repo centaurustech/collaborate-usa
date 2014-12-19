@@ -108,8 +108,9 @@ class Mod_My_Streams extends Mod_Voice {
                     $detail = word_limiter($detail, 10);
                     $userdata = $this->session->userdata('user_data');
                     $uid = $userdata['uid'];
-                    $user = $this->Mod_User->get_user($uid);
-                    $user_image = $user['data']['profile_pic'];
+                    $user = $this->Mod_User->get_user($uid);                    
+                    
+                    $user_image = get_profile_pic($uid, $user['data']['profile_pic']);
                     
                     $single_stream_url = base_url() . $this->_config['single_stream_url'] . '/' . $voice_id;
                     
@@ -128,7 +129,7 @@ class Mod_My_Streams extends Mod_Voice {
                             <li>
                                 <div class='wwf_the_outer' style='background: url({$image}) no-repeat scroll 0 0 / 100% 100px rgba(0, 0, 0, 0)'>
                                     <div class='image_wwf'>
-                                        <img src='../user_files/prof/{$uid}/{$user_image}' alt='' style='width: 56px; height: 56px;' />
+                                        <img src='{$user_image}' alt='' style='width: 56px; height: 56px;' />
                                     </div>
                                     <h4>{$title}</h4>
                                     <p>{$detail}</p>

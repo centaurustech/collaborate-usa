@@ -173,6 +173,14 @@ class Mod_Vote extends Mod_Voice {
                             $result["status"] = true;
                             $result["data"]["vote"] = $this->get_last_vote();
                             $result["data"]["voice"] = $voice["data"];
+                            
+                            // generate patronage points
+                            if($vval == 'i_see'){
+                                generate_ppoints($uid, 'vote_yes');
+                            }
+                            else if($vval == 'i_dont_see'){
+                                generate_ppoints($uid, 'vote_no');
+                            }
                         }
                         else{
                             $result["message"] = "vote insertion failed.";

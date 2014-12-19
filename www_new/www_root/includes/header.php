@@ -133,7 +133,7 @@ $site_contact_info = @cb89(@mysql_exec("SELECT * FROM site_contact_info"), 'c_ke
 
 
 #/ Set User Profile Pic
-$prf_pic = DOC_ROOT."assets/images/ep_th.png";
+$prf_pic = DOC_ROOT."assets/images/ep.png";
 if($user_idc>0)
 {
     if(!@empty($_SESSION['CUSA_Main_usr_info']['profile_pic'])){
@@ -256,6 +256,10 @@ if (@array_key_exists("CUSA_MSG_GLOBAL", $_SESSION))
     if ($_SESSION["CUSA_MSG_GLOBAL"][0]==true) { echo '<div class="infor" id="err_gd2">'.$_SESSION['CUSA_MSG_GLOBAL'][1].'</div>'; }
     //echo '<script type="text/javascript">time_id("err_gd2", "div", 60000);</script>';
     unset($_SESSION["CUSA_MSG_GLOBAL"]);
+
+    if(array_key_exists('engine', $_SESSION) && ($_SESSION['engine']=='CI')){
+    echo '<br />';
+    }
     ?>
     </div>
     </div>

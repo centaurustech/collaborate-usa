@@ -376,6 +376,7 @@ function __autoload($class)
 
 // setup custom configs
 $config['cusa_log'] = FALSE;
+$config['search_url'] = "search";
 $config['cusa_log_path'] = '';
 $config['merger_url'] = "merger";
 $config['vote_down'] = 'i_dont_see';
@@ -387,6 +388,8 @@ $config['single_voice_url'] = 'voice';
 $config['voice_create_url'] = 'create-voice';
 $config['my_streams_url'] = 'my-streams';
 $config['single_stream_url'] = 'stream';
+$config['feeds_per_page_limit'] = 9;
+$config['search_per_page_limit'] = 9;
 $config['my_voice_per_page_limit'] = 9;
 $config['my_stream_per_page_limit'] = 9;
 $config['my_river_per_page_limit'] = 9;

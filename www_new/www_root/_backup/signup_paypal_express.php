@@ -38,9 +38,11 @@ if($sel_pack>0)
 
     #/ Check Attempts
     include_once('../includes/check_attempts.php');
-    //if(check_attempts(3)==false){
-    //update_attempt_counts(); redirect_me($seo_tag);
-    //}
+    if(check_attempts(3)==false){
+    update_attempt_counts();
+    echo '<strong class="red-txt">Too Many Attempts!</strong> Please try again after a few minutes.';
+    exit;
+    }
 
 
     ##/ Validate Fields

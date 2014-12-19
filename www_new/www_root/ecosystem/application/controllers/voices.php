@@ -93,7 +93,7 @@ class Voices extends Voice {
                 $this->page_data['sidebar'] = ($sidebar_data['status'] == true) ? $sidebar_data['data'] : '';
                 
                 $data = array(
-                    "heading" => "MY VOICE",
+                    "heading" => "VOICE",
                     "title" => $this->page_data['voice']['question_text']
                 );
                 

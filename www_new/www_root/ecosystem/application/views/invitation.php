@@ -22,21 +22,22 @@
                             foreach($notification as $notif_data){
                             
                             if($notif_data['notif_data']['template_id'] == 6){
-                                
-                            $image = "user_files/prof/".$notif_data['notif_data']['from_user_id'].'/'.$notif_data['notif_data']['user']['data']['profile_pic'];
-                            for($i = 0; $i < 10; $i++){
-                                if(!file_exists($image)){$image = "../{$image}";}else{break;}
-                            }
-                            if(!file_exists($image)){
-                                $image = "assets/images/ep.png";
-                                for($i = 0; $i < 10; $i++){
-                                    if(!file_exists($image)){$image = "../{$image}";}else{break;}
-                                }
-                            }
+                                                            
+                            $image = get_profile_pic($notif_data['notif_data']['from_user_id'], $notif_data['notif_data']['user']['data']['profile_pic']);
                             
-                            $detail = str_replace_nth("Stream", "<a href='".base_url(). $config['single_stream_url'].'/'.$notif_data['notif_data']['caller_stream']['data']['id']."'>".$notif_data['notif_data']['caller_stream']['data']['question_text']."</a>", $notif_data['notification']['notification'], 0);
-                            $detail = str_replace_nth("Stream", "<a href='".base_url(). $config['single_stream_url'].'/'.$notif_data['notif_data']['receiver_stream']['data']['id']."'>".$notif_data['notif_data']['receiver_stream']['data']['question_text']."</a>", $detail, 0);
-                            
+                            if($notif_data['notif_data']['caller_stream']['data']['data_type'] == "stream"){
+                                $detail = str_replace_nth("Stream", "<a href='".base_url(). $config['single_stream_url'].'/'.$notif_data['notif_data']['caller_stream']['data']['id']."'>".$notif_data['notif_data']['caller_stream']['data']['title']."</a>", $notif_data['notification']['notification'], 0);
+                                $detail = str_replace_nth("Stream", "<a href='".base_url(). $config['single_stream_url'].'/'.$notif_data['notif_data']['receiver_stream']['data']['id']."'>".$notif_data['notif_data']['receiver_stream']['data']['title']."</a>", $detail, 0);    
+                                $a_link = "accept-river-invite";
+                                $r_link = "reject-river-invite";
+                            }
+                            else{
+                                $detail = str_replace_nth(ucwords($notif_data['notif_data']['caller_stream']['data']['data_type']), "<a href='".base_url(). $notif_data['notif_data']['caller_stream']['data']['data_type'].'/'.$notif_data['notif_data']['caller_stream']['data']['id']."'>".$notif_data['notif_data']['caller_stream']['data']['title']."</a>", $notif_data['notification']['notification'], 0);
+                                $detail = str_replace_nth(ucwords($notif_data['notif_data']['caller_stream']['data']['data_type']), "<a href='".base_url(). $notif_data['notif_data']['caller_stream']['data']['data_type'].'/'.$notif_data['notif_data']['receiver_stream']['data']['id']."'>".$notif_data['notif_data']['receiver_stream']['data']['title']."</a>", $detail, 0);
+                                $a_link = "accept-ocean-invite";
+                                $r_link = "reject-ocean-invite";
+                            }
+                                                        
                             ?>
                             
                         <li class="mrgntoptn">
@@ -46,8 +47,8 @@
                                 <?php echo $detail; ?><br />
                                 <strong><?php echo c_get_time_elapsed(strtotime($notif_data['notif_data']['created_on'])); ?></strong>
                                 <p>
-                                    <a href="javascript:void(0);" class="mainsave floatlft marginrighrspc accept-river-invite" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['eco_sys_id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['eco_sys_id']; ?>">Accept</a>
-                                    <a href="javascript:void(0);" class="mainsave floatlft reject-river-invite" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['eco_sys_id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['eco_sys_id']; ?>">Reject</a>
+                                    <a href="javascript:void(0);" class="mainsave floatlft marginrighrspc <?php echo $a_link; ?>" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['id']; ?>">Accept</a>
+                                    <a href="javascript:void(0);" class="mainsave floatlft <?php echo $r_link; ?>" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['id']; ?>">Reject</a>
                                     <img src="<?php echo c_get_assets_url() . 'images/voice_loader.gif' ?>" class="ar-loader" style="margin-top: 8px; display: none;" />
                                 </p>
                             </div>
@@ -90,6 +91,18 @@
         $(".reject-river-invite").bind('click', function(){
             if(confirm('Are you sure you want to reject this request.')){
                 rejectRiverInvite($(this).attr('data-csid'), $(this).attr('data-rsid'), $(this));
+            }
+        });
+        
+        $(".accept-ocean-invite").bind('click', function(){
+            if(confirm('Are you sure you want to accept this request.')){                
+                acceptOceanInvite($(this).attr('data-csid'), $(this).attr('data-rsid'), $(this));
+            }
+        });
+        
+        $(".reject-ocean-invite").bind('click', function(){
+            if(confirm('Are you sure you want to reject this request.')){
+                rejectOceanInvite($(this).attr('data-csid'), $(this).attr('data-rsid'), $(this));
             }
         });
     });
@@ -140,6 +153,81 @@
             _self.closest('p').find('.ar-loader').css('display', 'inline-block');
             
             var url = "<?php echo base_url() . $config['merger_url']; ?>/reject_river_invite";
+            var data = {csid: _csid, rsid: _rsid};
+            
+            processData(url, data, function(res){
+                lock = false;
+                try{
+                    res = JSON.parse(res);
+                    
+                    // check return status is true
+                    if(res.status){
+                        window.location.reload(true);                 
+                    }
+                    
+                    // something wrong
+                    else{       
+                        _self.closest('p').find('.ar-loader').css('display', 'none');
+                        _self.closest('p').find('a').css('display', 'inline-block');
+                        
+                        metroAlert(res.message, {theme: metroStyle.ERROR});
+                    }
+                }
+                catch(e){
+                    _self.closest('p').find('.ar-loader').css('display', 'none');
+                    _self.closest('p').find('a').css('display', 'inline-block');
+                    metroAlert(e, {theme: metroStyle.ERROR});
+                }
+            });   
+        }        
+    }
+    
+    function acceptOceanInvite(_csid, _rsid, _self){
+        
+        if(!lock){
+            lock = true;
+            
+            _self.closest('p').find('a').css('display', 'none');
+            _self.closest('p').find('.ar-loader').css('display', 'inline-block');
+            
+            var url = "<?php echo base_url() . $config['merger_url']; ?>/river_to_ocean";
+            var data = {csid: _csid, rsid: _rsid};
+            
+            processData(url, data, function(res){
+                lock = false;
+                try{                
+                    res = JSON.parse(res);
+                    
+                    // check return status is true
+                    if(res.status){
+                        window.location.reload(true);
+                    }
+                    
+                    // something wrong
+                    else{
+                        _self.closest('p').find('.ar-loader').css('display', 'none');
+                        _self.closest('p').find('a').css('display', 'inline-block');
+                        metroAlert(res.message, {theme: metroStyle.ERROR});
+                    }
+                }
+                catch(e){
+                    _self.closest('p').find('.ar-loader').css('display', 'none');
+                    _self.closest('p').find('a').css('display', 'inline-block');
+                    metroAlert(e, {theme: metroStyle.ERROR});
+                }
+            });
+        }
+    }
+    
+    function rejectOceanInvite(_csid, _rsid, _self){
+        
+        if(!lock){
+            lock = true;
+            
+            _self.closest('p').find('a').css('display', 'none');
+            _self.closest('p').find('.ar-loader').css('display', 'inline-block');
+            
+            var url = "<?php echo base_url() . $config['merger_url']; ?>/reject_ocean_invite";
             var data = {csid: _csid, rsid: _rsid};
             
             processData(url, data, function(res){

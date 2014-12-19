@@ -184,18 +184,23 @@ if(! function_exists('remote_file_exists')){
 }
 
 // get profile picture
-/*
+
 if(! function_exists('get_profile_pic')){
-    function get_profile_pic($uid = 0, $pic = "", $node = ""){
+    function get_profile_pic($uid = 0, $pic = ""){
         
-        $image = $node . "user_files/prof/{$uid}/{$pic}";
+        $image = "";
         
-        if(! file_exists($image)){
-            get_profile_pic($uid, $pic, "../".$node);
+        if(empty($pic)){
+            $image = "/assets/images/ep.png";
+        }else{
+            $image = "/user_files/prof/{$uid}/{$pic}";
         }
-        else{
-            return $image;
+
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . $image)){
+            $image = "/assets/images/ep.png";
         }
+            
+        $image = @substr_replace($image, '_th.', @strrpos($image, '.'), 1);
+        return $image;
     }
 }
-*/

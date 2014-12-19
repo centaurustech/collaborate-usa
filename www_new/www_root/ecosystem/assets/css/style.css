@@ -3220,3 +3220,15 @@ text-decoration: none;
     margin: 0 auto;
     float: none;
 }
+
+.srachbar {
+    background: none repeat scroll 0 0 #989898;
+    color: #fff;
+    float: left;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: -5%;
+    margin-left: -5%;
+    text-align: center;
+    width: 110%;
+}

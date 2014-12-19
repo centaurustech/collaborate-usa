@@ -100,7 +100,8 @@ if(isset($_POST['email_add']))
             if($user_info['screen_name']=='')
             {
                 $_SESSION["CUSA_MSG_GLOBAL"] = array(true, 'You have not setup your <b>Screen Name</b> yet. Please complete your <b>Profile Info</b> from the Profile edit page.');
-                redirect_me('update-user-info');
+                //redirect_me('update-user-info');
+                redirect_me('ecosystem/');
             }
             else
             {
@@ -110,8 +111,9 @@ if(isset($_POST['email_add']))
 
                 if(!empty($last_visited_seo))
                 redirect_me($last_visited_seo);
-                else
-                redirect_me('home');
+                else{
+                redirect_me('ecosystem/');
+                }
             }
         }
         else

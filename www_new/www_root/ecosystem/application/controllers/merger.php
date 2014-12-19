@@ -51,10 +51,14 @@ class Merger extends Voice {
     }
     
     public function river_to_ocean(){
-        
+        echo @json_encode($this->Mod_Merger->river_to_ocean());
     }
     
     public function reject_river_invite(){                        
         echo @json_encode($this->Mod_Merger->reject_river_invite());
+    }
+    
+    public function reject_ocean_invite(){
+        echo @json_encode($this->Mod_Merger->reject_ocean_invite());
     }
 }

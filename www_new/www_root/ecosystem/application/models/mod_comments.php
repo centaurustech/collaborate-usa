@@ -36,18 +36,8 @@ class Mod_Comments extends Mod_Voice {
                     );
                     
                     if($this->db->insert('eco_discussion_comments', $data)){
-                        $since = c_get_time_elapsed(strtotime(c_now()));
-                        
-                        
-                        
-                        $host = str_replace('ecosystem/', '', base_url());
-                        $uid = $user['id'];
-                        $user_image = $user['profile_pic'];
-                        $user_image = "{$host}user_files/prof/{$uid}/{$user_image}";
-                        
-                        if(!remote_file_exists($user_image)){
-                            $user_image = "/assets/images/ep.png";
-                        }
+                        $since = c_get_time_elapsed(strtotime(c_now()));                                                
+                        $user_image = get_profile_pic($user['id'], $user['profile_pic']);                        
                         
                         $result['status'] = true;
                         $result['message'] = "Comment posted successfully.";
@@ -196,15 +186,14 @@ class Mod_Comments extends Mod_Voice {
                     $since = c_get_time_elapsed(strtotime($comment['added_on']));
                     $user = $this->is_valid_user($comment['posted_by']);
                     
-                    $name  = ($user) ? $user['name'] : 'Unknow user';
-                    $uid   = ($user) ? $comment['posted_by'] : 0;
-                    $image = ($user) ? $user['profile_pic'] : ''; 
+                    $name  = ($user) ? $user['name'] : 'Unknow user';                                       
+                    $image = get_profile_pic($user['id'], $user['profile_pic']);
                     
                     $html .= "
                     <div class='leftine'>
                         <div class='comm'>&nbsp;</div>
                         <div class='commhead'>&nbsp;</div>
-                        <div class='smalluserimg'><img alt='' src='../../user_files/prof/$uid/$image' /></div>
+                        <div class='smalluserimg'><img alt='' src='$image' /></div>
                         <div class='smallusertxt'> <span class='star_headdrop'>$name</span>
                             <p>$detail</p>
                             <span style='color: #646464; float: left; font-size: 13px'>$since</span>

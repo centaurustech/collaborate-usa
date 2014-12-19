@@ -51,7 +51,7 @@ class Mod_My_Oceans extends Mod_Voice {
             $next_start = ($start + 1) * $limit;
             $start = $start * $limit;
             
-            $query = "SELECT * FROM eco_system WHERE `moderator_id`=%d AND `parent_id`=0 AND `level`=3 AND `is_admin_blocked`=0 ORDER BY id DESC LIMIT %d, %d";
+            $query = "SELECT * FROM eco_system WHERE `moderator_id`=%d AND `level`=3 AND `is_admin_blocked`=0 ORDER BY id DESC LIMIT %d, %d";
             $sql = sprintf($query, $uid, $start, $limit);
             
             $bundle = array("sql" => $sql);
@@ -111,8 +111,8 @@ class Mod_My_Oceans extends Mod_Voice {
                     $userdata = $this->session->userdata('user_data');
                     $uid = $userdata['uid'];
                     $user = $this->Mod_User->get_user($uid);
-                    $user_image = "../user_files/prof/{$uid}/".$user['data']['profile_pic'];
-                    if(file_exists($user_image)){$user_image = "../{$user_image}";}
+                    
+                    $user_image = get_profile_pic($uid, $user['data']['profile_pic']);
                     
                     $single_stream_url = base_url() . $this->_config['single_ocean_url'] . '/' . $ocean_id;
                     

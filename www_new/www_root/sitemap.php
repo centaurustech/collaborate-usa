@@ -41,8 +41,10 @@ include_once("includes/header.php");
                     <li class="portfolio"><a href="<?=DOC_ROOT?>signin">Sign-In to your Account</a></li>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>join">Join / Signup</a></li>
                 <?php } else { ?>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/notification">Notifications</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/messages">Messages</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/notification">My Notifications</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/messages">My Messages</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>member">My Profile</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>update-password">Update Password</a></li>
                     <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/logout">Signout</a></li>
                 <?php } ?>
                 </ul>
@@ -53,11 +55,11 @@ include_once("includes/header.php");
             <div class="categTree">
                 <div class="tree_top"><h3>Eco-System</h3></div>
                 <ul class="tree">
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-voices">My Voices</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-votes">My Votes</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-streams">My Streams</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-rivers">My Rivers</a></li>
-                    <li class="portfolio"><a href="<?=DOC_ROOT?>my-oceans">My Oceans</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/my-voices">My Voices</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/my-votes">My Votes</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/my-streams">My Streams</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/my-rivers">My Rivers</a></li>
+                    <li class="portfolio"><a href="<?=DOC_ROOT?>ecosystem/my-oceans">My Oceans</a></li>
                 </ul>
             </div>
             <?php } ?>

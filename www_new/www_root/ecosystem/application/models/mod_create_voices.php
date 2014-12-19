@@ -48,7 +48,7 @@ class Mod_Create_Voices extends Mod_Voice {
             
             // invalid user login
             $this->_set_message(self::ERROR, "You are not valid user.");
-            redirect(base_url() . $this->_config["my_voice_url"]);
+            redirect(base_url() . $this->_config["my_voices_url"]);
             exit("Unathorized user.");
         }
         
@@ -88,7 +88,7 @@ class Mod_Create_Voices extends Mod_Voice {
                 $this->_set_message(self::ERROR, "Voice not created kindly contact the support. with this error code " . USER_VOICE_FOLDER_NOT_CREATED);
                 
                 // redirect imediately to my voices page
-                redirect(base_url() . $this->_config["my_voice_url"]);
+                redirect(base_url() . $this->_config["my_voices_url"]);
                 exit;  
             }
         }
@@ -101,7 +101,7 @@ class Mod_Create_Voices extends Mod_Voice {
             $this->_set_message(self::ERROR, "Voice not created kinly contact support. with this error code " . USER_FOLDER_NOT_CREATED);
             
             // redirect imediately to my voices page
-            redirect(base_url() . $this->_config["my_voice_url"]);
+            redirect(base_url() . $this->_config["my_voices_url"]);
             exit; 
         }
     }
@@ -148,7 +148,7 @@ class Mod_Create_Voices extends Mod_Voice {
                     
                     // invalid user login
                     $this->_set_message(self::ERROR, "You are not valid user.");
-                    redirect(base_url() . $this->_config["my_voice_url"]);
+                    redirect(base_url() . $this->_config["my_voices_url"]);
                     exit("Unathorized user.");
                 }
             }
@@ -214,6 +214,9 @@ class Mod_Create_Voices extends Mod_Voice {
                             // insert voice to voice table
                             $this->db->insert('user_voices', $voice_data);
                             
+                            // generate patronage points
+                            generate_ppoints($user_id, 'create_voice');
+                            
                             // voice successfully created
                             $this->_set_message(self::SUCCESS, "Your voice successfully created.");
                         }
@@ -247,6 +250,6 @@ class Mod_Create_Voices extends Mod_Voice {
             $this->_set_message(self::ERROR, "Voice Title can't be blank.");
         }
         
-        redirect(base_url() . $this->_config["my_voice_url"]);
+        redirect(base_url() . $this->_config["my_voices_url"]);
     }
 }

@@ -19,6 +19,27 @@ if(!is_array($page_info)){if($ro<=0){redirect_me('404');}else{exit;}}
 //var_dump("<pre>", $seo_tag_id, $page_info); die();
 
 
+#/ Distribute Patronage Points
+$user_id = (int)@$_SESSION["CUSA_Main_usr_id"];
+if($user_id>0)
+{
+    include_once('../includes/patronage_points_func.php');
+    $pp_act = '';
+
+    switch($page_info['id'])
+    {
+        case '1': $pp_act = 'visit_privacy_policy'; break; //Privacy Policy
+        case '2': $pp_act = 'visit_info_statement'; break; //Information Statement
+        case '4': $pp_act = 'visit_tos'; break; //Terms of Use
+    }
+
+    if(!empty($pp_act))
+    generate_ppoints($user_id, $pp_act);
+}
+#-
+
+/////////////////////////////////////////////////////////////////////
+
 ##/Special Process for PDF Content
 if(isset($page_info['pdf_content']) && @strlen($page_info['pdf_content'])>10)
 {

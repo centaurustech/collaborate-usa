@@ -66,7 +66,7 @@
         <div style="display:none;" id="t1" class="withbor bggray">
             <div class="container_705 bggray">
                 <?php foreach($vote_up_users["data"] as $data){ ?>
-                    <div class="smalldetimg"><img alt="" src="../../user_files/prof/<?php echo $data['id'] . "/" . $data['profile_pic']; ?>" /></div>
+                    <div class="smalldetimg"><img alt="" src="<?php echo get_profile_pic($data['id'], $data['profile_pic']); ?>" /></div>
                     <div class="starheadmardet">
                         <h2><span class="star_head"><?php echo $data['name']; ?></span> Voted i see it</h2>
                     </div>
@@ -80,7 +80,7 @@
         <div style="display:none;" id="t2" class="withbor bggray">
             <div class="container_705 bggray">
                 <?php foreach($vote_down_users["data"] as $data){ ?>
-                    <div class="smalldetimg"><img alt="" src="../../user_files/prof/<?php echo $data['id'] . "/" . $data['profile_pic']; ?>" /></div>
+                    <div class="smalldetimg"><img alt="" src="<?php echo get_profile_pic($data['id'], $data['profile_pic']); ?>" /></div>
                     <div class="starheadmardet">
                         <h2><span class="star_head"><?php echo $data['name']; ?></span> Voted i don't see it</h2>
                     </div>

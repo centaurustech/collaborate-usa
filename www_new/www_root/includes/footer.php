@@ -101,6 +101,7 @@
                     <li><a href="<?=DOC_ROOT?>signin">Sign-In to your Account</a></li><li>
                     <a href="<?=DOC_ROOT?>join">Join / Signup</a></li>
                     <?php } else { ?>
+                    <a href="<?=DOC_ROOT?>update-password">Update Password</a>
                     <a href="<?=DOC_ROOT?>ecosystem/logout">Signout</a>
                     <?php } ?>
                 </ul>

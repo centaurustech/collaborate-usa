@@ -16,6 +16,47 @@
                 <input type="radio" checked="" name="tab-group-1" id="tab-4" />
                 <label for="tab-2">Notifications</label>
                 <div class="content2 toptabs">
+                    <?php if (count($notification) > 0){ ?>
+                    <ul class="msginbx">
+                        
+                        <?php 
+                            
+                             
+                            foreach($notification as $notif_data){
+                            
+                            if($notif_data['notif_data']['template_id'] != 6){
+                            
+                            if($notif_data['notif_data']['user']['status'] == true){
+                                $image = get_profile_pic($notif_data['notif_data']['from_user_id'], $notif_data['notif_data']['user']['data']['profile_pic']);
+                                $image = "<img src='$image' />";
+                            }
+                            else{
+                                $image = "<img src='" . c_get_assets_url() . "images/eco_drop.png' />";
+                            }
+                            
+                            
+                            $detail = $notif_data['notification']['notification'];
+                                                        
+                            ?>
+                            
+                        <li class="mrgntoptn">
+                            <div class="usrimgmsg"><?php echo $image; ?></div>
+                            <div class="usritxtmsg"> 
+                                <strong><?php #echo $notif_data['notif_data']['user']['data']['name']; ?></strong><br />
+                                <?php echo $detail; ?><br />
+                                <strong><?php echo c_get_time_elapsed(strtotime($notif_data['notif_data']['created_on'])); ?></strong>
+                                <!--
+                                <p>
+                                    <a href="javascript:void(0);" class="mainsave floatlft marginrighrspc <?php echo $a_link; ?>" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['id']; ?>">Accept</a>
+                                    <a href="javascript:void(0);" class="mainsave floatlft <?php echo $r_link; ?>" data-csid="<?php echo $notif_data['notif_data']['caller_stream']['data']['id']; ?>" data-rsid="<?php echo $notif_data['notif_data']['receiver_stream']['data']['id']; ?>">Reject</a>
+                                    <img src="<?php echo c_get_assets_url() . 'images/voice_loader.gif' ?>" class="ar-loader" style="margin-top: 8px; display: none;" />
+                                </p>-->
+                            </div>
+                            <div class="brdrall"></div>
+                        </li>
+                        <?php }} ?>
+                    </ul>
+                    <?php } ?>  
                     <!--
                     <ul class="msginbx">
                         <li class="mrgntoptn">
@@ -52,7 +93,7 @@
 
 
 <script type="text/javascript">
-
+    /*
     var lock = false;
     
     $(document).ready(function(){
@@ -83,5 +124,6 @@
             }
         });
     }
+    */
                      
 </script>

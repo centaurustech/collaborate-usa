@@ -80,7 +80,7 @@ class River extends Voice {
                 $bundle = array("sql" => $sql);
                 $my_rivers_data = $this->Mod_River->get_voices($bundle);
                 $this->page_data['my_rivers'] = $my_rivers_data['data'];
-                $this->page_data['is_possible_to_join'] = $this->Mod_River->is_possible_to_join($this->page_data['user_id'], $this->page_data['river']['id']);
+                $this->page_data['is_possible_to_join'] = $this->Mod_River->is_possible_to_join_ocean($this->page_data['user_id'], $this->page_data['river']['id']);
                 $this->page_data['is_possible_to_create_ocean'] = $this->Mod_River->is_possible_to_create_ocean($this->page_data['river']['id'], $this->page_data['user_id']);
                 $this->page_data['has_ocean'] = $this->Mod_River->has_ocean($this->page_data['river']['id']);
                 $this->page_data['child_streams'] = $this->Mod_River->get_child_streams($this->page_data['river']['id']);
@@ -194,6 +194,6 @@ class River extends Voice {
     
     public function merge(){
                         
-        echo @json_encode($this->Mod_River->merge_to_river());
+        echo @json_encode($this->Mod_River->merge_to_ocean());
     }
 }

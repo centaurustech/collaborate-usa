@@ -1,0 +1,72 @@
+.dd_main_container{
+}
+
+.dd-container{
+    margin-left: 10px;
+}
+
+.dd-select {
+    border:none;
+    border-radius: 5px;
+    background:none !important;
+    width:18px !important;
+}
+
+.dd-pointer {
+    display:none;
+}
+
+.dd-select a{
+    text-decoration: none;
+    padding:0px;
+}
+
+.dd-select a small{
+    display:none;
+}
+
+ul.dd-options {
+    margin:5px 0 0 !important;
+    padding:0 !important;
+    list-style:none;
+    border-radius: 5px;
+    border: solid 1px #eee !important;
+}
+
+ul.dd-options li {
+    margin: 0 !important;
+}
+
+ul.dd-options li a{
+    font-size:11px !important;
+    text-decoration: none;
+    padding:5px 7px !important;
+}
+
+.dd-desc {
+    color:#999;
+}
+
+
+@media (max-width: 815px){
+.dd_main_container {
+    clear:both;
+    margin-top: -5px !important;
+}
+
+.dd-container{
+    margin-left: 0;
+    display: inline-block;
+}
+}
+
+@media (max-width: 650px){
+.dd-select{
+    display: inline-block;
+}
+
+ul.dd-options {
+    text-align:left;
+}
+
+}

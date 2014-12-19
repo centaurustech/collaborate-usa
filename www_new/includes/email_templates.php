@@ -244,7 +244,6 @@ function notification_email($from_usr, $to_usr, $notification, $created_on, $vis
 
 }//end func...
 
-/////////////////////////////////////////////////////
 
 function password_updated($user_info, $new_pass)
 {
@@ -267,6 +266,9 @@ function password_updated($user_info, $new_pass)
     return $body_in;
 
 }//end func...
+
+/////////////////////////////////////////////////////
+
 
 
 function order_status_updated($first_name, $invoice, $order_status)

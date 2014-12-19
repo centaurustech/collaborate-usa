@@ -38,8 +38,12 @@
 |
 */
 
-$route['default_controller'] = "my_voices";
+$route['default_controller'] = "feeds";
+$route['feeds_ajax'] = "feeds/feeds_ajax";
 $route['logout'] = "logout";
+
+$route['search'] = "search";
+$route['search/search_feeds_ajax'] = "search/search_feeds_ajax";
 
 $route['merger/(:any)'] = "merger/$1";
 $route['notification'] = "notification";

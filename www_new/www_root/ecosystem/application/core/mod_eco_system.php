@@ -276,6 +276,18 @@ class Mod_Eco_System extends CI_Model {
         }
     }
     
+    public function is_ready_for_ocean($req_id = 0, $caller_sys_id = 0, $receiver_sys_id = 0){
+        $sql = "SELECT * FROM eco_merge_requests WHERE ((caller_eco_sys_id=? OR receiver_eco_sys_id=?) OR (caller_eco_sys_id=? OR receiver_eco_sys_id=?)) AND verification_str!=''";
+        $query = $this->db->query($sql, array($caller_sys_id, $receiver_sys_id, $receiver_sys_id, $caller_sys_id));
+        
+        if($query->num_rows() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public function is_possible_to_join($req_id = 0, $receiver_sys_id = 0){
         
         $sql = "SELECT emr.*
@@ -441,7 +453,7 @@ class Mod_Eco_System extends CI_Model {
         
         // set return result
         $result = array("status" => false, "message" => "", "data" => "");                
-        
+        /*
         $sql = "SELECT str.*
                 FROM streams_voice AS str
                 LEFT JOIN eco_merge_requests AS emr
@@ -449,6 +461,26 @@ class Mod_Eco_System extends CI_Model {
                 WHERE emr.`id`=?
                 AND str.is_blocked=0
                 ORDER BY str.id DESC";
+                
+        */
+        $sql = "SELECT es.id, es.parent_id, es.level, es.moderator_id, 
+                es.created_on AS added_on,
+                
+                IF((es.level=1), sv.voice_cat_id, es.voice_cat_id) AS voice_cat_id,
+                IF((es.level=1), sv.is_blocked, es.is_admin_blocked) AS is_blocked,
+                IF((es.level=1), sv.question_text, es.title) AS title,
+                IF((es.level=1), sv.voice_details, es.description) AS description,
+                CASE
+                  WHEN es.`level`=1 THEN 'stream'
+                  WHEN es.`level`=2 THEN 'river'
+                  WHEN es.`level`=3 THEN 'ocean'
+                END
+                AS data_type
+                
+                FROM eco_system AS es
+                LEFT JOIN streams_voice AS sv ON sv.eco_sys_id=es.id AND es.level=1
+                LEFT JOIN eco_merge_requests AS emr ON es.`id` = emr.`receiver_eco_sys_id`
+                WHERE emr.`id`=?";
                 
         $rsl = $this->db->query($sql, array($req_id));
         
@@ -468,7 +500,7 @@ class Mod_Eco_System extends CI_Model {
         
         // set return result
         $result = array("status" => false, "message" => "", "data" => "");                
-            
+        /*
         $sql = "SELECT str.*
                 FROM streams_voice AS str
                 LEFT JOIN eco_merge_requests AS emr
@@ -476,6 +508,26 @@ class Mod_Eco_System extends CI_Model {
                 WHERE emr.`id`=?
                 AND str.is_blocked=0
                 ORDER BY str.id DESC";
+        */
+        
+        $sql = "SELECT es.id, es.parent_id, es.level, es.moderator_id, 
+                es.created_on AS added_on,
+                
+                IF((es.level=1), sv.voice_cat_id, es.voice_cat_id) AS voice_cat_id,
+                IF((es.level=1), sv.is_blocked, es.is_admin_blocked) AS is_blocked,
+                IF((es.level=1), sv.question_text, es.title) AS title,
+                IF((es.level=1), sv.voice_details, es.description) AS description,
+                CASE
+                  WHEN es.`level`=1 THEN 'stream'
+                  WHEN es.`level`=2 THEN 'river'
+                  WHEN es.`level`=3 THEN 'ocean'
+                END
+                AS data_type
+                
+                FROM eco_system AS es
+                LEFT JOIN streams_voice AS sv ON sv.eco_sys_id=es.id AND es.level=1
+                LEFT JOIN eco_merge_requests AS emr ON es.`id` = emr.`caller_eco_sys_id`
+                WHERE emr.`id`=?";
                 
         $rsl = $this->db->query($sql, array($req_id));
         
@@ -624,5 +676,57 @@ class Mod_Eco_System extends CI_Model {
         else{
             return false;
         }
+    }
+    
+    public function get_other_random_stream(){
+        
+        // set return result
+        $result = array("status" => false, "message" => "", "data" => "");
+        
+        if(is_logged_in()){
+            
+            $sql = "SELECT * FROM streams_voice WHERE user_id!=? AND is_blocked=0 ORDER BY RAND() LIMIT 1";
+            $rsl = $this->db->query($sql, array($this->get_logged_uid()));
+            
+            if($rsl->num_rows() > 0){
+                $result["status"] = true;
+                $result["message"] = "stream found.";
+                $result["data"] = $rsl->row_array();
+            }
+            else{
+                $result["message"] = "No stream found.";
+            }    
+        }
+        else{
+            $result["message"] = "Login first.";
+        }
+                
+        return $result;
+    }
+    
+    public function get_other_random_river(){
+        
+        // set return result
+        $result = array("status" => false, "message" => "", "data" => "");
+        
+        if(is_logged_in()){
+            
+            $sql = "SELECT * FROM eco_system WHERE `moderator_id`!=? AND `level`=2 and is_admin_blocked=0 ORDER BY RAND() LIMIT 1";
+            $rsl = $this->db->query($sql, array($this->get_logged_uid()));
+            
+            if($rsl->num_rows() > 0){
+                $result["status"] = true;
+                $result["message"] = "river found.";
+                $result["data"] = $rsl->row_array();
+            }
+            else{
+                $result["message"] = "No river found.";
+            }
+        }
+        else{
+            $result["message"] = "Login first.";
+        }
+        
+        return $result;
     }
 }

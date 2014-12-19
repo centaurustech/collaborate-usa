@@ -62,7 +62,6 @@ if (defined('ENVIRONMENT'))
  */
 	//$system_path = 'system';
 	$system_path = MAIN_ROOT.'/includes/CI_2.2/system';
-    
 
 /*
  *---------------------------------------------------------------
@@ -78,6 +77,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
+	//$application_folder = MAIN_ROOT.'/www/ecosystem/application';
 	$application_folder = 'application';
 
 /*
@@ -182,10 +182,23 @@ if (defined('ENVIRONMENT'))
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
 
-	// The path to the "application" folder
+    #/ Redirect if not in our IP
+    /*
+    if(in_array($_SERVER['REMOTE_ADDR'], array('110.93.203.122', '110.93.203.14', '127.0.0.1'))==false){
+    @header("Location: nf.php");
+    echo "<script language=\"javascript\">location.href='nf.php';</script>";
+    exit;
+    } else {
+    //var_dump("<pre>", SELF, BASEPATH, SYSDIR, $application_folder); die();
+    }
+    */
+
+
+
+    // The path to the "application" folder
 	if (is_dir($application_folder))
 	{
-		define('APPPATH', $application_folder.'/');
+        define('APPPATH', $application_folder.'/');
 	}
 	else
 	{

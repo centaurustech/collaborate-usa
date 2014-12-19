@@ -92,6 +92,7 @@ if(isset($_POST['screen_name']) && ($success_2 == false))
     'required' => [['screen_name'], ['identify_by'], ['address_ln_1'], ['city'], ['country_code'], ['state'], ['zip']],
     'lengthMin' => [['screen_name', 5]],
     'lengthMax' => [['screen_name', 50], ['identify_by', 50], ['address_ln_1', 200], ['address_ln_2', 150], ['phone_number', 20], ['city', 200], ['country_code', 2], ['state', 50], ['zip', 20]],
+    'slug' => [['screen_name']],
     ];
 
     $form_v->labels(array(

@@ -4,8 +4,30 @@
     margin-top:5px;
 }
 
+.display-big label {
+    color:#555;
+    width: 283px;
+    margin-top:0;
+}
+
 .fields-big .right_fl {
     float: left;
+}
+
+.display-big .right_fl {
+}
+
+.flbld {
+    font-weight:bold;
+}
+
+.flblue {
+    color:#53A9E9;
+}
+
+.dimg {
+    margin-top:-6px;
+    margin-left:8px;
 }
 
 .fields-big .submsg{
@@ -66,6 +88,10 @@
 
 .fields-big label {
     width: 190px;
+}
+
+.display-big label {
+    width: 273px;
 }
 
 }

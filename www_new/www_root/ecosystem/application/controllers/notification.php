@@ -39,7 +39,21 @@ class Notification extends Voice {
         
         $sidebar_data = $this->Mod_Sidebar->get_default_sidebar();        
         $this->page_data['sidebar'] = ($sidebar_data['status'] == true) ? $sidebar_data['data'] : '';
+              
+        $notification = read_notification($this->Mod_User->get_logged_uid());
+        $this->page_data['notification'] = $notification;
+        $i = 0;
         
+        foreach($notification as $notif_data){
+            $user = $this->Mod_User->get_user($notif_data['notif_data']['from_user_id']);
+            $this->page_data['notification'][$i]['notif_data']['user'] = $user;
+            
+            #$this->page_data['notification'][$i]['notif_data']['receiver_stream'] = $this->Mod_Stream->get_request_receiver_stream($this->page_data['notification'][$i]['notif_data']['object_id']);
+            #$this->page_data['notification'][$i]['notif_data']['caller_stream'] = $this->Mod_Stream->get_request_caller_stream($this->page_data['notification'][$i]['notif_data']['object_id']);
+            
+            ++$i;
+        }
+        #echo "<pre>";print_r($this->page_data['notification']);exit;
         
         $this->load_header($data);
         $this->load->view('notification', $this->page_data);
@@ -52,6 +66,7 @@ class Notification extends Voice {
     
     private function _load_models(){                
         $this->load->model('Mod_Sidebar');
+        $this->load->model('Mod_User');
     }
             
     /////////////////////////////////////////////////

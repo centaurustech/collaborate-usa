@@ -116,9 +116,10 @@ class Mod_My_Vote_Voices extends Mod_Voice {
                     $detail = word_limiter($detail, 10);
                     $userdata = $this->session->userdata('user_data');
                     $uid = $voice['user_id'];
-                    $user = $this->Mod_User->get_user($uid);                    
-                    $user_image = $user['data']['profile_pic'];
+                    $user = $this->Mod_User->get_user($uid);
                     
+                    $user_image = get_profile_pic($uid, $user['data']['profile_pic']);
+                                        
                     $single_voice_url = base_url() . $this->_config['single_voice_url'] . '/' . $voice_id;
                     
                     ++$serial;
@@ -136,7 +137,7 @@ class Mod_My_Vote_Voices extends Mod_Voice {
                             <li>
                                 <div class='wwf_the_outer' style='background: url({$image}) no-repeat scroll 0 0 / 100% 100px rgba(0, 0, 0, 0)'>
                                     <div class='image_wwf'>
-                                        <img src='../user_files/prof/{$uid}/{$user_image}' alt='' style='width: 56px; height: 56px;' />
+                                        <img src='{$user_image}' alt='' style='width: 56px; height: 56px;' />
                                     </div>
                                     <h4>{$title}</h4>
                                     <p>{$detail}</p>

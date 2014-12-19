@@ -18,7 +18,7 @@ $site_media = get_site_media($sm_array);
 //var_dump("<pre>", $site_media); die();
 
 #/ get site_misc_data
-$smd = array('website_functions_copy', 'home_sliders', 'why_collaborate_copy', 'learn_functions', 'home_video'); //'home_video' when live
+$smd = array('website_functions_copy', 'home_sliders', 'why_collaborate_copy', 'learn_functions', 'home_vide'); //'home_video' when live
 $site_misc_data = get_site_misc_data($smd);
 //var_dump("<pre>", $site_misc_data); die();
 
@@ -68,7 +68,34 @@ include_once("includes/header.php");
             echo "<h2>{$site_misc_data['website_functions_copy'][0]['title']}</h2>
             <p>{$site_misc_data['website_functions_copy'][0]['m_value']}</p>";
         }
+        ?>
 
+        <script>
+        $(document).ready(function() {
+        	$(".fbox_learn").fancybox({
+        	    minWidth    : 230,
+        	    minHeight   : 300,
+        		maxWidth	: 950,
+        		maxHeight	: 600,
+        		autoSize	: true,
+                fitToView	: true,
+                openEffect	: 'elastic',
+        		closeEffect	: 'elastic',
+                <?php if($user_idc>0){ //patronage points allocation via ajax ?>
+                afterShow: function(){
+                    $.ajax({
+                    cache: false,
+                    type : 'Get',
+                    dataType: 'text',
+                    url: '<?=DOC_ROOT?>upp?ai=6',
+                    })
+                },
+                <?php } ?>
+        	});
+        });
+        </script>
+
+        <?php
         #/*
         //old but working
         ?>
@@ -77,17 +104,17 @@ include_once("includes/header.php");
 
             <map name="Map" id="Map">
                 <area shape="poly" coords="124,269" href="#" />
-                <area shape="poly" coords="76,320,42,284,26,258,47,226,80,230,110,268,78,283" href="#learn_about_fund" title="About FUND" class="fbox" />
-                <area shape="poly" coords="19,237,12,213,11,176,11,161,43,146,71,170,76,215,40,212" href="#learn_about_refer" title="About REFER" class="fbox" />
-                <area shape="poly" coords="17,146,24,121,37,96,52,75,87,80,98,114,84,136,78,153,48,131" href="#learn_about_learn" title="About Learn" class="fbox" />
-                <area shape="poly" coords="66,59,83,44,106,33,128,22,154,45,149,78,128,89,107,105,96,67"  href="#learn_about_earn" title="About Earn" class="fbox" />
-                <area shape="poly" coords="150,18,169,17,208,18,222,22,234,54,205,83,183,76,160,81,171,41" href="#learn_about_join" title="ABOUT JOIN (MEMBERSHIP)" class="fbox" />
-                <area shape="poly" coords="221,87,247,63,238,28,264,41,284,56,295,66,302,75,291,105,259,116,224,89" href="#learn_about_share" title="About SHARE" class="fbox" />
-                <area shape="poly" coords="269,126,273,141,283,162,282,170,315,184,341,161,329,121,320,99,312,88,303,120" href="#learn_about_voice" title="About VOICE" class="fbox" />
-                <area shape="poly" coords="282,184,281,201,278,217,272,230,296,260,327,257,338,229,342,213,343,185,341,179,318,200" href="#learn_about_vote" title="About VOTE" class="fbox" />
-                <area shape="poly" coords="266,244,255,258,233,276,237,314,266,331,299,301,319,271,288,275" href="#learn_about_buy" title="About BUY" class="fbox" />
-                <area shape="poly" coords="222,284,203,290,178,293,160,324,176,353,207,354,229,345,251,336,225,323" href="#learn_about_sell" title="About SELL" class="fbox" />
-                <area shape="poly" coords="163,291,146,286,128,279,121,275,87,293,87,329,112,342,127,348,160,352,146,322" href="#learn_about_give" title="About GIVE" class="fbox" />
+                <area shape="poly" coords="76,320,42,284,26,258,47,226,80,230,110,268,78,283" href="#learn_about_fund" title="About FUND" class="fbox_learn" />
+                <area shape="poly" coords="19,237,12,213,11,176,11,161,43,146,71,170,76,215,40,212" href="#learn_about_refer" title="About REFER" class="fbox_learn" />
+                <area shape="poly" coords="17,146,24,121,37,96,52,75,87,80,98,114,84,136,78,153,48,131" href="#learn_about_learn" title="About Learn" class="fbox_learn" />
+                <area shape="poly" coords="66,59,83,44,106,33,128,22,154,45,149,78,128,89,107,105,96,67"  href="#learn_about_earn" title="About Earn" class="fbox_learn" />
+                <area shape="poly" coords="150,18,169,17,208,18,222,22,234,54,205,83,183,76,160,81,171,41" href="#learn_about_join" title="ABOUT JOIN (MEMBERSHIP)" class="fbox_learn" />
+                <area shape="poly" coords="221,87,247,63,238,28,264,41,284,56,295,66,302,75,291,105,259,116,224,89" href="#learn_about_share" title="About SHARE" class="fbox_learn" />
+                <area shape="poly" coords="269,126,273,141,283,162,282,170,315,184,341,161,329,121,320,99,312,88,303,120" href="#learn_about_voice" title="About VOICE" class="fbox_learn" />
+                <area shape="poly" coords="282,184,281,201,278,217,272,230,296,260,327,257,338,229,342,213,343,185,341,179,318,200" href="#learn_about_vote" title="About VOTE" class="fbox_learn" />
+                <area shape="poly" coords="266,244,255,258,233,276,237,314,266,331,299,301,319,271,288,275" href="#learn_about_buy" title="About BUY" class="fbox_learn" />
+                <area shape="poly" coords="222,284,203,290,178,293,160,324,176,353,207,354,229,345,251,336,225,323" href="#learn_about_sell" title="About SELL" class="fbox_learn" />
+                <area shape="poly" coords="163,291,146,286,128,279,121,275,87,293,87,329,112,342,127,348,160,352,146,322" href="#learn_about_give" title="About GIVE" class="fbox_learn" />
             </map>
         </div>
         <?php #*/ ?>
@@ -95,17 +122,17 @@ include_once("includes/header.php");
         <link type="text/css" rel="stylesheet" href="<?=DOC_ROOT?>assets/css/wheel.css" />
         <div class="wheelp">
         <div class="wheel">
-            <a id="button" href="#learn_about_join" title="ABOUT JOIN (MEMBERSHIP)" class="fbox"><span class="imgaha">&nbsp;</span></a>
-            <a id="button" href="#learn_about_share" title="About SHARE" class="fbox"><span class="imgshare">&nbsp;</span></a>
-            <a id="button" href="#learn_about_voice" title="About VOICE" class="fbox"><span class="imgvoice">&nbsp;</span></a>
-            <a id="button" href="#learn_about_vote" title="About VOTE" class="fbox"><span class="imgvote">&nbsp;</span></a>
-            <a id="button" href="#learn_about_buy" title="About BUY" class="fbox"><span class="imgbuy">&nbsp;</span></a>
-            <a id="button" href="#learn_about_sell" title="About SELL" class="fbox"><span class="imgsall">&nbsp;</span></a>
-            <a id="button" href="#learn_about_give" title="About GIVE" class="fbox"><span class="imgcive">&nbsp;</span></a>
-            <a id="button" href="#learn_about_fund" title="About FUND" class="fbox"><span class="imgfund">&nbsp;</span></a>
-            <a id="button" href="#learn_about_refer" title="About REFER" class="fbox"><span class="imgrefer">&nbsp;</span></a>
-            <a id="button" href="#learn_about_learn" title="About Learn" class="fbox"><span class="imglearn">&nbsp;</span></a>
-            <a id="button" href="#learn_about_earn" title="About Earn" class="fbox"><span class="imgearn">&nbsp;</span></a>
+            <a id="button" href="#learn_about_join" title="ABOUT JOIN (MEMBERSHIP)" class="fbox_learn"><span class="imgaha">&nbsp;</span></a>
+            <a id="button" href="#learn_about_share" title="About SHARE" class="fbox_learn"><span class="imgshare">&nbsp;</span></a>
+            <a id="button" href="#learn_about_voice" title="About VOICE" class="fbox_learn"><span class="imgvoice">&nbsp;</span></a>
+            <a id="button" href="#learn_about_vote" title="About VOTE" class="fbox_learn"><span class="imgvote">&nbsp;</span></a>
+            <a id="button" href="#learn_about_buy" title="About BUY" class="fbox_learn"><span class="imgbuy">&nbsp;</span></a>
+            <a id="button" href="#learn_about_sell" title="About SELL" class="fbox_learn"><span class="imgsall">&nbsp;</span></a>
+            <a id="button" href="#learn_about_give" title="About GIVE" class="fbox_learn"><span class="imgcive">&nbsp;</span></a>
+            <a id="button" href="#learn_about_fund" title="About FUND" class="fbox_learn"><span class="imgfund">&nbsp;</span></a>
+            <a id="button" href="#learn_about_refer" title="About REFER" class="fbox_learn"><span class="imgrefer">&nbsp;</span></a>
+            <a id="button" href="#learn_about_learn" title="About Learn" class="fbox_learn"><span class="imglearn">&nbsp;</span></a>
+            <a id="button" href="#learn_about_earn" title="About Earn" class="fbox_learn"><span class="imgearn">&nbsp;</span></a>
         </div>
         </div>
 
@@ -169,7 +196,7 @@ include_once("includes/header.php");
         $vc_bg = "{$consts['DOC_ROOT']}user_files/prof/{$hv_v['user_id']}/voices/{$hv_v['voice_pic']}";
         }
 
-        $prf_pic = '';
+        $prf_pic = "{$consts['DOC_ROOT']}assets/images/ep_th.png";
         if(!empty($hv_v['profile_pic'])){
         $prf_pic = "{$consts['DOC_ROOT']}user_files/prof/{$hv_v['user_id']}/{$hv_v['profile_pic']}";
         }
@@ -182,7 +209,7 @@ include_once("includes/header.php");
                 <div class=\"image_wwf\"><img src=\"{$prf_pic}\" /></div>
                 <h4>{$question_text}</h4>
                 <p>{$voice_details}</p>
-                <a class=\"yellow_btn\" href=\"{$consts['DOC_ROOT']}voice/{$hv_v['id']}\">Vote</a>
+                <a class=\"yellow_btn\" href=\"{$consts['DOC_ROOT']}ecosystem/voice/{$hv_v['id']}\">Vote</a>
             </div>
             ";
         echo "</li>";

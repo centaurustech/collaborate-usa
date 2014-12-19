@@ -139,10 +139,13 @@ RewriteEngine On
 #RewriteBase /
 
 # Rewite to run signup on https instead - tested
-# RewriteCond %{HTTPS} off
-# RewriteCond %{REQUEST_URI} ^/(signup|signup\-*) [NC]
-# RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
+#RewriteCond %{HTTPS} off
+#RewriteCond %{REQUEST_URI} ^/(signup|signup\-*) [NC]
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
 
+#RewriteCond %{HTTPS} off
+#RewriteCond %{REQUEST_URI} ^/(ecosystem|ecosystem/*) [NC]
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
 
 #/ External 3rd party systems
 #rewriteRule ^(blog|blog/.*)$ /blog/index.php [L,QSA]

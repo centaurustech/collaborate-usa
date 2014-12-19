@@ -29,7 +29,7 @@
     <!-- ocean detail --> 
     <span class="mainbanner"><img alt="Ocean" src="<?php echo $image; ?>" style="width: 100%;" /></span>
     <div class="withbor">
-        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/drop.png" /></span>
+        <div class="container_705"> <span class="star_vo"><img alt="" src="<?php echo c_get_assets_url(); ?>images/oceans.png" /></span>
             <div class="starheadmar">
                 <h2><span class="star_head"><?php echo $title; ?></span></h2>
             </div>
@@ -53,20 +53,15 @@
                         $detail = word_limiter($detail, 10);
                         
                         $user = $this->Mod_User->get_user($river['moderator_id']);
-                        $uid = $river['moderator_id'];
-                        $user_image = $user['data']['profile_pic'];
+                        $uid = $river['moderator_id'];                        
                         $single_river_url = base_url() . $config['single_river_url'] . '/' . $river['id'];
                         
-                        $host = str_replace('ecosystem/', '', base_url());
-                        $user_image = "{$host}user_files/prof/{$uid}/{$user_image}";
+                        $user_image = get_profile_pic($uid, $user['data']['profile_pic']);
                         
-                        if(!remote_file_exists($user_image)){
-                            $user_image = "/assets/images/ep.png";
-                        }
                 ?>
                     <li>
                         <div class="wwf_the_outer" style="background: url(<?php echo $str_bg_image; ?>) no-repeat scroll 0 0 / 100% 100px rgba(0, 0, 0, 0)">
-                            <div class="image_wwf"><img src="<?php echo $user_image; ?>" alt="" /></div>
+                            <div class="image_wwf"><img src="<?php echo $user_image; ?>" alt="" style="width: 65px; height: 65px;" /></div>
                             <h4><?php echo $title; ?></h4>
                             <p><?php echo $detail; ?></p>
                             <a href="<?php echo $single_river_url; ?>" class="yellow_btn">View</a>
